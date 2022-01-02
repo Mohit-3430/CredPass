@@ -1,0 +1,16 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.nav {
+    list-style-type: none;
+    display: flex;
+    
+    background-image: linear-gradient(to left , rgb(13, 10, 199), rgb(158, 158, 21));
+}
+.nav__links {
+    margin: 0.5rem 0.75rem;
+    padding: 0.5rem 0.3rem;
+    color: white;
+    font-weight: 600;
+}

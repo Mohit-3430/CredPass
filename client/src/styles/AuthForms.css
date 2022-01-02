@@ -1,0 +1,48 @@
+#form__heading{
+    margin-bottom: 1.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid black 0.25rem;
+    margin: 5rem;
+    padding: 3rem;
+}
+
+.form > label {
+    margin: 1.5rem;
+    font-weight: bold;
+}
+
+#form__submit{
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .form > input {
+        width : 10%;
+    }
+  }
+
+#SubmitButton {
+    background-color: beige;
+    border: 0.1rem black solid;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+}
+
+#response {
+    text-align: center;
+    margin-top: 0.5rem;
+    color: red;
+}
+
+#errmsg {
+    color: red;
+    margin : 1rem
+}
