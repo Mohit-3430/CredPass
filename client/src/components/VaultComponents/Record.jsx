@@ -6,9 +6,7 @@ import React from 'react'
 const Record = ({site, decryptPassword}) => {
 
     const [eye, setEye] = useState("fas fa-eye")
-    const [status, setStatus] = useState(1)
-    // hidden - 1
-    // show - 0
+    const [status, setStatus] = useState(1) // hidden-1, show-0
 
     const changeEye = ()=>{
         if (eye==="fas fa-eye") {
