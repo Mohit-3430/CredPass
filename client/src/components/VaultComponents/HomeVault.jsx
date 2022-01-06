@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import '../../styles/HomeVault.css'
 import Record from "./Record"
+import { useNavigate } from "react-router-dom"
 
 const HomeVault = () => {
 
     const [uname, setUname] = useState("")
     const [sites, setSites] = useState([])  
-    // const [eye, setEye] = useState("fas fa-eye-slash");
+    const navigate = useNavigate();
 
     const getUserName = () =>{
         const user = localStorage.getItem("token");
@@ -91,13 +92,15 @@ const HomeVault = () => {
     
     return (
         <>
-            
-            <h1>Welcome {uname} </h1>
-            <p id='ref'>Your Vault:</p>
-
+            <h1 id="welcome__message">Welcome 👋, {uname} </h1>
+            <p id='ref'><u>Your Vault:</u>
+                <i class="fas fa-plus plus" onClick={()=>navigate('/vault-create')}></i>
+            </p>
+            <main className="vault">
             {sites.map(site => (
               <Record site={site} key={site._id} decryptPassword={decryptPassword}/>
-            ))}   
+            ))}  
+            </main>
         </>
     )
 }

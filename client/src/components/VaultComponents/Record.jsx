@@ -26,18 +26,17 @@ const Record = ({site, decryptPassword}) => {
 
     return (
         <>
-          
-        <div id="vaultContainer">
-            <p><b>Site Name:</b><br/>{site.siteName}</p>
-            <p><b>User Name:</b><br/>{site.uname}</p>
-            <div>
-                <p><b>Password:</b><br/></p> 
-                <p id="password"> {status  ? "*********" : site.password}<br/>
-                    <button onClick={()=>runThese({password:site.password, _id:site._id, status:status})}>
-                    <i className={eye}></i></button>
+        <section className="vault__contents">
+            <p><b>Site Name: </b>{site.siteName}</p>
+            <p><b>User Name: </b>{site.uname}</p>
+            <div className="vault__content--password-field">
+                <p style={{display:"inline"}}><b>Password:</b></p> <button className="toggle" onClick={()=>runThese({password:site.password, _id:site._id, status:status})}>
+                    <i className={`${eye} eye`}></i></button>
+                <p> {status  ? "*********  " : site.password}
+                    
                 </p>
             </div>
-        </div>
+        </section>
         </>
     )
 }
