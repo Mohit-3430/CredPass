@@ -5,10 +5,9 @@
 }
 
 .home{
-  background: url('../images/green_circuit_key.jpg') no-repeat center;
-  filter: brightness(100%);
+  background: url('../images/green_circuit_key.jpg') no-repeat center ;
   background-size: cover;
-  height: 70vh;
+  height: 80vh;
   width: 100vw;
   font-weight: bold;
 }
@@ -32,7 +31,20 @@
 .home__intro > button {
   margin: 0.25rem 1.5rem;
   padding: .25rem;
-  background-color: rgb(8, 87, 87);
-  border-radius: 0.25em;
+  background-color: rgb(33, 33, 129);
   color: white;
+  font-weight: bold;
+  border: .3rem solid rgb(33, 33, 129);
+}
+.home__intro > button:hover {
+  background-color: transparent;
+  cursor: pointer;
+  color : white;
+}
+
+@media only screen and (max-width:600px) {
+  .home{
+    background-size: initial;
+    height: 85vh;
+  }
 }

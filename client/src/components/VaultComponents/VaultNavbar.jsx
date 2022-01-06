@@ -1,8 +1,8 @@
-import '../styles/HomeNavbar.css'
+import "../../styles/VaultNavbar.css"
 import {Link} from 'react-router-dom'
-import { useState } from 'react'
+import { useState } from "react"
 
-const HomeNavbar = () => {
+const Navbar = () => {
 
     const [showNav, setShowNav] = useState("hide")
     const [bars, setBars] = useState("fa-bars")
@@ -15,25 +15,26 @@ const HomeNavbar = () => {
         else{
             setShowNav("hide");
             setBars("fa-bars")
-        }        
+        }
     }
 
     return (
-        <>
-        <nav className='nav'>
-            <div className='nav__links nav__brand'>
-                <Link to='/'>PVA</Link>
+        <>  
+        <nav className="nav">
+            <div className="nav__brand">
+                PVA
                 <i onClick={()=>toggleNav()} className={`fas ${bars}`}></i>
             </div>
             <div className={`nav__links ${showNav}`}>
                 <ul>
-                    <li onClick={()=>toggleNav()}><Link to='/login'>LOGIN</Link></li>
-                    <li onClick={()=>toggleNav()}><Link  to='/signup'>REGISTER</Link></li>
-            </ul> 
-            </div> 
-            </nav>
+                    <li onClick={()=>toggleNav()}><Link to='/vault-home'>Home</Link></li>
+                    <li onClick={()=>toggleNav()}><Link to='/vault-create'>Create</Link></li>
+                    <li onClick={()=>toggleNav()}><Link to='/Logout'>Logout</Link></li>
+                </ul>  
+            </div>
+        </nav>
         </> 
     );
 }
 
-export default HomeNavbar
+export default Navbar;
