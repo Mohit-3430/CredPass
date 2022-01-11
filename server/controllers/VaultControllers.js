@@ -21,9 +21,7 @@ export const VaultCreate = async(req, res) =>{
     
     try {
         await site.save();
-
         await Site.findOneAndUpdate({siteName: siteName}, { user : req.body.userName})
-
         res.status(200).json({sucess:true, msg : "Added"})
     }catch (err) {
         res.status(401).json({sucess:false, msg:"An error Ocurred!"})
@@ -39,7 +37,6 @@ export const VaultCreateIndex = (req, res)=>{
 // GET api/vault-data
 export const VaultSiteData = async (req, res) =>{
     const uid = req.query.uid;
-    console.log(typeof req.query.uid)
     try {
         const sites = await Site.find({user : uid}).lean();
         // console.log(sites)
@@ -66,5 +63,31 @@ export const VaultEncrypt = (req, res) =>{
         res.send(encrypt(password))
     } catch {
            
+    }
+}
+
+// PATCH api/record-edit
+export const recordEdit = async(req, res) =>{
+    const siteId = req.params.siteId;
+    const updates = req.body;
+    const options = {new:true};
+    try {
+        const site = await Site.findByIdAndUpdate(siteId, updates, options);
+        if(!site) throw error;
+        res.status(200).send(site);
+    } catch (error) {
+        res.status(404).json({"success":false, "msg":"No Record Found"})
+    }
+}
+// DELETE api/record-delete
+export const recordDelete = async (req, res) =>{
+    const siteId = req.params.siteId;
+
+    try {
+        const site = await Site.findByIdAndDelete(siteId)
+        if(!site) throw error;
+        res.status(200).json({"success":true, "msg":"record deleted!"})
+    } catch (error) {
+        res.status(404).json({"success":false, "msg":"Record Not Found!"})   
     }
 }

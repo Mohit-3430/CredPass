@@ -13,20 +13,24 @@ const CreateVault = () => {
     const [userName, setUserName] = useState("")
     const navigate = useNavigate();
 
-    const getUserName = () =>{
-        const user = localStorage.getItem("token");
-        if(user){
-            let userInfo = window.atob(user.split('.')[1]).split(':')[1].split(',')[0]
-            userInfo = userInfo.replace(/"/g,"");
-            setUserName(userInfo)
+    useEffect(() => {
+        const getUserName = () =>{
+            const user = localStorage.getItem("token");
+            if(user){
+                let userInfo = window.atob(user.split('.')[1]).split(':')[1].split(',')[0]
+                userInfo = userInfo.replace(/"/g,"");
+                setUserName(userInfo)
+            }
+            else {
+                setUserName("")
+            }
         }
-        else {
+
+        getUserName();
+
+        return ()=>{
             setUserName("")
         }
-    }
-
-    useEffect(() => {
-        getUserName();
         
     }, [userName])
 

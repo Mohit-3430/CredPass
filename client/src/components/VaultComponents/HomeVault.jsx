@@ -18,9 +18,28 @@ const HomeVault = () => {
             setUname(userInfo)
         }
         else {
-            setUname(",Login to Get Details")
+            setUname("Login to Get Details")
         }
     }
+
+    useEffect(() => {
+        getUserName();
+
+        const fetchSites = ()=>{
+            axios.get(`http://localhost:5000/api/vault-data/`, {
+            headers : {
+                "Authorization" : localStorage.getItem("token")
+            },
+            params : {
+                uid : uname
+            }
+            }).then(res =>{
+                    setSites(res.data.sites)
+            }).catch(err =>console.log(`${err}`))
+        }
+        fetchSites()
+
+    },[uname])
 
     const config = {
         headers : {
@@ -52,8 +71,6 @@ const HomeVault = () => {
         {
             try {
                 const res = await axios.post(`http://localhost:5000/api/vault-encrypt-password/`,{siteObj}, config)
-                console.log(res.data)
-                console.log(siteObj.password);
                 setSites(sites.map((site)=>{
                 return site._id === siteObj._id ? 
                 {
@@ -70,37 +87,22 @@ const HomeVault = () => {
            
     }
 
-    
-    useEffect(() => {
-        getUserName();
-
-        const fetchSites = ()=>{
-            axios.get(`http://localhost:5000/api/vault-data/`, {
-            headers : {
-                "Authorization" : localStorage.getItem("token")
-            },
-            params : {
-                uid : uname
-            }
-            }).then(res =>{
-                    setSites(res.data.sites)
-            }).catch(err =>console.log(`${err}`))
-        }
-        fetchSites()
-
-    },[uname])
-    
     return (
         <>
             <h1 id="welcome__message">Welcome 👋, {uname} </h1>
+            {sites ? 
+            <>
             <p id='ref'><u>Your Vault:</u>
-                <i class="fas fa-plus plus" onClick={()=>navigate('/vault-create')}></i>
+                <i className="fas fa-plus plus" onClick={()=>navigate('/vault-create')}></i>
             </p>
             <main className="vault">
             {sites.map(site => (
-              <Record site={site} key={site._id} decryptPassword={decryptPassword}/>
+              <Record site={site} sites={sites} setSites={setSites} key={site._id} decryptPassword={decryptPassword}/>
             ))}  
             </main>
+            </>
+            : <p>No Sites, Add them now</p>
+            }
         </>
     )
 }

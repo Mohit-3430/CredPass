@@ -10,7 +10,7 @@
     color: rgb(65, 31, 65);
 }
 
-#welcome__message{
+#message{
     margin: 1rem;
 }
 
@@ -31,8 +31,16 @@
     padding: 1rem;
 }
 
-.tooltiptext {
-    visibility: visible;
+.vault__contents--edit-icons{
+    float: right;
+}
+.vault__contents--edit-icons i {
+    padding: .25rem;
+}
+.vault__contents--edit-icons i:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
 }
 .plus{
     background-color: black;

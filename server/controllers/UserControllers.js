@@ -20,15 +20,10 @@ export const LoginVerifyController = async (req, res, next) => {
             const isValid =  await bcrypt.compare(req.body.password, user.password)
             
             if (isValid && user) {
-
                 const tokenObject = issueJWT(user); //from utils
-
                 res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
-
             } else {
-
                 res.status(401).json({ success: false, msg: "you entered the wrong password" });
-
             }
 
     }
