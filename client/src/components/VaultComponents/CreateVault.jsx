@@ -14,25 +14,22 @@ const CreateVault = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const getUserName = () =>{
-            const user = localStorage.getItem("token");
-            if(user){
-                let userInfo = window.atob(user.split('.')[1]).split(':')[1].split(',')[0]
-                userInfo = userInfo.replace(/"/g,"");
-                setUserName(userInfo)
+        const fetchUname = ()=>{
+            axios.get(`http://localhost:5000/api/vault-data/`, {
+            headers : {
+                "Authorization" : localStorage.getItem("token")
             }
-            else {
-                setUserName("")
-            }
+            }).then(res =>{
+                    setUserName(res.data.user)
+            }).catch(err =>console.log(`${err}`))
         }
-
-        getUserName();
-
+        fetchUname()
+        
         return ()=>{
             setUserName("")
         }
-        
-    }, [userName])
+
+    }, [])
 
     const handleSubmit = async(event) => {
         event.preventDefault();

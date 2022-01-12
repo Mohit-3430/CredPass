@@ -10,36 +10,20 @@ const HomeVault = () => {
     const [sites, setSites] = useState([])  
     const navigate = useNavigate();
 
-    const getUserName = () =>{
-        const user = localStorage.getItem("token");
-        if(user){
-            let userInfo = window.atob(user.split('.')[1]).split(':')[1].split(',')[0]
-            userInfo = userInfo.replace(/"/g,"");
-            setUname(userInfo)
-        }
-        else {
-            setUname("Login to Get Details")
-        }
-    }
-
     useEffect(() => {
-        getUserName();
-
+        
         const fetchSites = ()=>{
             axios.get(`http://localhost:5000/api/vault-data/`, {
             headers : {
                 "Authorization" : localStorage.getItem("token")
-            },
-            params : {
-                uid : uname
             }
             }).then(res =>{
                     setSites(res.data.sites)
+                    setUname(res.data.user)
             }).catch(err =>console.log(`${err}`))
         }
         fetchSites()
-
-    },[uname])
+    },[])
 
     const config = {
         headers : {
@@ -89,8 +73,8 @@ const HomeVault = () => {
 
     return (
         <>
-            <h1 id="welcome__message">Welcome 👋, {uname} </h1>
-            {sites ? 
+            <h1 id="message">Welcome 👋, {uname} </h1>
+            {sites.length> 0 ?
             <>
             <p id='ref'><u>Your Vault:</u>
                 <i className="fas fa-plus plus" onClick={()=>navigate('/vault-create')}></i>
@@ -101,7 +85,11 @@ const HomeVault = () => {
             ))}  
             </main>
             </>
-            : <p>No Sites, Add them now</p>
+            : 
+            <>  
+                <p id="message" style={{display:"inline"}}>There is no data to display, Add now</p>
+                <i className="fas fa-plus plus-new" onClick={()=>navigate('/vault-create')}></i>
+            </>
             }
         </>
     )

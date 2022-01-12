@@ -36,11 +36,11 @@ export const VaultCreateIndex = (req, res)=>{
 
 // GET api/vault-data
 export const VaultSiteData = async (req, res) =>{
-    const uid = req.query.uid;
+    
     try {
-        const sites = await Site.find({user : uid}).lean();
+        const sites = await Site.find({user : req.user.uname}).lean();
         // console.log(sites)
-        res.status(201).json({success:true, sites: sites})
+        res.status(201).json({success:true, sites: sites, user:req.user.uname})
     } catch (err) {
         res.status(404).json({success:false, msg:"An error Occured"})
     } 
