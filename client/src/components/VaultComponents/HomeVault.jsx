@@ -67,8 +67,7 @@ const HomeVault = () => {
             } catch (error) {
                 console.log(error);   
             }
-        }            
-           
+        }                 
     }
 
     return (
