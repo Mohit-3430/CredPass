@@ -1,16 +1,87 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+.modal__container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:white;
+    border: .10rem solid black;
+    z-index: 1;
+    transition: all 0.2s ease;
 }
 
-.form__container {
-    background-color: white;
-    z-index: 1000;
-}
 .close {
+    color: red;
+    padding-top: .15rem;
+    padding-right: .15rem;
+    font: bold;
+    font-size: 1.25rem;
     float: right;
 }
 .close:hover {
     cursor: pointer;
+}
+
+.modal__container--title{
+    text-align: center;
+    padding-top: 1rem;
+    padding-left: .15rem;
+    font-size: 1.5rem;
+    text-decoration: underline;
+}
+
+.modal__container--form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 3.2rem;
+}
+
+.modal__container--form label {
+    font-weight: bold;
+    display: inline-block;
+    margin: .25rem 0rem;
+}
+/* INPUTS */
+
+.modal__container--form input {
+    margin-bottom: .5rem;
+    border: none;
+    border-bottom: .15rem black solid;
+}
+
+/* BUTTONS */
+.modal__container--form-buttons{
+    margin-top: .75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.modal__container--form-buttons button{
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.cancel__buttons {
+    margin: 1rem 0rem;
+    background-color: red;
+    padding: .25rem 1rem;
+}
+.cancel__buttons:hover{
+    background-color: white;
+    color: red;
+    border: 0.01rem red;
+    cursor: pointer;
+}
+
+.change__buttons {
+    padding: .25rem 1rem;
+    background-color: rgb(8, 167, 8);
+}
+.change__buttons:hover {
+    cursor: pointer;
+    color: rgb(8, 167, 8);
+    border: .01rem rgb(8, 167, 8);
+    background-color: white
 }

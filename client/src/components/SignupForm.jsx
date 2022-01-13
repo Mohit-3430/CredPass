@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import "../styles/AuthForms.css"
 import axios from 'axios';
+import HomeNavbar from './HomeNavbar';
 
 const SignupForm = () => {
     
@@ -25,7 +26,6 @@ const SignupForm = () => {
             
         }
         else{
-
             setMessage("")
             const config = {
                 header : {
@@ -34,7 +34,6 @@ const SignupForm = () => {
             }
 
             try {
-                
                 const data = await axios.post("http://localhost:5000/api/user/register", {emailId, password, uname, againPassword}, config)
                 console.log(data);
                 navigate('/login')
@@ -47,6 +46,7 @@ const SignupForm = () => {
 
     return (
         <>
+        <HomeNavbar />
             <section className='form'>
                 <h1 id='form__heading'>Register</h1>
                 <form onSubmit={handleSubmit}>

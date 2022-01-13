@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState} from "react"
 import axios from "axios"
 import '../../styles/HomeVault.css'
 import Record from "./Record"
+import VaultNavbar from "./VaultNavbar"
+import EditModal from "./EditModal"
 import { useNavigate } from "react-router-dom"
 
 const HomeVault = () => {
 
     const [uname, setUname] = useState("")
     const [sites, setSites] = useState([])  
+    const [modal, setModal] = useState(false);
+    const [siteModal, setSiteModal] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -70,8 +74,13 @@ const HomeVault = () => {
         }                 
     }
 
+    if(modal)document.body.style.backgroundColor="gray";
+    else document.body.style.backgroundColor="white";
+
     return (
         <>
+        <section className='vault__dashboard'>
+        <VaultNavbar />
             <h1 id="message">Welcome 👋, {uname} </h1>
             {sites.length> 0 ?
             <>
@@ -80,9 +89,10 @@ const HomeVault = () => {
             </p>
             <main className="vault">
             {sites.map(site => (
-              <Record site={site} sites={sites} setSites={setSites} key={site._id} decryptPassword={decryptPassword}/>
-            ))}  
+              <Record site={site}  sites={sites} setSites={setSites} setModal={setModal} key={site._id} decryptPassword={decryptPassword} setSiteModal={setSiteModal}/>
+              ))}  
             </main>
+            
             </>
             : 
             <>  
@@ -90,6 +100,8 @@ const HomeVault = () => {
                 <i className="fas fa-plus plus-new" onClick={()=>navigate('/vault-create')}></i>
             </>
             }
+        </section>
+        {modal && <EditModal siteModal={siteModal} modal={modal} sites={sites} setModal={setModal} setSites={setSites} close={()=>setModal(false)}/>}
         </>
     )
 }

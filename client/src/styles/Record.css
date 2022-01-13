@@ -1,0 +1,68 @@
+.vault__contents{
+    font-size: 1.123rem;
+    border: 0.25rem solid black;
+    width:30vw;
+    padding: 1rem;
+}
+
+.vault__contents--edit-icons{
+    float: right;
+}
+
+.vault__contents--edit-icons i:hover {
+    cursor: pointer;
+    color: white;
+}
+
+.fa-trash{
+    padding: .25rem;
+    color: red;
+}
+.fa-trash:hover{
+    background-color: red;
+}
+
+.fa-edit{
+    padding: .25rem;
+    color: rgb(14, 185, 14);
+}
+.fa-edit:hover{
+    background-color: rgb(14, 185, 14);
+}
+
+.plus{
+    background-color: black;
+    padding: .5rem;
+    color: white;
+    font-size: 1rem;
+    float: right;
+}
+
+.plus:hover{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.toggle{
+    background-color: transparent;
+    border: none;
+}
+.toggle:hover{
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width:800px){
+    .vault__contents {
+        width: 40vw;
+        margin: .5rem;
+    }  
+}
+
+@media only screen and (max-width:600px){
+    .vault__contents {
+        width: 80vw;
+        margin: .5rem;
+    }  
+}

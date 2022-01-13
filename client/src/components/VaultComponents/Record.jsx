@@ -1,15 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import '../../styles/HomeVault.css'
+import '../../styles/Record.css'
 
 import React from 'react'
-import EditModal from "./EditModal";
 
-const Record = ({site, sites, setSites, decryptPassword}) => {
+const Record = ({site, sites, setSites, setModal, decryptPassword, setSiteModal}) => {
 
     const [eye, setEye] = useState("fas fa-eye")
     const [status, setStatus] = useState(1) // hidden-1, show-0
-    const [modal, setModal] = useState(false);
 
     const changeEye = ()=>{
         if (eye==="fas fa-eye") {
@@ -45,11 +43,16 @@ const Record = ({site, sites, setSites, decryptPassword}) => {
         }
     }
 
+    const editStuff = (site)=>{
+        setModal(true);
+        setSiteModal(site)
+    }
+
     return (
         <>
         <section className="vault__contents">
             <div className="vault__contents--edit-icons"><i onClick={()=>removeRecord(site._id)} className="fas fa-trash"></i>
-                <i onClick={()=>setModal(true)} className="fas fa-edit"></i>
+                <i onClick={()=>editStuff(site)} className="fas fa-edit"></i>
             </div>
             <p><b>Site Name: </b>{site.siteName}</p>
             <p><b>User Name: </b>{site.uname}</p>
@@ -60,7 +63,6 @@ const Record = ({site, sites, setSites, decryptPassword}) => {
                 </p>
             </div>
         </section>
-        {modal && <EditModal site={site} sites={sites} setModal={setModal} setSites={setSites}/>}
         </>
     )
 }

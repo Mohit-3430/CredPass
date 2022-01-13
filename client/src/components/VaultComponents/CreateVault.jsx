@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import VaultNavbar from "./VaultNavbar"
 import '../../styles/AuthForms.css'
 
 
@@ -64,7 +65,8 @@ const CreateVault = () => {
     }
 
     return (
-        <>
+        <>  
+            <VaultNavbar />
             <section className='form'>
                 <h1 id='form__heading'>Vault Create</h1>
                 <form onSubmit={handleSubmit}>
@@ -102,4 +104,4 @@ const CreateVault = () => {
     )
 }
 
-export default CreateVault
+export default CreateVault;

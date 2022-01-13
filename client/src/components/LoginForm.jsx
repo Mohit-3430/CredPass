@@ -2,6 +2,7 @@ import axios from 'axios'
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/AuthForms.css'
+import HomeNavbar from './HomeNavbar';
 
 const LoginForm = () => {
 
@@ -40,6 +41,7 @@ const LoginForm = () => {
 
     return (
         <>
+        <HomeNavbar/>
             <section className='form'>
                 <h1 id='form__heading'>LogIn</h1>
                 <form onSubmit={handleSubmit}>

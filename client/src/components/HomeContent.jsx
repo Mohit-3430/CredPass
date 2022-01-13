@@ -1,7 +1,9 @@
+import HomeNavbar from "./HomeNavbar";
 
 const HomeContent = () =>{
     return (
         <>
+        <HomeNavbar/>
             <section className='home'>
                 <main className='home__intro'>
                     <h1>Welcome</h1>
