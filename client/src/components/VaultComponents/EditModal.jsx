@@ -1,7 +1,9 @@
-import React, {useState, useEffect,useCallback} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios";
+import ReactModal from 'react-modal';
 import "../../styles/EditModalStyle.css";
 
+ReactModal.setAppElement('#root')
 const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
 
     const [siteName, setSiteName] = useState(siteModal.siteName);
@@ -25,23 +27,6 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
     }   
     decryptPassword();
     }, [siteModal.password])
-    
-    const keyPress = useCallback(
-    e => {
-        if (e.key === 'Escape' && modal) {
-        setModal(false);
-        }
-    },
-    [setModal, modal]
-    );
-
-    useEffect(
-    () => {
-        document.addEventListener('keydown', keyPress);
-        return () => document.removeEventListener('keydown', keyPress);
-    },
-    [keyPress]
-    );
     
     const modalSubmit = async(e)=>{
         e.preventDefault();
@@ -70,8 +55,19 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
 
     return(
         <>
-        <div onClick={()=> close()}>  
-        <section className={`modal__container ${modal}`} onClick={e=> e.stopPropagation()}>
+        <ReactModal isOpen={modal} onRequestClose={()=>setModal(false)} shouldCloseOnOverlayClick={()=>setModal(false)}
+            style={{
+                content:{
+                    position : "static",
+                    inset : "0px",
+                    border: "none",
+                    background : "none",
+                    visibility : "none",
+                },
+                overlay :{backgroundColor : "rgb(184 184 184 / 75%)"}
+            }}   
+            >
+        <section className='modal__container'>
             <i onClick={()=>setModal(false)} className='fas fa-times close'></i>
             <h3 className='modal__container--title'>Edit</h3>
             <form onSubmit={modalSubmit} className='modal__container--form'>
@@ -86,8 +82,8 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
                     <button onClick={()=>setModal(false)} className='cancel__buttons'>Cancel</button>
                 </div>
             </form>  
-        </section> 
-        </div>
+        </section>
+        </ReactModal>
         </>
     )
 }

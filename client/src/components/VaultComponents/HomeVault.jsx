@@ -74,9 +74,6 @@ const HomeVault = () => {
         }                 
     }
 
-    if(modal)document.body.style.backgroundColor="gray";
-    else document.body.style.backgroundColor="white";
-
     return (
         <>
         <section className='vault__dashboard'>

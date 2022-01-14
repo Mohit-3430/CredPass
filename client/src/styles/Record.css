@@ -3,6 +3,7 @@
     border: 0.25rem solid black;
     width:30vw;
     padding: 1rem;
+    border-radius: 2rem;
 }
 
 .vault__contents--edit-icons{
