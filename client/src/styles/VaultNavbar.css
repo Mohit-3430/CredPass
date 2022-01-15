@@ -12,7 +12,7 @@ body {
     list-style: none;
 }
 
-.nav__links a{
+a{
     color: white;
     text-decoration: none;
     font-weight: 700;

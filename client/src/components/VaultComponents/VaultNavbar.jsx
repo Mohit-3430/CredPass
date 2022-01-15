@@ -22,7 +22,7 @@ const Navbar = () => {
         <>  
         <nav className="nav">
             <div className="nav__brand">
-                PVA
+                <Link to='/vault-home'>PVA</Link>
                 <i onClick={()=>toggleNav()} className={`fas ${bars}`}></i>
             </div>
             <div className={`nav__links ${showNav}`}>

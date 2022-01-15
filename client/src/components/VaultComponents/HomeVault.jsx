@@ -29,51 +29,6 @@ const HomeVault = () => {
         fetchSites()
     },[])
 
-    const config = {
-        headers : {
-            "Authorization" : localStorage.getItem("token")
-        }
-    }
-
-    const decryptPassword = async(siteObj) => {
-        
-        if (siteObj.status ===1) {
-            // console.log(siteObj.password);
-            try {
-                const res = await axios.post(`http://localhost:5000/api/vault-decrypt-password/`,{siteObj}, config)
-                siteObj.password = res.data;
-            setSites(sites.map((site)=>{
-                return site._id === siteObj._id ? 
-                {
-                    _id : site._id,
-                    siteName : site.siteName,
-                    uname : site.uname,
-                    password : res.data
-                } : site
-            }))
-            } catch (err) {
-                console.log(err)
-            }
-        }       
-        else if(siteObj.status ===0)
-        {
-            try {
-                const res = await axios.post(`http://localhost:5000/api/vault-encrypt-password/`,{siteObj}, config)
-                setSites(sites.map((site)=>{
-                return site._id === siteObj._id ? 
-                {
-                    _id : site._id,
-                    siteName : site.siteName,
-                    uname : site.uname,
-                    password : res.data,
-                } : site
-            }))   
-            } catch (error) {
-                console.log(error);   
-            }
-        }                 
-    }
-
     return (
         <>
         <section className='vault__dashboard'>
@@ -86,15 +41,16 @@ const HomeVault = () => {
             </p>
             <main className="vault">
             {sites.map(site => (
-              <Record site={site}  sites={sites} setSites={setSites} setModal={setModal} key={site._id} decryptPassword={decryptPassword} setSiteModal={setSiteModal}/>
+              <Record site={site}  sites={sites} setSites={setSites} setModal={setModal} key={site._id} setSiteModal={setSiteModal}/>
               ))}  
             </main>
             
             </>
             : 
-            <>  
+            <>  <div className="none">
                 <p id="message" style={{display:"inline"}}>There is no data to display, Add now</p>
                 <i className="fas fa-plus plus-new" onClick={()=>navigate('/vault-create')}></i>
+                </div>
             </>
             }
         </section>

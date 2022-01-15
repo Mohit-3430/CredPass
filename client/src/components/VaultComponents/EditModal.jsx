@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from "axios";
 import ReactModal from 'react-modal';
 import "../../styles/EditModalStyle.css";
@@ -16,18 +16,6 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
             "Authorization" : localStorage.getItem("token")
         }
     }
-    useEffect(() => {
-        
-        const decryptPassword = async()=>{
-        try{
-            const {data} = await axios.post('http://localhost:5000/api/vault-decrypt-password', {siteObj:{password:siteModal.password}}, { headers : {"Authorization" : localStorage.getItem("token")}})
-            setPassword(data)
-        }catch(err){
-            console.log(err);
-        }
-    }   
-    decryptPassword();
-    }, [siteModal.password])
     
     const modalSubmit = async(e)=>{
         e.preventDefault();
