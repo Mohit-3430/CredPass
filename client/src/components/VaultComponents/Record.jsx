@@ -42,8 +42,8 @@ const Record = ({site, sites, setSites, setModal, setSiteModal}) => {
             }))
         }
         decryptPassword(site)
-
-    }, [site, sites, setSites])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const removeRecord = async(siteId)=>{
         try{
