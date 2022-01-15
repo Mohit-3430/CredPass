@@ -28,7 +28,7 @@ const Navbar = () => {
             <div className={`nav__links ${showNav}`}>
                 <ul>
                     <li onClick={()=>toggleNav()}><Link to='/vault-home'>Home</Link></li>
-                    <li onClick={()=>toggleNav()}><Link to='/vault-create'>Create</Link></li>
+                    <li onClick={()=>toggleNav()}><Link to='/vault-create'>Add</Link></li>
                     <li onClick={()=>toggleNav()}><Link to='/Logout'>Logout</Link></li>
                 </ul>  
             </div>

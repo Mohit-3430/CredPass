@@ -58,7 +58,7 @@ const Record = ({site, sites, setSites, setModal, decryptPassword, setSiteModal}
             <p><b>User Name: </b>{site.uname}</p>
             <div className="vault__content--password-field">
                 <p style={{display:"inline"}}><b>Password:</b></p> <button className="toggle" onClick={()=>runThese({password:site.password, _id:site._id, status:status})}>
-                    <i className={`${eye} eye`}></i></button>
+                    <i className={`${eye}`}></i></button>
                 <p> {status  ? "*********  " : site.password}  
                 </p>
             </div>

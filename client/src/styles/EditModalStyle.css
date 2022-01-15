@@ -5,12 +5,14 @@
     transform: translate(-50%, -50%);
     background-color:white;
     border: .10rem solid black;
-    z-index: 1;
     transition: all 0.2s ease;
     padding: 1rem;
-    border-radius: 2.15rem;
+    border-radius: 1.15rem;
 }
 
+form {
+    width : 100%
+}
 .close {
     color: red;
     padding-top: .15rem;
@@ -47,6 +49,7 @@
 .modal__container--form input {
     margin-bottom: .5rem;
     border: none;
+    outline: none;
     border-bottom: .15rem black solid;
 }
 
@@ -90,12 +93,16 @@
     background-color: red;
     cursor: pointer;
 }
+.eye:hover{
+    cursor: pointer;
+}
 
 @media screen and (max-width:450px) {
     .modal__container{
         padding: 0;
         border-radius: .15rem;
         width: 75%;
+        border-radius: 1rem;
     }
     .modal__container--form {
         padding: 1.25rem;

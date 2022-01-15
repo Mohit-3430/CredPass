@@ -14,11 +14,9 @@ const Logout = () => {
 
     useEffect(() => {
         removeData();
-
         setTimeout(()=>{
-            
             navigate('/')
-        },2000)
+        },800)
         
     }, [navigate])
     

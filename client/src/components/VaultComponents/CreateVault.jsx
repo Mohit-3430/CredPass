@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import VaultNavbar from "./VaultNavbar"
 import '../../styles/AuthForms.css'
 
-
 const CreateVault = () => {
 
     const [siteName, setSiteName] = useState("")
@@ -12,6 +11,7 @@ const CreateVault = () => {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const [userName, setUserName] = useState("")
+    const [eye, setEye] = useState("fa-eye")
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -60,45 +60,55 @@ const CreateVault = () => {
             setTimeout(()=>{
                 navigate('/Logout')
             }, 1500)
+        }       
+    }
+
+    const togglePassword= ()=>{
+        const pswd = document.getElementById('pswd')
+        if(eye==='fa-eye' && pswd.type==="password") {
+            setEye('fa-eye-slash');
+            pswd.type="text"
         }
-            
+        else {
+            pswd.type="password"
+            setEye('fa-eye');
+        }
     }
 
     return (
         <>  
             <VaultNavbar />
-            <section className='form'>
-                <h1 id='form__heading'>Vault Create</h1>
+            <section className='form__container'>
+            <div className="form__wrapper create-vault">
+                <h1 className='form__heading'>Add Site</h1>
                 <form onSubmit={handleSubmit}>
-                    <label>Enter Site Name:</label>
-                    <br/>
+                    <label>Site Name:</label>
                     <input type='text'
                         value = {siteName}
-                        required
+                        required autoFocus
+                        placeholder='Enter site name or URL'
                         onChange={(e)=> setSiteName(e.target.value)}
                          />
-                    <br />
-                    <label>Enter User Name:</label>
-                    <br/>
+                    <label>User Name:</label>
                     <input type='text'
                         value = {uname}
-                        required
+                        required placeholder='Enter User Name'
                         onChange={(e)=> setUname(e.target.value)}
                          />
-                    <br />
-                    <label>Enter Password:</label>
-                    <br />
+                    <label>Password:</label>
                     <input type='password' 
                         value = {password}
-                        required
+                        required id='pswd'
+                        placeholder='Enter Password'
                         onChange={(e)=> setPassword(e.target.value)}
                         />
-                    <br />
-                    <div id="form__submit">
-                    <input id="SubmitButton" type="submit" />
+                        <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                    <div className="form__submit">
+                    <button type="submit" className="submit-button">Create</button>
                     </div>
-                    {message && <span id='response'>{message}</span>}
+                    {message && <span className='response'>{message}</span>}
                 </form>
+                </div>
             </section>
         </>
     )

@@ -9,6 +9,7 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
     const [siteName, setSiteName] = useState(siteModal.siteName);
     const [uname, setUname] = useState(siteModal.uname);
     const [password, setPassword] = useState(siteModal.password);
+    const [eye, setEye] = useState("fa-eye")
 
     const config = {
         headers : {
@@ -53,9 +54,21 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
         }
     }
 
+    const togglePassword= ()=>{
+        const pswd = document.getElementById('pswd')
+        if(eye==='fa-eye' && pswd.type==="password") {
+            setEye('fa-eye-slash');
+            pswd.type="text"
+        }
+        else {
+            pswd.type="password"
+            setEye('fa-eye');
+        }
+    }
+
     return(
         <>
-        <ReactModal isOpen={modal} onRequestClose={()=>setModal(false)} shouldCloseOnOverlayClick={()=>setModal(false)}
+        <ReactModal isOpen={modal} onRequestClose={()=>setModal(false)} shouldCloseOnOverlayClick={true}
             style={{
                 content:{
                     position : "static",
@@ -76,7 +89,10 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
                 <label>User Name:</label>
                 <input type="text" value={uname} onChange={(e)=> setUname(e.target.value)}/>
                 <label>New Password:</label>
-                <input type="text" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+                <div className="pass">
+                    <input type="password" id='pswd' value={password} onChange={(e)=> setPassword(e.target.value)}/>
+                    <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                </div>
                 <div className='modal__container--form-buttons'>
                     <button type="submit" className='change__buttons'>Change</button>
                     <button onClick={()=>setModal(false)} className='cancel__buttons'>Cancel</button>

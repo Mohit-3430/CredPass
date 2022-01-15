@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {useState} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/AuthForms.css'
 import HomeNavbar from './HomeNavbar';
 
@@ -9,6 +9,7 @@ const LoginForm = () => {
     const [emailId, setEmailId] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [eye, setEye] = useState("fa-eye")
     const navigate = useNavigate();
 
     const handleSubmit = async(event) => {
@@ -39,34 +40,49 @@ const LoginForm = () => {
             
     }
 
+    const togglePassword= ()=>{
+        const pswd = document.getElementById('pswd')
+        if(eye==='fa-eye' && pswd.type==="password") {
+            setEye('fa-eye-slash');
+            pswd.type="text"
+        }
+        else {
+            pswd.type="password"
+            setEye('fa-eye');
+        }
+    }
+
     return (
         <>
         <HomeNavbar/>
-            <section className='form'>
-                <h1 id='form__heading'>LogIn</h1>
+            <section className='form__container'>
+                <div className="form__wrapper login">
+                <h1 className='form__heading'>Sign In</h1><hr/>
                 <form onSubmit={handleSubmit}>
-                    <label>Enter Email:</label>
-                    <br/>
+                    <label>Email:</label>
                     <input type='email'
                         value = {emailId}
                         required
-                        autoFocus
+                        autoFocus placeholder='Enter Email'
                         onChange={(e)=> setEmailId(e.target.value)}
                          />
-                    <br />
-                    <label>Enter Password:</label>
-                    <br />
-                    <input type='password' 
-                        value = {password}
-                        required
-                        onChange={(e)=> setPassword(e.target.value)}
-                        />
-                    <br />
-                    <div id="form__submit">
-                    <input type="submit" />
+                    <label>Password:</label>
+                        <input type='password' 
+                            value = {password} id='pswd'
+                            required placeholder='Enter Password'
+                            onChange={(e)=> setPassword(e.target.value)}
+                            />
+                        <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                    <div className="form__submit">
+                    <button type="submit" className='submit-button'>Log In</button>
                     </div>
-                    {message && <div id='response'>{message}</div>}
+                    {message && <div className='response'>{message}</div>}
                 </form>
+                    <div className="dialogs">
+                        <p><Link to='#'>Forgot Password??</Link></p>
+                        <p><Link to='/signup'>New here, Register</Link></p>
+                    </div>
+                </div>
             </section>
         </>
     )

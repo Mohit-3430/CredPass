@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import "../styles/AuthForms.css"
 import axios from 'axios';
 import HomeNavbar from './HomeNavbar';
@@ -11,6 +11,8 @@ const SignupForm = () => {
     const [password, setPassword] = useState("");
     const [againPassword, setAgainPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [eye, setEye] = useState("fa-eye")
+    const [ceye, setcEye] = useState("fa-eye")
 
     const navigate = useNavigate();
 
@@ -44,49 +46,76 @@ const SignupForm = () => {
         }   
     }
 
+    const togglePassword= ()=>{
+        const pswd = document.getElementById('pswd')
+        if(eye==='fa-eye' && pswd.type==="password") {
+            setEye('fa-eye-slash');
+            pswd.type="text"
+        }
+        else {
+            pswd.type="password"
+            setEye('fa-eye');
+        }
+    }
+
+    const togglecPassword =()=>{
+        const cpswd = document.getElementById('cpswd')
+        if(eye==='fa-eye' && cpswd.type==="password") {
+            setcEye('fa-eye-slash');
+            cpswd.type="text"
+        }
+        else {
+            cpswd.type="password"
+            setcEye('fa-eye');
+        }
+    }
+
     return (
         <>
         <HomeNavbar />
-            <section className='form'>
-                <h1 id='form__heading'>Register</h1>
+            <section className='form__container'>
+            <div className="form__wrapper register">
+                <h1 className='form__heading'>Register</h1>
                 <form onSubmit={handleSubmit}>
-                    <label>Enter Email:</label>
-                    <br/>
+                    <label>Email:</label>
                     <input type='email'
                         value = {emailId}
-                        required
+                        required autoFocus
+                        placeholder='Enter Valid Email ID'
                         onChange={(e)=> setEmailId(e.target.value)}
                          />
-                    <br />
-                    <label>Enter userName:</label>
-                    <br/>
+                    <label>User Name:</label>
                     <input type='text'
                         value = {uname}
                         required
+                        placeholder='Enter User Name'
                         onChange={(e)=> setUname(e.target.value)}
                          />
-                    <br />
-                    <label>Enter Password:</label>
-                    <br />
+                    <label>Password:</label>
                     <input type='password' 
                         value = {password}
-                        required
+                        required id='pswd'
+                        placeholder='Set a Password'
                         onChange={(e)=> setPassword(e.target.value)}
                         />
-                    <br />
-                    <label>Enter Password Again:</label>
-                    <br/>
+                    <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                    <label>Confirm Password:</label>
                     <input type='password' 
                         value = {againPassword}
-                        required
+                        required id='cpswd'
+                        placeholder='Confirm Password'
                         onChange={(e)=> setAgainPassword(e.target.value)}
                         />
-                    <br />
-                    {message && <p id ="errmsg">{message}</p>}
-                    <div id="form__submit">
-                    <button>Submit</button>
+                    <i className={`fas ${ceye} eye`} onClick={()=>togglecPassword()}></i>
+                    {message && <p className="errmsg">{message}</p>}
+                    <div className="form__submit">
+                    <button type='submit' className='submit-button'>Register</button>
                     </div>
                 </form>
+                    <div className="dialogs">
+                        <p>Existing User? <Link to='/login'>Login</Link></p>
+                    </div>
+                </div>
             </section>
         </>
     )
