@@ -6,12 +6,6 @@ body {
     justify-content: space-between;
     background-image: linear-gradient(to left , rgb(13, 10, 199), rgb(158, 158, 21));
 }
-
-.nav__links a{
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-}
 .nav__links li{
     margin: 0.5rem 0.75rem;
     padding: 0.5rem 0.3rem;

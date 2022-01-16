@@ -8,15 +8,29 @@ body {
 }
 
 .nav ul{
+    position: relative;
     display: flex;
     list-style: none;
 }
 
-a{
+.extra__menu ul{
+    position: absolute;
+    right: 4%;
+    background-color: rgb(13, 10, 199);
+}
+.user__name{
+    border-bottom: .05rem solid;
+}
+a,li{
     color: white;
     text-decoration: none;
     font-weight: 700;
 }
+
+.nav__links li:hover{
+    cursor: pointer;
+}
+
 .nav__links li{
     margin: 0.5rem 0.75rem;
     padding: 0.5rem 0.3rem;
@@ -55,5 +69,13 @@ a{
     }
     .hide {
         display: none;
+    }
+    .extra__menu ul{
+        position: relative;
+        background-color: transparent;
+        right: 0%;
+    }
+    .user__name{
+        border: none;
     }
 }

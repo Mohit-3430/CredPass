@@ -2,10 +2,12 @@ import "../../styles/VaultNavbar.css"
 import {Link} from 'react-router-dom'
 import { useState } from "react"
 
-const Navbar = () => {
+const VaultNavbar = ({uname}) => {
 
     const [showNav, setShowNav] = useState("hide")
     const [bars, setBars] = useState("fa-bars")
+    const [extraMenu, setExtraMenu] = useState(false)
+    const [caret, setCaret] = useState("down")
 
     const toggleNav = ()=>{
         if(showNav==="hide"){
@@ -15,6 +17,16 @@ const Navbar = () => {
         else{
             setShowNav("hide");
             setBars("fa-bars")
+        }
+    }
+    const extraMenuToggle = ()=>{
+        if (extraMenu===true) {
+            setCaret("down");
+            setExtraMenu(false);
+        }
+        else{
+            setCaret("up");
+            setExtraMenu(true)
         }
     }
 
@@ -29,7 +41,20 @@ const Navbar = () => {
                 <ul>
                     <li onClick={()=>toggleNav()}><Link to='/vault-home'>Home</Link></li>
                     <li onClick={()=>toggleNav()}><Link to='/vault-create'>Add</Link></li>
-                    <li onClick={()=>toggleNav()}><Link to='/Logout'>Logout</Link></li>
+                    <div className="extra__menu">
+                    <li onClick={()=>extraMenuToggle()}>Dashboard <i className={`fas fa-caret-${caret}`}></i>
+                        {extraMenu && 
+                        <ul>
+                            <div className="toggle--extra__menu">
+                                <li className="user__name"><Link to='#'>@ {uname}</Link></li>
+                                <li><Link to='#'><i className="fas fa-user"></i> Profile</Link></li>
+                                <li><Link to='#'><i className="fas fa-cog"></i> Settings</Link></li>
+                                <li><Link to='/Logout'><i className="fas fa-sign-out-alt"></i> Logout</Link></li>
+                            </div>
+                        </ul>
+                        }
+                    </li>
+                    </div>
                 </ul>  
             </div>
         </nav>
@@ -37,4 +62,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar;
+export default VaultNavbar;

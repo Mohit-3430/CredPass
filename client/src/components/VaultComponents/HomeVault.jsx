@@ -29,10 +29,11 @@ const HomeVault = () => {
         fetchSites()
     },[])
 
+
     return (
         <>
         <section className='vault__dashboard'>
-        <VaultNavbar />
+        <VaultNavbar uname={uname}/>
             <h1 id="message">Welcome 👋, {uname} </h1>
             {sites.length> 0 ?
             <>
