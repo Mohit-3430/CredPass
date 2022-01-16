@@ -21,7 +21,7 @@ export const VaultCreate = async(req, res) =>{
     
     try {
         await site.save();
-        await Site.findOneAndUpdate({siteName: siteName}, { user : req.body.userName})
+        await Site.findOneAndUpdate({siteName: siteName}, { user : req.user.sub})
         res.status(200).json({sucess:true, msg : "Added"})
     }catch (err) {
         res.status(401).json({sucess:false, msg:"An error Ocurred!"})
@@ -38,9 +38,9 @@ export const VaultCreateIndex = (req, res)=>{
 export const VaultSiteData = async (req, res) =>{
     
     try {
-        const sites = await Site.find({user : req.user.uname}).lean();
+        const sites = await Site.find({user : req.user.sub}).lean();
         // console.log(sites)
-        res.status(201).json({success:true, sites: sites, user:req.user.uname})
+        res.status(200).json({success:true, sites: sites, user:req.user.sub})
     } catch (err) {
         res.status(404).json({success:false, msg:"An error Occured"})
     } 
