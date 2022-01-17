@@ -1,6 +1,7 @@
 import "../../styles/VaultNavbar.css"
 import {Link} from 'react-router-dom'
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 const VaultNavbar = ({uname}) => {
 
@@ -8,6 +9,21 @@ const VaultNavbar = ({uname}) => {
     const [bars, setBars] = useState("fa-bars")
     const [extraMenu, setExtraMenu] = useState(false)
     const [caret, setCaret] = useState("down")
+    const [superUser, setSuperUser] = useState("")
+
+    useEffect(() => {
+        
+        const fetchSuperUserName = ()=>{
+            axios.get(`http://localhost:5000/api/vault-data/`, {
+            headers : {
+                "Authorization" : localStorage.getItem("token")
+            }
+            }).then(res =>{
+                    setSuperUser(res.data.user)
+            }).catch(err =>console.log(`${err}`))
+        }
+        fetchSuperUserName()
+    },[])
 
     const toggleNav = ()=>{
         if(showNav==="hide"){
@@ -46,7 +62,7 @@ const VaultNavbar = ({uname}) => {
                         {extraMenu && 
                         <ul>
                             <div className="toggle--extra__menu">
-                                <li className="user__name"><Link to='#'>@ {uname}</Link></li>
+                                <li className="user__name"><Link to='#'>@ {superUser}</Link></li>
                                 <li><Link to='#'><i className="fas fa-user"></i> Profile</Link></li>
                                 <li><Link to='/settings'><i className="fas fa-cog"></i> Settings</Link></li>
                                 <li><Link to='/logout'><i className="fas fa-sign-out-alt"></i> Logout</Link></li>

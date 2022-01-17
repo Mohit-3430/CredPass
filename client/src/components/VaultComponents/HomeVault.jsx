@@ -33,7 +33,7 @@ const HomeVault = () => {
     return (
         <>
         <section className='vault__dashboard'>
-        <VaultNavbar uname={uname}/>
+        <VaultNavbar/>
             <h1 id="message">Welcome 👋, {uname} </h1>
             {sites.length> 0 ?
             <>

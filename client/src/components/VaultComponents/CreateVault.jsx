@@ -77,7 +77,7 @@ const CreateVault = () => {
 
     return (
         <>  
-            <VaultNavbar uname={userName}/>
+            <VaultNavbar/>
             <section className='form__container'>
             <div className="form__wrapper create-vault">
                 <h1 className='form__heading'>Add Site</h1>
