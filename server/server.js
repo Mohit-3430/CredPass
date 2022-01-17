@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose"
 import dotenv from "dotenv";
-import jsonwebtoken from "jsonwebtoken"
+import {authentication} from "./middlewares/Authentication.js"
 
 dotenv.config();
 
@@ -24,18 +24,6 @@ import VaultRoutes from "./routes/VaultRoutes.js"
 app.get('/', (req, res) => {
   res.send("Hello From Server!!")
 })
-
-const authentication = (req, res, next)=>{
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]
-  if(token==null) return res.sendStatus(401)
-  
-  jsonwebtoken.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user)=>{
-    if(err) return res.sendStatus(403)
-    req.user=user
-    next();
-  })
-}
 
 // ====User Routes====
 app.use('/api/user',UserAuthRoutes)
