@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true,
         unique : true,
+    },
+    two_fa_status :{
+        type : Boolean,
+        default : false
     }
     
 }, { timestamps: true });
