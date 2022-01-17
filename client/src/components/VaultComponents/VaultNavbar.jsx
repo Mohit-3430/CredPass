@@ -48,8 +48,8 @@ const VaultNavbar = ({uname}) => {
                             <div className="toggle--extra__menu">
                                 <li className="user__name"><Link to='#'>@ {uname}</Link></li>
                                 <li><Link to='#'><i className="fas fa-user"></i> Profile</Link></li>
-                                <li><Link to='#'><i className="fas fa-cog"></i> Settings</Link></li>
-                                <li><Link to='/Logout'><i className="fas fa-sign-out-alt"></i> Logout</Link></li>
+                                <li><Link to='/settings'><i className="fas fa-cog"></i> Settings</Link></li>
+                                <li><Link to='/logout'><i className="fas fa-sign-out-alt"></i> Logout</Link></li>
                             </div>
                         </ul>
                         }
