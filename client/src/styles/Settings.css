@@ -62,12 +62,40 @@
     font-weight: 600;
     border-radius: 0.25rem;
 }
+button:hover{
+    cursor: pointer;
+}
 
 /* Two-step-Login */
 .settings-section__header p{
     margin: 1rem 0;
 }
 .settings-section__header button{
-    float: right;
+    margin-top: 0.25rem;
     margin-right: 5rem;
+    border: none;
+    padding: 0.20rem;
+    background-color: rgba(47, 4, 117, 0.788);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.25rem;
+}
+.instructions {
+    padding: 1rem;
+    padding-bottom: 0;
+}
+.instructions li{
+    margin-left: 1rem;
+    list-style: lower-greek;
+    color: black;
+}
+.two-step-form{
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.two-fa-form-buttons button{
+    margin: 1rem;
 }

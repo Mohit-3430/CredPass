@@ -2,8 +2,25 @@ import VaultNavbar from "../VaultNavbar"
 import TwoStepLogin from "./TwoStepLogin"
 import "../../../styles/Settings.css"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import {useState,useEffect} from "react"
 
 const Settings2Fa = () => {
+    const [superUser, setSuperUser] = useState("")
+
+    useEffect(() => {
+        
+        const fetchSuperUserName = ()=>{
+            axios.get(`http://localhost:5000/api/vault-data/`, {
+            headers : {
+                "Authorization" : localStorage.getItem("token")
+            }
+            }).then(res =>{
+                    setSuperUser(res.data.user)
+            }).catch(err =>console.log(`${err}`))
+        }
+        fetchSuperUserName()
+    },[])
 
     return (
         <>
@@ -24,7 +41,7 @@ const Settings2Fa = () => {
             </div>
             </div>
             <section className="settings-section__container">
-                <TwoStepLogin />
+                <TwoStepLogin superUser={superUser}/>
             </section>
         </section>
         </>

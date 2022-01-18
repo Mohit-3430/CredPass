@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
     two_fa_status :{
         type : Boolean,
         default : false
+    },
+    qrCode : {
+        type: String,
+    },
+    base32:{
+        type: String
     }
     
 }, { timestamps: true });

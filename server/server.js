@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose"
 import dotenv from "dotenv";
-import {authentication} from "./middlewares/Authentication.js"
+import {authentication, toptCheck} from "./middlewares/Authentication.js"
 
 dotenv.config();
 
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/user',UserAuthRoutes)
 
 // ====Vault Routes ====
-app.use('/api',authentication, VaultRoutes)
+app.use('/api',authentication, toptCheck, VaultRoutes)
 
 app.listen(port, () =>{
   console.log(`Runnning on port ${port}`);

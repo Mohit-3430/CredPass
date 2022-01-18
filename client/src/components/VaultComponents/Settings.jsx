@@ -1,8 +1,6 @@
 import VaultNavbar from "./VaultNavbar"
 import "../../styles/Settings.css"
 import { Link } from "react-router-dom";
-// import TwoStepLogin from "./SettingsComponents/TwoStepLogin";
-// import IrreversibleStuff from "./SettingsComponents/IrreversibleStuff";
 
 const Settings = () => {
     return (
@@ -24,9 +22,6 @@ const Settings = () => {
             </div>
             </div>
             <section className="settings-section__container">
-                {/* <MyAccount /> */}
-                {/* <TwoStepLogin />
-                <IrreversibleStuff /> */}
             </section>
         </section>
         </>
