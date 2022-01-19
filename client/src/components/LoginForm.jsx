@@ -12,19 +12,23 @@ const LoginForm = () => {
     const [eye, setEye] = useState("fa-eye")
     const navigate = useNavigate();
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
+    const handleSubmit = async(e) => {
+        e.preventDefault();
         
         setMessage("")
         try {
-            const response = await axios.post("http://localhost:5000/api/user/login", {emailId, password})
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('expires', response.data.expiresIn);
+            const {data} = await axios.post("http://localhost:5000/api/user/login", {emailId, password})
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('expires', data.expiresIn);
 
-            if(response.status===200){
+            if(data.success===true && data.totpStatus===true){
+                navigate('/login-totp')
+            }
+            else if(data.success===true && data.totpStatus===false){
                 setMessage("")
                 navigate('/vault-home')
-            } else {
+            } 
+            else {
                 setMessage("User Not Found, Pls register");
                 setTimeout(()=>{
                     navigate('/regester')

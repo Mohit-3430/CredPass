@@ -11,6 +11,7 @@ import Settings from './components/VaultComponents/Settings';
 import SettingsMyAccount from './components/VaultComponents/SettingsComponents/SettingsMyAccount';
 import Settings2Fa from './components/VaultComponents/SettingsComponents/Settings2FA';
 import SettingsIrreversible from './components/VaultComponents/SettingsComponents/SettingsIrreversible';
+import Totp from './components/Totp';
 
 const App =() =>  {
   return (
@@ -18,8 +19,9 @@ const App =() =>  {
       <Router>
         <Routes>
           <Route path = '/' element = {<HomeContent />}/>
-          <Route path = '/login' element = {<LoginForm />}/>
           <Route path = '/signup' element = {<SignupForm />}/>
+          <Route path = '/login' element = {<LoginForm />}/>
+          <Route path = '/login-totp' element = {<Totp />}/>
           
           <Route path = '/vault-home' element = {<HomeVault/>} />
           <Route path = '/vault-create' element = {<CreateVault/>} />

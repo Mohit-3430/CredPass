@@ -40,26 +40,26 @@ export const LoginController = (req, res) => {
 export const LoginVerifyController = async (req, res, next) => {
 
     try {
-    const user = await User.findOne({ emailId: req.body.emailId })
-    
+        const user = await User.findOne({ emailId: req.body.emailId })
         if (!user) {
-                return res.status(401).json({ success: false, msg: "could not find user" });
-            }
+            return res.status(401).json({ success: false, msg: "could not find user" });
+        }
 
         const isValid =  await bcrypt.compare(req.body.password, user.password)
         
         if (isValid && user) {
             const tokenObject = issueJWT(user); //from utils
-            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires});
+            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus:user.two_fa_status});
         } else {
             res.status(401).json({ success: false, msg: "you entered the wrong password" });
         }
-
     }
     catch (err) {
         next(err);
         // res.status(404).json({sucess:false, msg : err.message})
     }
+
+    
 }
 
 // POST /api/user/only-password
