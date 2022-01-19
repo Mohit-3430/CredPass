@@ -84,9 +84,12 @@ button:hover{
     padding: 1rem;
     padding-bottom: 0;
 }
+.qrCode, .tCode{
+    text-align: center;
+}
 .instructions li{
     margin-left: 1rem;
-    list-style: lower-greek;
+    list-style: decimal;
     color: black;
 }
 .two-step-form{

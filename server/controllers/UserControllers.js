@@ -111,9 +111,9 @@ export const toptStatus = async(req, res)=>{
     try{
         const user = await User.findOne({uname : req.user.sub})
         if(user.two_fa_status===false){
-            res.send("Disabled")
+            res.status(200).json({msg : "Disabled"})
         }else {
-            res.send("Enaled")
+            res.status(200).json({msg :"Enabled", base32 : user.base32, qr : user.qrCode})
         }
     }catch(err){
         console.log(err)
@@ -122,7 +122,6 @@ export const toptStatus = async(req, res)=>{
 
 // POST /api/user/totp-verification
 export const toptVerification = async(req, res)=>{
-    // TODO: Modify Status of the user
     // TODO: res.type === enable and res.type===disable
     const {verified} = verifyTOTP(req.body.secret_32, req.body.code)
     if(verified===true){
@@ -131,3 +130,16 @@ export const toptVerification = async(req, res)=>{
     res.send(verified)
 }
 
+// PATCH /api/user/edit-user-info
+export const editUser = async (req, res)=>{
+    const updates = req.body;
+    const options = {new:true}
+
+    try{
+        const user = await User.findOneAndUpdate({uname:req.user.sub}, updates, options)
+        if(!user) throw err;
+        res.status(200).send(user);
+    }catch(err){
+        res.status(404).json({"success":false, "msg":"No Record Found"})
+    }
+}

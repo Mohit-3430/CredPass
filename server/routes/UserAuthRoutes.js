@@ -1,5 +1,5 @@
 import express from "express"
-import { LoginController, LoginVerifyController, SignupController, SignupAuthController,  aldreadySigninPasswordVerifier,toptStatus, toptShow, toptVerification} from "../controllers/UserControllers.js"
+import { LoginController, LoginVerifyController, SignupController, SignupAuthController,  aldreadySigninPasswordVerifier,toptStatus, toptShow, toptVerification, editUser} from "../controllers/UserControllers.js"
 import { authentication, toptCheck } from "../middlewares/authentication.js";
 
 const router = express.Router();
@@ -9,6 +9,8 @@ router.get('/register', SignupController)
 
 router.post('/register', SignupAuthController)
 router.post('/login', LoginVerifyController)
+
+router.patch('/edit-user-info',authentication,toptCheck, editUser)
 
 router.post('/only-password',authentication,toptCheck, aldreadySigninPasswordVerifier)
 router.get('/totp-status',authentication,toptCheck, toptStatus)

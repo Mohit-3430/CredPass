@@ -4,8 +4,11 @@ import ReactModal from "react-modal"
 
 ReactModal.setAppElement('#root')
 const TwoStepLogin = () => {
-    const [modal, setModal] = useState(false);
-    const [showQR, setShowQR] = useState(false)
+    // const [modal, setModal] = useState(false);
+    const [superModal, setSuperModal] = useState(false)
+    const [qrModal, setQrModal] = useState(false)
+
+    // const [showQR, setShowQR] = useState(false)
     
     const [code, setCode] = useState("")
     const [superPassword, setSuperPassword] = useState("");
@@ -16,15 +19,23 @@ const TwoStepLogin = () => {
     const [status, setStatus] = useState("")
 
     useEffect(() => {
+        // Fetches status(Enabled or Disabled); base32 & qrcode
         const getStatus = async()=>{
             try {
                 const {data} = await axios.get('http://localhost:5000/api/user/totp-status', {headers : {"Authorization" : localStorage.getItem("token")}});
-                setStatus(data)
+                if(data.msg==="Enabled"){
+                    setRes32Code(data.base32);
+                    setResQR(data.qr);
+                }
+                setStatus(data.msg)
             } catch (error) {
                 console.log(error)  
             }
         }
         getStatus();
+        return()=>{
+            setSuperPassword("")
+        }
     }, [])
 
     const config = {
@@ -34,23 +45,31 @@ const TwoStepLogin = () => {
     }
 
     const getQR = async ()=>{
-        try {
-            const {data} = await axios.get('http://localhost:5000/api/user/totp-show', config)
-            setRes32Code(data.code)
-            setResQR(data.scan)
-        } catch (error) {
-          console.log(error);
+        // fetches NEW base32 and qr image only if user two_fa_status ===false
+        if(status==="Disabled"){
+            try {
+                const {data} = await axios.get('http://localhost:5000/api/user/totp-show', config)
+                setRes32Code(data.code)
+                setResQR(data.scan)
+            } catch (error) {
+            console.log(error);
+            }
+        }
+        else {
+            // TODO : Fetch from DB
         }
     }
 
-    const modalSubmit= async(e)=>{
+    const superModalSubmit= async(e)=>{
+        // Verifies the super password
+        setSuperPassword("")
         e.preventDefault();
         try {
             const {data} = await axios.post('http://localhost:5000/api/user/only-password', {password:superPassword},{headers : {
             "Authorization" : localStorage.getItem("token")}
         });
             if(data.success===true){
-                setShowQR(true)
+                setQrModal(true)
                 getQR();
             }else console.log(false)
 
@@ -67,8 +86,10 @@ const TwoStepLogin = () => {
         });
             if(data===true){
                 setStatus("Enabled")
-                setModal(false)
-                setShowQR(false)
+                await axios.patch('http://localhost:5000/api/user/edit-user-info', {base32:res32Code, qrCode:resQR},{headers : {
+                    "Authorization" : localStorage.getItem("token")}});
+                setQrModal(false)
+                setSuperModal(false)
             }
             else{
                 console.log("Wrong Code, Check Again")
@@ -90,6 +111,14 @@ const TwoStepLogin = () => {
         }
     }
 
+    const disableTotp=async()=>{
+        await axios.patch('http://localhost:5000/api/user/edit-user-info', {two_fa_status:false, base32:"", qrCode:""},{headers : {"Authorization" : localStorage.getItem("token")}});
+        setStatus("Disabled")
+        setQrModal(false)
+        setSuperModal(false)
+        setSuperPassword("")
+    }
+
     return (
         <>
          <div className="settings-section" id="two-step-login">
@@ -98,9 +127,9 @@ const TwoStepLogin = () => {
                 <hr />
                 <p>This is an additional step to secure your account</p>
                 <p>Current Status:{status}</p>
-                <button onClick={()=>setModal(true)}>Manage</button><br/>
+                <button onClick={()=>setSuperModal(true)}>Manage</button><br/>
             </div>
-            <ReactModal isOpen={modal} onRequestClose={()=>setModal(false)} shouldCloseOnOverlayClick={true}
+            <ReactModal isOpen={superModal} onRequestClose={()=>setSuperModal(false)} shouldCloseOnOverlayClick={true}
             style={{
                 content:{
                     position : "static",
@@ -113,46 +142,69 @@ const TwoStepLogin = () => {
             }}   
             >
         <section className='modal__container'>
-            {showQR===false ? <>
-            <i onClick={()=>{setModal(false);setSuperPassword(false)}} className='fas fa-times close'></i>
+            <i onClick={()=>setSuperModal(false)} className='fas fa-times close'></i>
             <h3 className='modal__container--title'>Confirm Yourself:</h3>
-            <form onSubmit={modalSubmit} className='modal__container--form'>
+            <form onSubmit={superModalSubmit} className='modal__container--form'>
                 <label>Enter Super Password:</label>
                 <div>
-                <input type="password" id="pswd"value={superPassword} onChange={(e)=> setSuperPassword(e.target.value)}/>
+                <input type="password" id="pswd" required autoFocus value={superPassword} onChange={(e)=> setSuperPassword(e.target.value)}/>
                 <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
                 </div>
                 <div className='modal__container--form-buttons'>
                     <button className='change__buttons'>Proceed</button>
-                    <button onClick={()=>{setModal(false); setSuperPassword("")}} className='cancel__buttons'>Cancel</button>
+                    <button onClick={()=>setSuperModal(false)} className='cancel__buttons'>Cancel</button>
                 </div>
             </form>
-            </>: null}
-            {showQR===true ? <>
-                <i onClick={()=>{setModal(false);setSuperPassword(false)}} className='fas fa-times close'></i>
+            </section>
+            </ReactModal>
+            {/* NEW MODEL */}
+            <ReactModal isOpen={qrModal} onRequestClose={()=>setSuperModal(false)} shouldCloseOnOverlayClick={true}
+            style={{
+                content:{
+                    position : "static",
+                    inset : "0px",
+                    border: "none",
+                    background : "none",
+                    visibility : "none",
+                },
+                overlay :{backgroundColor : "rgb(184 184 184 / 75%)"}
+            }}   
+            >
+            <section className='modal__container'>
+                <i onClick={()=>{setQrModal(false);setSuperModal(false);setSuperPassword("")}} className='fas fa-times close'></i>
                 <h3 className='modal__container--title'>Two-Step Login</h3>
+                {status==="Disabled" ? 
                 <p>Follow the Steps to setup the process on your authenticator App</p>
+                : <p>Two step verification is <b style={{color:"green"}}>Enbaled</b>, If you wish to add another device Follow these steps to Set-up:</p>
+                }
                 <ul className='instructions'>
                     <li>Download the App on your device</li>
                     <div>
                     <li>Scan this QR code with the app</li>
-                    <center>
+                    <div className='qrCode'>
                         <img src={resQR} alt='QRCODE'></img>
-                        <p>OR</p>
-                        <p>{res32Code}</p>
-                    </center>
                     </div>
-                    <li>Now, After Scanning enter the 6-digit pin below</li>
+                    <div className='tCode'>
+                        OR Enter this code in App :
+                        <p>{res32Code}</p>
+                    </div>
+                    </div>
+                    {status==="Disabled" && <li>Now, enter the 6-digit code displayed in the app </li>}
                 </ul>
+            {status==="Disabled" ?
             <form onSubmit={submit2FA} className='two-step-form'>
                 <label>Enter 6-digit Code:</label>
-                <input type="number" required id="code" value={code} onChange={(e)=> setCode(e.target.value)}/>
+                <input type="number" required id="code" autoFocus value={code} onChange={(e)=> setCode(e.target.value)}/>
                 <div className='two-fa-form-buttons'>
                     <button className='change__buttons'>Enable</button>
-                    <button onClick={()=>{setShowQR(false);setModal(false);setSuperPassword("")}} className='cancel__buttons'>Close</button>
+                    <button onClick={()=>{setQrModal(false);setSuperModal(false);setSuperPassword("")}} className='cancel__buttons'>Close</button>
                 </div>
-            </form> </>
-            :null}
+            </form>
+            : <div className='two-fa-form-buttons'>
+                <button onClick={()=>disableTotp()} className='disable-buttons'>Disable</button>
+                <button onClick={()=>{setQrModal(false);setSuperModal(false);setSuperPassword("")}} className='cancel__buttons'>Close</button>
+            </div> 
+            }
         </section>  
             </ReactModal>
         </div>  
