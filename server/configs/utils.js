@@ -3,9 +3,8 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-export const issueJWT = (user) => {
-    const uname = user.uname;
-
+export const issueJWT = (uname) => {
+    
     const expiresIn = '1d';
     const payload = {
         sub: uname,

@@ -8,7 +8,7 @@ const Totp = () => {
 
     const [code, setCode] = useState("");
     const navigate = useNavigate();
-
+    
     const config = {
         headers : {
             "Authorization" : localStorage.getItem("token")
@@ -17,9 +17,11 @@ const Totp = () => {
     const handleSubmit = async(e)=>{
         e.preventDefault();
         try {
-            const {data} = await axios.get("http://localhost:5000/api/user/totp-status",config)
-            const response = await axios.post("http://localhost:5000/api/user/totp-verification",{secret_32 : data.base32, code : code}, config)
-            if(response.data===true){
+            const {data} = await axios.post("http://localhost:5000/api/user/totp-status-noauth", {superUser : localStorage.getItem('user')})
+            const response = await axios.post("http://localhost:5000/api/user/totp-verification-noauth",{secret_32 : data.base32, code : code, user : localStorage.getItem('user')}, config)
+            if(response.data.success===true){
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('expires', response.data.expiresIn);
                 navigate('/vault-home')
             }
         } catch (err) {
@@ -39,6 +41,7 @@ const Totp = () => {
                     <label>Enter 6 digit pin:</label>
                         <input type='number' 
                             value = {code}
+                            max={999999}
                             required 
                             placeholder='Enter 6 digit Code'
                             onChange={(e)=> setCode(e.target.value)}

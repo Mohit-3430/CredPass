@@ -8,6 +8,7 @@ const Logout = () => {
     function removeData () {
         localStorage.removeItem("token")
         localStorage.removeItem("expires")
+        localStorage.removeItem("user")
     }
 
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Logout = () => {
     useEffect(() => {
         removeData();
         setTimeout(()=>{
-            navigate('/')
+            navigate('/Login')
         },800)
         
     }, [navigate])

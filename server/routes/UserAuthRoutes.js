@@ -1,5 +1,5 @@
 import express from "express"
-import { LoginController, LoginVerifyController, SignupController, SignupAuthController,  aldreadySigninPasswordVerifier,toptStatus, toptShow, toptVerification, editUser} from "../controllers/UserControllers.js"
+import { LoginController, LoginVerifyController, SignupController, SignupAuthController,  aldreadySigninPasswordVerifier,toptStatus, toptShow, toptVerification, toptVerificationNoAuth, editUser, toptStatusNoauth} from "../controllers/UserControllers.js"
 import { authentication, toptCheck } from "../middlewares/authentication.js";
 
 const router = express.Router();
@@ -14,7 +14,9 @@ router.patch('/edit-user-info',authentication,toptCheck, editUser)
 
 router.post('/only-password',authentication,toptCheck, aldreadySigninPasswordVerifier)
 router.get('/totp-status',authentication,toptCheck, toptStatus)
+router.post('/totp-status-noauth', toptStatusNoauth)
 router.post('/totp-verification',authentication,toptCheck, toptVerification)
+router.post('/totp-verification-noauth', toptVerificationNoAuth)
 router.get('/totp-show',authentication,toptCheck, toptShow)
 
 export default router;

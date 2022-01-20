@@ -48,8 +48,13 @@ export const LoginVerifyController = async (req, res, next) => {
         const isValid =  await bcrypt.compare(req.body.password, user.password)
         
         if (isValid && user) {
-            const tokenObject = issueJWT(user); //from utils
-            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus:user.two_fa_status});
+            if (user.two_fa_status===false){
+                const tokenObject = issueJWT(user.uname); //from utils
+                res.status(202).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus:user.two_fa_status, superUser : user.uname});
+            }
+            else{
+                res.status(200).json({success : "partial", msg:"Token will be generated once the totp step is completed", totpStatus : true, superUser : user.uname})
+            }
         } else {
             res.status(401).json({ success: false, msg: "you entered the wrong password" });
         }
@@ -119,15 +124,38 @@ export const toptStatus = async(req, res)=>{
         console.log(err)
     }
 }
+// POST /api/user/totp-status-noauth
+export const toptStatusNoauth = async(req, res)=>{
+    try{
+        const user = await User.findOne({uname : req.body.superUser})
+        if(user.two_fa_status===false){
+            res.status(200).json({msg : "Disabled"})
+        }else {
+            res.status(200).json({msg :"Enabled", base32 : user.base32, qr : user.qrCode})
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
 
 // POST /api/user/totp-verification
 export const toptVerification = async(req, res)=>{
-    // TODO: res.type === enable and res.type===disable
     const {verified} = verifyTOTP(req.body.secret_32, req.body.code)
     if(verified===true){
         await User.findOneAndUpdate({uname : req.user.sub}, {two_fa_status: true});
     }
     res.send(verified)
+}
+
+// POST /api/user/totp-verification-noauth
+export const toptVerificationNoAuth = (req, res)=>{
+    const {verified} = verifyTOTP(req.body.secret_32, req.body.code)
+    if(verified===true){
+        const tokenObject = issueJWT(req.body.user); //from utils
+        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus:true});
+    }
+    else 
+        res.status(404).json({success:false})
 }
 
 // PATCH /api/user/edit-user-info

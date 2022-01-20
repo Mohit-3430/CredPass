@@ -18,20 +18,23 @@ const LoginForm = () => {
         setMessage("")
         try {
             const {data} = await axios.post("http://localhost:5000/api/user/login", {emailId, password})
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('expires', data.expiresIn);
-
-            if(data.success===true && data.totpStatus===true){
+            // TOTP Enabled
+            if(data.success==="partial" && data.totpStatus===true){
+                localStorage.setItem('user', data.superUser);
                 navigate('/login-totp')
             }
+            // TOTP Disabled
             else if(data.success===true && data.totpStatus===false){
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('expires', data.expiresIn);
+                localStorage.setItem('user', data.superUser);
                 setMessage("")
                 navigate('/vault-home')
             } 
             else {
                 setMessage("User Not Found, Pls register");
                 setTimeout(()=>{
-                    navigate('/regester')
+                    navigate('/signup')
                 },1500)
             }
 
