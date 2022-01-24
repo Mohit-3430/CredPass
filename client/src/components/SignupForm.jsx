@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import "../styles/AuthForms.css"
 import axios from 'axios';
+import { FaEye, FaEyeSlash} from "react-icons/fa"
 import HomeNavbar from './HomeNavbar';
 
 const SignupForm = () => {
@@ -11,8 +12,8 @@ const SignupForm = () => {
     const [password, setPassword] = useState("");
     const [againPassword, setAgainPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [eye, setEye] = useState("fa-eye")
-    const [ceye, setcEye] = useState("fa-eye")
+    const [eye, setEye] = useState(true)
+    const [ceye, setcEye] = useState(true)
 
     const navigate = useNavigate();
 
@@ -48,25 +49,25 @@ const SignupForm = () => {
 
     const togglePassword= ()=>{
         const pswd = document.getElementById('pswd')
-        if(eye==='fa-eye' && pswd.type==="password") {
-            setEye('fa-eye-slash');
+        if(eye===true && pswd.type==="password") {
+            setEye(false);
             pswd.type="text"
         }
         else {
             pswd.type="password"
-            setEye('fa-eye');
+            setEye(true);
         }
     }
 
     const togglecPassword =()=>{
         const cpswd = document.getElementById('cpswd')
-        if(eye==='fa-eye' && cpswd.type==="password") {
-            setcEye('fa-eye-slash');
+        if(eye===true && cpswd.type==="password") {
+            setcEye(false);
             cpswd.type="text"
         }
         else {
             cpswd.type="password"
-            setcEye('fa-eye');
+            setcEye(true);
         }
     }
 
@@ -98,7 +99,7 @@ const SignupForm = () => {
                         placeholder='Set a Password'
                         onChange={(e)=> setPassword(e.target.value)}
                         />
-                    <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                    <span className="eye" onClick={()=> togglePassword()}>{eye===true ? <FaEye /> : <FaEyeSlash />}</span>
                     <label>Confirm Password:</label>
                     <input type='password' 
                         value = {againPassword}
@@ -106,7 +107,7 @@ const SignupForm = () => {
                         placeholder='Confirm Password'
                         onChange={(e)=> setAgainPassword(e.target.value)}
                         />
-                    <i className={`fas ${ceye} eye`} onClick={()=>togglecPassword()}></i>
+                    <span className="eye" onClick={()=> togglecPassword()}>{ceye===true ? <FaEye /> : <FaEyeSlash />}</span>
                     {message && <p className="errmsg">{message}</p>}
                     <div className="form__submit">
                     <button type='submit' className='submit-button'>Register</button>

@@ -1,20 +1,21 @@
 import '../styles/HomeNavbar.css'
+import { FaTimes, FaBars } from "react-icons/fa";
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
 
 const HomeNavbar = () => {
 
     const [showNav, setShowNav] = useState("hide")
-    const [bars, setBars] = useState("fa-bars")
+    const [bars, setBars] = useState(true)
 
     const toggleNav = ()=>{
         if(showNav==="hide"){
             setShowNav("show");
-            setBars("fa-times")
+            setBars(false)
         }
         else{
             setShowNav("hide");
-            setBars("fa-bars")
+            setBars(true)
         }        
     }
 
@@ -23,7 +24,7 @@ const HomeNavbar = () => {
         <nav className='nav'>
             <div className='nav__links nav__brand'>
                 <Link to='/'>PVA</Link>
-                <i onClick={()=>toggleNav()} className={`fas ${bars}`}></i>
+                <span onClick={()=>toggleNav()}>{bars===true ? <FaBars /> : <FaTimes />}</span>     
             </div>
             <div className={`nav__links ${showNav}`}>
                 <ul>

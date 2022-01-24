@@ -1,12 +1,14 @@
 import "../../styles/VaultNavbar.css"
 import {Link} from 'react-router-dom'
 import { useState, useEffect } from "react"
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaCaretDown, FaCaretUp} from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
 import axios from "axios"
 
 const VaultNavbar = ({uname}) => {
 
     const [showNav, setShowNav] = useState("hide")
-    const [bars, setBars] = useState("fa-bars")
+    const [bars, setBars] = useState(true)
     const [extraMenu, setExtraMenu] = useState(false)
     const [caret, setCaret] = useState("down")
     const [superUser, setSuperUser] = useState("")
@@ -28,11 +30,11 @@ const VaultNavbar = ({uname}) => {
     const toggleNav = ()=>{
         if(showNav==="hide"){
             setShowNav("show");
-            setBars("fa-times")
+            setBars(false)
         }
         else{
             setShowNav("hide");
-            setBars("fa-bars")
+            setBars(true)
         }
     }
     const extraMenuToggle = ()=>{
@@ -51,21 +53,21 @@ const VaultNavbar = ({uname}) => {
         <nav className="nav">
             <div className="nav__brand">
                 <Link to='/vault-home'>PVA</Link>
-                <i onClick={()=>toggleNav()} className={`fas ${bars}`}></i>
+                <span onClick={()=>toggleNav()}>{bars ===true ? < FaBars/> : <FaTimes/>}</span>
             </div>
             <div className={`nav__links ${showNav}`}>
                 <ul>
                     <li onClick={()=>toggleNav()}><Link to='/vault-home'>Home</Link></li>
                     <li onClick={()=>toggleNav()}><Link to='/vault-create'>Add</Link></li>
                     <div className="extra__menu">
-                    <li onClick={()=>extraMenuToggle()}>Dashboard <i className={`fas fa-caret-${caret}`}></i>
+                    <li onClick={()=>extraMenuToggle()}>Dashboard {caret==="down" ? <FaCaretDown />: <FaCaretUp />}
                         {extraMenu && 
                         <ul>
                             <div className="toggle--extra__menu">
                                 <li className="user__name"><Link to='#'>@ {superUser}</Link></li>
-                                <li><Link to='#'><i className="fas fa-user"></i> Profile</Link></li>
-                                <li><Link to='/settings'><i className="fas fa-cog"></i> Settings</Link></li>
-                                <li><Link to='/logout'><i className="fas fa-sign-out-alt"></i> Logout</Link></li>
+                                <li><Link to='#'><FaUser/> Profile</Link></li>
+                                <li><Link to='/settings'><IoSettings /> Settings</Link></li>
+                                <li><Link to='/logout'><FaSignOutAlt /> Logout</Link></li>
                             </div>
                         </ul>
                         }

@@ -5,6 +5,7 @@ import Record from "./Record"
 import VaultNavbar from "./VaultNavbar"
 import EditModal from "./EditModal"
 import { useNavigate } from "react-router-dom"
+import { FaPlus } from "react-icons/fa";
 
 const HomeVault = () => {
 
@@ -38,7 +39,7 @@ const HomeVault = () => {
             {sites.length> 0 ?
             <>
             <p id='ref'><u>Your Vault:</u>
-                <i className="fas fa-plus plus" onClick={()=>navigate('/vault-create')}></i>
+                <span className="plus" onClick={()=>navigate('/vault-create')}><FaPlus /></span>
             </p>
             <main className="vault">
             {sites.map(site => (
@@ -50,7 +51,7 @@ const HomeVault = () => {
             : 
             <>  <div className="none">
                 <p id="message" style={{display:"inline"}}>There is no data to display, Add now</p>
-                <i className="fas fa-plus plus-new" onClick={()=>navigate('/vault-create')}></i>
+                <span className='plus-new' onClick={()=>navigate('/vault-create')}><FaPlus /></span>
                 </div>
             </>
             }

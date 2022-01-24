@@ -2,6 +2,7 @@ import axios from 'axios'
 import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/AuthForms.css'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import HomeNavbar from './HomeNavbar';
 
 const LoginForm = () => {
@@ -9,7 +10,7 @@ const LoginForm = () => {
     const [emailId, setEmailId] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [eye, setEye] = useState("fa-eye")
+    const [eye, setEye] = useState(true)
     const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
@@ -49,13 +50,13 @@ const LoginForm = () => {
 
     const togglePassword= ()=>{
         const pswd = document.getElementById('pswd')
-        if(eye==='fa-eye' && pswd.type==="password") {
-            setEye('fa-eye-slash');
+        if(eye===true && pswd.type==="password") {
+            setEye(false);
             pswd.type="text"
         }
         else {
             pswd.type="password"
-            setEye('fa-eye');
+            setEye(true);
         }
     }
 
@@ -79,7 +80,7 @@ const LoginForm = () => {
                             required placeholder='Enter Password'
                             onChange={(e)=> setPassword(e.target.value)}
                             />
-                        <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                        <span className="eye" onClick={()=> togglePassword()}>{eye===true ? <FaEye /> : <FaEyeSlash />}</span>
                     <div className="form__submit">
                     <button type="submit" className='submit-button'>Log In</button>
                     </div>

@@ -1,22 +1,23 @@
 import { useState, useEffect} from "react";
 import axios from "axios";
 import '../../styles/Record.css'
-
+import {FaEye, FaEyeSlash, FaTrash } from "react-icons/fa"
+import { MdEdit } from "react-icons/md";
 import React from 'react'
 
 const Record = ({site, sites, setSites, setModal, setSiteModal}) => {
 
-    const [eye, setEye] = useState("fas fa-eye")
+    const [eye, setEye] = useState(true)
     const [status, setStatus] = useState(1) // hidden-1, show-0
 
     const changeEye = ()=>{
-        if (eye==="fas fa-eye") {
+        if (eye===true) {
             setStatus(0)
-            setEye("fas fa-eye-slash")
+            setEye(false)
         }
         else{
             setStatus(1)
-            setEye("fas fa-eye")
+            setEye(true)
         }
     }
 
@@ -64,14 +65,15 @@ const Record = ({site, sites, setSites, setModal, setSiteModal}) => {
     return (
         <>
         <section className="vault__contents">
-            <div className="vault__contents--edit-icons"><i onClick={()=>removeRecord(site._id)} className="fas fa-trash"></i>
-                <i onClick={()=>editStuff(site)} className="fas fa-edit"></i>
+            <div className="vault__contents--edit-icons">
+                <span onClick={()=>removeRecord(site._id)} className="trash"> <FaTrash /></span>
+                <span onClick={()=>editStuff(site)} className="edit"><MdEdit /></span>
             </div>
             <p><b>Site Name: </b>{site.siteName}</p>
             <p><b>User Name: </b>{site.uname}</p>
             <div className="vault__content--password-field">
-                <p style={{display:"inline"}}><b>Password:</b></p> <button className="toggle">
-                    <i className={`${eye}`} onClick={()=>changeEye()}></i></button>
+                <p style={{display:"inline"}}><b>Password:</b></p> 
+                  <span className="reye" onClick={()=> changeEye()}> {eye===true ? <FaEye /> : <FaEyeSlash />}</span>
                 <p> {status  ? "●●●●●●●●" : site.password}  
                 </p>
             </div>

@@ -1,18 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ReactModal from "react-modal"
+import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 
 ReactModal.setAppElement('#root')
 const TwoStepLogin = () => {
-    // const [modal, setModal] = useState(false);
+    
     const [superModal, setSuperModal] = useState(false)
     const [qrModal, setQrModal] = useState(false)
-
-    // const [showQR, setShowQR] = useState(false)
     
     const [code, setCode] = useState("")
     const [superPassword, setSuperPassword] = useState("");
-    const [eye, setEye] = useState("fa-eye");
+    const [eye, setEye] = useState(true);
 
     const [resQR, setResQR] = useState("");
     const [res32Code, setRes32Code] = useState("")
@@ -101,13 +100,13 @@ const TwoStepLogin = () => {
 
     const togglePassword= ()=>{
         const pswd = document.getElementById('pswd')
-        if(eye==='fa-eye' && pswd.type==="password") {
-            setEye('fa-eye-slash');
+        if(eye===true && pswd.type==="password") {
+            setEye(false);
             pswd.type="text"
         }
         else {
             pswd.type="password"
-            setEye('fa-eye');
+            setEye(true);
         }
     }
 
@@ -142,13 +141,13 @@ const TwoStepLogin = () => {
             }}   
             >
         <section className='modal__container'>
-            <i onClick={()=>setSuperModal(false)} className='fas fa-times close'></i>
+            <span onClick={()=>setSuperModal(false)} className="close"><FaTimes /></span>
             <h3 className='modal__container--title'>Confirm Yourself:</h3>
             <form onSubmit={superModalSubmit} className='modal__container--form'>
                 <label>Enter Super Password:</label>
                 <div>
-                <input type="password" id="pswd" required autoFocus value={superPassword} onChange={(e)=> setSuperPassword(e.target.value)}/>
-                <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                  <input type="password" id="pswd" required autoFocus value={superPassword} onChange={(e)=> setSuperPassword(e.target.value)}/>
+                  <span className="eye" onClick={()=> togglePassword()}>{eye===true ? <FaEye /> : <FaEyeSlash />}</span>
                 </div>
                 <div className='modal__container--form-buttons'>
                     <button className='change__buttons'>Proceed</button>
@@ -171,7 +170,7 @@ const TwoStepLogin = () => {
             }}   
             >
             <section className='modal__container'>
-                <i onClick={()=>{setQrModal(false);setSuperModal(false);setSuperPassword("")}} className='fas fa-times close'></i>
+                <span onClick={()=>{setSuperModal(false); setQrModal(false); setSuperPassword("")}} className="close"><FaTimes /></span>
                 <h3 className='modal__container--title'>Two-Step Login</h3>
                 {status==="Disabled" ? 
                 <p>Follow the Steps to setup the process on your authenticator App</p>

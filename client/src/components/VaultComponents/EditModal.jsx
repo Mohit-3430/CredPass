@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from "axios";
 import ReactModal from 'react-modal';
+import {FaEye, FaEyeSlash, FaTimes} from "react-icons/fa"
 import "../../styles/EditModalStyle.css";
 
 ReactModal.setAppElement('#root')
@@ -9,7 +10,7 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
     const [siteName, setSiteName] = useState(siteModal.siteName);
     const [uname, setUname] = useState(siteModal.uname);
     const [password, setPassword] = useState(siteModal.password);
-    const [eye, setEye] = useState("fa-eye")
+    const [eye, setEye] = useState(true)
 
     const config = {
         headers : {
@@ -41,16 +42,16 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
           console.log(error);
         }
     }
-
+    
     const togglePassword= ()=>{
         const pswd = document.getElementById('pswd')
-        if(eye==='fa-eye' && pswd.type==="password") {
-            setEye('fa-eye-slash');
+        if(eye===true && pswd.type==="password") {
+            setEye(false);
             pswd.type="text"
         }
         else {
             pswd.type="password"
-            setEye('fa-eye');
+            setEye(true);
         }
     }
 
@@ -69,7 +70,7 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
             }}   
             >
         <section className='modal__container'>
-            <i onClick={()=>setModal(false)} className='fas fa-times close'></i>
+            <span onClick={()=>setModal(false)} className="close">< FaTimes /></span>
             <h3 className='modal__container--title'>Edit</h3>
             <form onSubmit={modalSubmit} className='modal__container--form'>
                 <label>Site Name:</label>
@@ -79,7 +80,7 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
                 <label>New Password:</label>
                 <div className="pass">
                     <input type="password" id='pswd' value={password} onChange={(e)=> setPassword(e.target.value)}/>
-                    <i className={`fas ${eye} eye`} onClick={()=>togglePassword()}></i>
+                    <span className="eye" onClick={()=> togglePassword()}>{eye===true ? <FaEye /> : <FaEyeSlash />}</span>
                 </div>
                 <div className='modal__container--form-buttons'>
                     <button type="submit" className='change__buttons'>Change</button>

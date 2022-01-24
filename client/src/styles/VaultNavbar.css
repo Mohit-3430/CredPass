@@ -43,7 +43,7 @@ a,li{
     padding: 0.5rem 0.3rem;
 }
 
-.nav__brand i{
+.nav__brand span{
     display: none;
     float: right;
     cursor: pointer;
@@ -64,7 +64,7 @@ a,li{
     .nav__links li:hover {
         background-image: linear-gradient(to left , rgba(84, 79, 228, 0.294), rgba(219, 219, 121, 0.315));
     }
-    .nav__brand i {
+    .nav__brand span {
         display: block;
     }
     .hide {

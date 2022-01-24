@@ -10,24 +10,24 @@
     float: right;
 }
 
-.vault__contents--edit-icons i:hover {
+.vault__contents--edit-icons span:hover {
     cursor: pointer;
     color: white;
 }
 
-.fa-trash{
-    padding: .25rem;
+.trash{
+    padding: .15rem;
     color: red;
 }
-.fa-trash:hover{
+.trash:hover{
     background-color: red;
 }
 
-.fa-edit{
-    padding: .25rem;
+.edit{
+    padding: .15rem;
     color: rgb(14, 185, 14);
 }
-.fa-edit:hover{
+.edit:hover{
     background-color: rgb(14, 185, 14);
 }
 
@@ -52,7 +52,9 @@
 .toggle:hover{
     cursor: pointer;
 }
-
+.reye {
+  cursor: pointer;
+}
 
 @media only screen and (max-width:800px){
     .vault__contents {
