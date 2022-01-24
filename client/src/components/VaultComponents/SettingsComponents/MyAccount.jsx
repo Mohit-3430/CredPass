@@ -26,7 +26,7 @@ const MyAccount = () => {
             </div>
             <div className="settings-section__content">
                 <form>
-                    <label>Account Password:</label>
+                    <label>Super Password:</label>
                     <input type="password"></input>
                     <label>New Email Id:</label>
                     <input type="email"></input>

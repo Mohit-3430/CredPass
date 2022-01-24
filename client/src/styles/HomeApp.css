@@ -1,4 +1,8 @@
 .home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: url('../images/green_circuit_key.jpg') no-repeat center ;
   background-size: cover;
   height: 80vh;
