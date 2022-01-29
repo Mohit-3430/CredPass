@@ -3,6 +3,9 @@ import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import VaultNavbar from "./VaultNavbar"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import { Slide, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/AuthForms.css'
 
 const CreateVault = () => {
@@ -10,7 +13,6 @@ const CreateVault = () => {
     const [siteName, setSiteName] = useState("")
     const [uname, setUname] = useState("")
     const [password, setPassword] = useState("")
-    const [message, setMessage] = useState("")
     const [userName, setUserName] = useState("")
     const [eye, setEye] = useState(true)
     const navigate = useNavigate();
@@ -45,22 +47,29 @@ const CreateVault = () => {
         try {
             const response = await axios.post("http://localhost:5000/api/vault-create", {siteName, uname, password, userName}, config);
             if(response.status===200){
+                toast.info("Added!!", {
+                    autoClose: 3000,
+                    transition : Slide
+                })
                 setTimeout(()=>{
-                    setMessage("Added!!")
                     navigate('/vault-home')
-                    setMessage("")
-                },1500)
+                },3000)
             } else {
-                setMessage("Invalid Operation")
+                toast.warn("Invalid Operation", {
+                    autoClose: 3000,
+                    transition : Slide
+                })
             }
 
         }catch(err){
-            console.log(err)
-            setMessage("You Are UNAUTHORIZED")
-            console.log(err)
+            toast.error("Login to access",{
+                autoClose:3000,
+                transition : Flip
+            });
+            
             setTimeout(()=>{
                 navigate('/Logout')
-            }, 1500)
+            }, 3000)
         }       
     }
 
@@ -107,10 +116,10 @@ const CreateVault = () => {
                     <div className="form__submit">
                     <button type="submit" className="submit-button">Create</button>
                     </div>
-                    {message && <span className='response'>{message}</span>}
                 </form>
                 </div>
             </section>
+            <ToastContainer />
         </>
     )
 }

@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/AuthForms.css'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import HomeNavbar from './HomeNavbar';
+import { ToastContainer, toast } from 'react-toastify';
+import {Zoom, Flip, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
 
@@ -32,18 +35,35 @@ const LoginForm = () => {
                 setMessage("")
                 navigate('/vault-home')
             } 
+            else if (data.success===false && data.msg==="could not find user") {
+                toast.info("User not Found",{
+                    autoClose : 3000,
+                    transition : Zoom
+                });             
+            }
+
+            else if (data.success===false && data.msg==="you entered the wrong password") {
+                toast.warn("Password is incorrect",{
+                    autoClose : 3000,
+                    transition : Slide
+                })
+            }
             else {
-                setMessage("User Not Found, Pls register");
+                toast.error(data.msg)
                 setTimeout(()=>{
                     navigate('/signup')
                 },1500)
             }
 
         }catch(err){
-            setMessage("User Not Found Pls register")
+            console.log(err)
+            toast.error("User Not Found!",{
+                autoClose : 3000,
+                transition : Flip
+            });
             setTimeout(()=>{
                 navigate('/signup')
-            },1500)
+            },3000)
         }
             
     }
@@ -92,6 +112,7 @@ const LoginForm = () => {
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </>
     )
 }

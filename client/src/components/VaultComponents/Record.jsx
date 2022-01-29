@@ -2,6 +2,9 @@ import { useState, useEffect} from "react";
 import axios from "axios";
 import '../../styles/Record.css'
 import {FaEye, FaEyeSlash, FaTrash } from "react-icons/fa"
+import { ToastContainer, toast } from 'react-toastify';
+import { Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { MdEdit } from "react-icons/md";
 import React from 'react'
 
@@ -48,6 +51,11 @@ const Record = ({site, sites, setSites, setModal, setSiteModal}) => {
 
     const removeRecord = async(siteId)=>{
         try{
+            toast.warn("Record Deleted!",{
+                autoClose : 1500,
+                hideProgressBar : true,
+                transition : Slide
+            })
             await axios.delete(`http://localhost:5000/api/record-delete/${siteId}`, config);
             setSites(sites.filter(val=>{ 
                 return val._id !== siteId;
@@ -77,6 +85,7 @@ const Record = ({site, sites, setSites, setModal, setSiteModal}) => {
                 <p> {status  ? "●●●●●●●●" : site.password}  
                 </p>
             </div>
+        <ToastContainer />
         </section>
         </>
     )

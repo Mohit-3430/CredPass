@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import axios from "axios";
 import ReactModal from 'react-modal';
 import {FaEye, FaEyeSlash, FaTimes} from "react-icons/fa"
+import { toast } from 'react-toastify';
+import { Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../../styles/EditModalStyle.css";
 
 ReactModal.setAppElement('#root')
@@ -38,6 +41,10 @@ const EditModal = ({siteModal, setModal, modal, sites, setSites, close}) => {
         try {
             const {data} = await axios.post('http://localhost:5000/api/vault-encrypt-password', {siteObj:{password:password, _id:siteModal._id}}, config)
             await axios.patch(`http://localhost:5000/api/record-edit/${siteModal._id}`, {siteName, uname, password:data}, config);
+            toast.success("Edited Successfully",{
+                autoClose : 3000,
+                transition : Slide
+            })
         } catch (error) {
           console.log(error);
         }

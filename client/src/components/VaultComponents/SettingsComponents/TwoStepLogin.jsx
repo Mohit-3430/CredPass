@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ReactModal from "react-modal"
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
-
+import { ToastContainer, toast } from 'react-toastify';
+import { Slide, Flip, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 ReactModal.setAppElement('#root')
 const TwoStepLogin = () => {
     
@@ -54,9 +56,6 @@ const TwoStepLogin = () => {
             console.log(error);
             }
         }
-        else {
-            // TODO : Fetch from DB
-        }
     }
 
     const superModalSubmit= async(e)=>{
@@ -73,28 +72,39 @@ const TwoStepLogin = () => {
             }else console.log(false)
 
         } catch (error) {
+            toast.error("Supper Password Incorrect",{
+                autoClose : 3000,
+                transition : Flip
+            })
             console.log(error)
         }
     }
     const submit2FA= async(e)=>{
         e.preventDefault();
-        // TODO: Make Call to display QR and modify user schema
+        //  Makes Call to display QR and modify user schema
         try{   
             const {data} = await axios.post('http://localhost:5000/api/user/totp-verification', {secret_32:res32Code, code:code},{headers : {
             "Authorization" : localStorage.getItem("token")}
         });
             if(data===true){
                 setStatus("Enabled")
+                toast.success("Enabled",{
+                    autoClose : 3000,
+                    transition : Flip
+                })
                 await axios.patch('http://localhost:5000/api/user/edit-user-info', {base32:res32Code, qrCode:resQR},{headers : {
                     "Authorization" : localStorage.getItem("token")}});
                 setQrModal(false)
                 setSuperModal(false)
             }
             else{
-                console.log("Wrong Code, Check Again")
+                toast.warn("Wrong Code", {
+                    autoClose : 3000,
+                    transition : Slide
+                })
             }
         }catch(err){
-            console.log(err)
+            toast.warn("error Occured, try again later")
         }
     }
 
@@ -113,6 +123,10 @@ const TwoStepLogin = () => {
     const disableTotp=async()=>{
         await axios.patch('http://localhost:5000/api/user/edit-user-info', {two_fa_status:false, base32:"", qrCode:""},{headers : {"Authorization" : localStorage.getItem("token")}});
         setStatus("Disabled")
+        toast.info("Diasbled!",{
+            autoClose : 3000,
+            transition : Zoom
+        })
         setQrModal(false)
         setSuperModal(false)
         setSuperPassword("")
@@ -207,6 +221,7 @@ const TwoStepLogin = () => {
         </section>  
             </ReactModal>
         </div>  
+        <ToastContainer />
         </>
     )
 }

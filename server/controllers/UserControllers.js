@@ -1,8 +1,8 @@
 import { issueJWT } from "../configs/utils.js";
 import { User } from "../Models/user.js";
 import bcrypt from "bcrypt";
-import qrcode from "qrcode"
-import { verifyTOTP, genSecret } from "../configs/2FAUtils.js";
+import qrcode from "qrcode"
+import { verifyTOTP, genSecret } from "../configs/2FAUtils.js";
 
 // POST /api/user/signup
 export const SignupAuthController = async (req, res, next) => {
@@ -37,12 +37,12 @@ export const LoginController = (req, res) => {
 }
 
 //POST /api/user/login
-export const LoginVerifyController = async (req, res, next) => {
+export const LoginVerifyController = async (req, res) => {
 
     try {
         const user = await User.findOne({ emailId: req.body.emailId })
         if (!user) {
-            return res.status(401).json({ success: false, msg: "could not find user" });
+            return res.status(201).json({ success: false, msg: "could not find user" });
         }
 
         const isValid =  await bcrypt.compare(req.body.password, user.password)
@@ -56,15 +56,12 @@ export const LoginVerifyController = async (req, res, next) => {
                 res.status(200).json({success : "partial", msg:"Token will be generated once the totp step is completed", totpStatus : true, superUser : user.uname})
             }
         } else {
-            res.status(401).json({ success: false, msg: "you entered the wrong password" });
+            res.status(200).json({ success: false, msg: "you entered the wrong password" });
         }
     }
     catch (err) {
-        next(err);
-        // res.status(404).json({sucess:false, msg : err.message})
+        res.status(404).json({sucess:false, msg : err.message})
     }
-
-    
 }
 
 // POST /api/user/only-password
@@ -74,8 +71,8 @@ export const aldreadySigninPasswordVerifier=async(req, res)=>{
         const user = await User.findOne({ uname: req.user.sub })
         
             if (!user) {
-                    return res.status(401).json({ success: false, msg: "could not find user" });
-                }
+                return res.status(401).json({ success: false, msg: "could not find user" });
+            }
             const isValid =  await bcrypt.compare(req.body.password, user.password)
             
             if (isValid && user) {

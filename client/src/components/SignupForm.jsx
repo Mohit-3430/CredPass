@@ -4,6 +4,8 @@ import "../styles/AuthForms.css"
 import axios from 'axios';
 import { FaEye, FaEyeSlash} from "react-icons/fa"
 import HomeNavbar from './HomeNavbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignupForm = () => {
     
@@ -11,7 +13,6 @@ const SignupForm = () => {
     const [uname, setUname] = useState("");
     const [password, setPassword] = useState("");
     const [againPassword, setAgainPassword] = useState("");
-    const [message, setMessage] = useState("");
     const [eye, setEye] = useState(true)
     const [ceye, setcEye] = useState(true)
 
@@ -22,14 +23,13 @@ const SignupForm = () => {
 
         if(password!==againPassword){
             
-            setMessage("Passwords Not matched!!")
+            toast.warn("Passwords Not matched!!")
 
             setPassword("")
             setAgainPassword("")
             
         }
         else{
-            setMessage("")
             const config = {
                 header : {
                     "Content-Type" : "application/json"
@@ -108,7 +108,6 @@ const SignupForm = () => {
                         onChange={(e)=> setAgainPassword(e.target.value)}
                         />
                     <span className="eye" onClick={()=> togglecPassword()}>{ceye===true ? <FaEye /> : <FaEyeSlash />}</span>
-                    {message && <p className="errmsg">{message}</p>}
                     <div className="form__submit">
                     <button type='submit' className='submit-button'>Register</button>
                     </div>
@@ -118,6 +117,7 @@ const SignupForm = () => {
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </>
     )
 }
