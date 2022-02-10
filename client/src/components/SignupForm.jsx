@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FaEye, FaEyeSlash} from "react-icons/fa"
 import HomeNavbar from './HomeNavbar';
 import { ToastContainer, toast } from 'react-toastify';
+import {Zoom, Flip, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignupForm = () => {
@@ -22,12 +23,12 @@ const SignupForm = () => {
         e.preventDefault();
 
         if(password!==againPassword){
-            
-            toast.warn("Passwords Not matched!!")
+            toast.warn("Passwords Not matched!!",{
+                transition : Flip
+            })
 
             setPassword("")
-            setAgainPassword("")
-            
+            setAgainPassword("")   
         }
         else{
             const config = {
@@ -41,9 +42,19 @@ const SignupForm = () => {
                 console.log(data);
                 navigate('/login')
             }catch (err){
-                console.log(err)
+                const errObj = err.response.data.errors;
+                console.log(err.response.data.errors)
+                if (errObj.emailId!=="") 
+                    toast.warn(errObj.emailId,{
+                        transition : Zoom
+                    })
+                else if (errObj.uname!=="")
+                    toast.warn(errObj.uname,{
+                        transition : Slide
+                    })
+                else
+                    toast.warn(errObj.password)
             }
-                
         }   
     }
 
@@ -117,7 +128,7 @@ const SignupForm = () => {
                     </div>
                 </div>
             </section>
-            <ToastContainer />
+            <ToastContainer autoClose={3000} hideProgressBar/>
         </>
     )
 }
