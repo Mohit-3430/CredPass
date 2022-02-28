@@ -32,6 +32,9 @@ form {
     font-size: 1.5rem;
     text-decoration: underline;
 }
+.modal__container--subtitle{
+    margin-top: 1rem;
+}
 
 .modal__container--form{
     display: flex;
