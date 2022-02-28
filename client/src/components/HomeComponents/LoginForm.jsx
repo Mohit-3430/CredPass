@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/AuthForms.css'
+import "../../styles/AuthForms.css"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import HomeNavbar from './HomeNavbar';
 import { ToastContainer, toast } from 'react-toastify';

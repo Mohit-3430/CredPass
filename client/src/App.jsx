@@ -1,17 +1,17 @@
 import './styles/HomeApp.css'
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import HomeContent from './components/HomeContent';
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-
+import HomeContent from './components/HomeComponents/HomeContent'
+import LoginForm from './components/HomeComponents/LoginForm'
+import SignupForm from './components/HomeComponents/SignupForm'
 import HomeVault from './components/VaultComponents/HomeVault';
 import CreateVault from './components/VaultComponents/CreateVault';
-import Logout from './components/Logout';
+import Logout from './components/HomeComponents/Logout';
+import Totp from './components/HomeComponents/Totp';
+
 import Settings from './components/VaultComponents/Settings';
 import SettingsMyAccount from './components/VaultComponents/SettingsComponents/SettingsMyAccount';
 import Settings2Fa from './components/VaultComponents/SettingsComponents/Settings2FA';
 import SettingsIrreversible from './components/VaultComponents/SettingsComponents/SettingsIrreversible';
-import Totp from './components/Totp';
 
 const App =() =>  {
   return (

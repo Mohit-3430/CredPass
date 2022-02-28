@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import "../styles/AuthForms.css"
+import "../../styles/AuthForms.css"
 import axios from 'axios';
 import { FaEye, FaEyeSlash} from "react-icons/fa"
 import HomeNavbar from './HomeNavbar';
