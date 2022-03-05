@@ -1,7 +1,7 @@
 import React from 'react'
 import VaultNavbar from '../VaultNavbar'
-import ExportData from './ExportData'
-import SettingsLinks from './SettingsLinks'
+import ExportData from '../SettingsComponents/ExportData'
+import SettingsLinks from '../SettingsComponents/SettingsLinks'
 
 const SettingsExportData = () => {
   return (

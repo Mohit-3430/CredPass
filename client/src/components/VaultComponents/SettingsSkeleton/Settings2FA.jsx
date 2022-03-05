@@ -1,9 +1,9 @@
 import VaultNavbar from "../VaultNavbar"
-import TwoStepLogin from "./TwoStepLogin"
+import TwoStepLogin from "../SettingsComponents/TwoStepLogin"
 import "../../../styles/Settings.css"
 import axios from "axios"
 import {useState,useEffect} from "react"
-import SettingsLinks from "./SettingsLinks"
+import SettingsLinks from "../SettingsComponents/SettingsLinks"
 
 const Settings2Fa = () => {
     const [superUser, setSuperUser] = useState("")

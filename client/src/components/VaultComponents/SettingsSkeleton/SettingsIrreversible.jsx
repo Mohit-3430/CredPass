@@ -1,7 +1,7 @@
 import VaultNavbar from "../VaultNavbar"
 import "../../../styles/Settings.css"
-import IrreversibleStuff from "./IrreversibleStuff"
-import SettingsLinks from "./SettingsLinks"
+import IrreversibleStuff from "../SettingsComponents/IrreversibleStuff"
+import SettingsLinks from "../SettingsComponents/SettingsLinks"
 
 const SettingsIrreversible = () => {
 

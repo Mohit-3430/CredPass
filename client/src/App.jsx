@@ -9,10 +9,10 @@ import Logout from './components/HomeComponents/Logout';
 import Totp from './components/HomeComponents/Totp';
 
 import Settings from './components/VaultComponents/Settings';
-import SettingsMyAccount from './components/VaultComponents/SettingsComponents/SettingsMyAccount';
-import Settings2Fa from './components/VaultComponents/SettingsComponents/Settings2FA';
-import SettingsIrreversible from './components/VaultComponents/SettingsComponents/SettingsIrreversible';
-import SettingsExportData from './components/VaultComponents/SettingsComponents/SettingsExportData'
+import SettingsMyAccount from './components/VaultComponents/SettingsSkeleton/SettingsMyAccount';
+import Settings2Fa from './components/VaultComponents/SettingsSkeleton/Settings2FA';
+import SettingsIrreversible from './components/VaultComponents/SettingsSkeleton/SettingsIrreversible';
+import SettingsExportData from './components/VaultComponents/SettingsSkeleton/SettingsExportData';
 
 const App =() =>  {
   return (

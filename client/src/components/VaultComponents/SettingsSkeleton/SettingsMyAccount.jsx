@@ -1,7 +1,7 @@
 import VaultNavbar from "../VaultNavbar"
-import MyAccount from "./MyAccount"
+import MyAccount from "../SettingsComponents/MyAccount"
 import "../../../styles/Settings.css"
-import SettingsLinks from "./SettingsLinks"
+import SettingsLinks from "../SettingsComponents/SettingsLinks"
 
 const SettingsMyAccount = () => {
 
