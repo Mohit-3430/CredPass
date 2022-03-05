@@ -80,7 +80,6 @@ const IrreversibleStuff = () => {
     }
 
     const vaultProceedings = ()=>{
-        // TODO: have to open modal and redirect it to modalVaultDelete
         if(vaultSuperPasswordVerified===false)
             setShowVaultSuperPassModal(true)
         setVaultSuperPasswordVerified(false)

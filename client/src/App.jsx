@@ -12,6 +12,7 @@ import Settings from './components/VaultComponents/Settings';
 import SettingsMyAccount from './components/VaultComponents/SettingsComponents/SettingsMyAccount';
 import Settings2Fa from './components/VaultComponents/SettingsComponents/Settings2FA';
 import SettingsIrreversible from './components/VaultComponents/SettingsComponents/SettingsIrreversible';
+import SettingsExportData from './components/VaultComponents/SettingsComponents/SettingsExportData'
 
 const App =() =>  {
   return (
@@ -31,6 +32,7 @@ const App =() =>  {
           <Route path = '/settings/myaccount' element = {<SettingsMyAccount />} />
           <Route path = '/settings/2fa' element = {<Settings2Fa />} />
           <Route path = '/settings/irreversible-action' element = {<SettingsIrreversible />} />
+          <Route path = '/settings/export-data' element = {<SettingsExportData />} />
         </Routes>
       </Router>
     </>

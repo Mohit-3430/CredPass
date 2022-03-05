@@ -9,10 +9,10 @@ const SettingsLinks = () => {
                     <hr style={{width : "15rem"}}/>
                 </div>
                 <ul className="settings">
-                <button><NavLink to="/settings/myaccount">Account</NavLink></button>
-                <button><NavLink to="/settings/2fa">MFA</NavLink></button>
-                <button><NavLink to="/settings/irreversible-action">Danger</NavLink></button>
-                <button>Options</button>
+                <NavLink to="/settings/myaccount">Account</NavLink>
+                <NavLink to="/settings/2fa">MFA</NavLink>
+                <NavLink to="/settings/irreversible-action">Danger</NavLink>
+                <NavLink to="/settings/export-data">Export</NavLink>
                 </ul>
             </div>
         </div>

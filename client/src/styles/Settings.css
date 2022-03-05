@@ -22,7 +22,7 @@
     justify-content: center;
 }
 
-.settings button {
+.settings a {
     color: black;
     background-color: white;
     border: none;
@@ -30,7 +30,7 @@
     list-style: none;
     padding: 0.25rem 1rem;
 }
-.settings button:hover {
+.settings a:hover {
     background-color: rgba(128, 128, 128, 0.486);
     cursor: pointer;
 }
@@ -70,7 +70,7 @@
     font-weight: 600;
     border-radius: 0.25rem;
 }
-button:hover{
+a,button:hover{
     cursor: pointer;
 }
 
