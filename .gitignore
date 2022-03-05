@@ -1,5 +1,3 @@
 node_modules/
-client/readme.md
 .env
-rsa_priv.pem
-rsa_pub.pem
+*.ps1
