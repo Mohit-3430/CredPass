@@ -7,6 +7,8 @@ import HomeVault from './components/VaultComponents/HomeVault';
 import CreateVault from './components/VaultComponents/CreateVault';
 import Logout from './components/HomeComponents/Logout';
 import Totp from './components/HomeComponents/Totp';
+import ForgotPassword from './components/HomeComponents/ForgotPassword'
+import ResetPassword from './components/HomeComponents/ResetPassword'
 
 import Settings from './components/VaultComponents/Settings';
 import SettingsMyAccount from './components/VaultComponents/SettingsSkeleton/SettingsMyAccount';
@@ -23,6 +25,8 @@ const App =() =>  {
           <Route path = '/signup' element = {<SignupForm />}/>
           <Route path = '/login' element = {<LoginForm />}/>
           <Route path = '/login-totp' element = {<Totp />}/>
+          <Route path = '/forgot-password' element = {<ForgotPassword />}/>
+          <Route path = '/reset-password/:emailId/:token' element = {<ResetPassword />}/>
           
           <Route path = '/vault-home' element = {<HomeVault/>} />
           <Route path = '/vault-create' element = {<CreateVault/>} />

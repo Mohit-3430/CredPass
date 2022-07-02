@@ -3,6 +3,13 @@ import { User } from "../Models/user.js";
 import bcrypt from "bcrypt";
 import qrcode from "qrcode"
 import { verifyTOTP, genSecret } from "../configs/2FAUtils.js";
+import { triggerSendEmail } from "../configs/SendEmail.js";
+import { passwordResetLink } from "../configs/PasswordResetLink.js";
+import jsonwebtoken from "jsonwebtoken";
+
+import dotenv from "dotenv"
+
+dotenv.config()
 
 // custom error handler
 const handleErrors = (err) => {
@@ -10,9 +17,9 @@ const handleErrors = (err) => {
 
     // email not unique error
     if (err.code === 11000) {
-        if(err.message.includes('uname'))
+        if (err.message.includes('uname'))
             errors.uname = 'The user name is aldeardy in use';
-        if(err.message.includes('emailId'))
+        if (err.message.includes('emailId'))
             errors.emailId = "The email id is aldready in use "
         return errors;
     }
@@ -32,7 +39,7 @@ export const SignupAuthController = async (req, res) => {
 
     try {
         if (req.body.password === req.body.againPassword) {
-            const user = await User.create({  emailId, password, uname });
+            const user = await User.create({ emailId, password, uname });
             res.status(201).json({ success: true, user: user })
         }
         else {
@@ -40,7 +47,7 @@ export const SignupAuthController = async (req, res) => {
         }
     } catch (err) {
         const errors = handleErrors(err);
-        res.status(400).json({ success: false, errors});
+        res.status(400).json({ success: false, errors });
     }
 }
 
@@ -184,4 +191,50 @@ export const editUser = async (req, res) => {
     } catch (err) {
         res.status(404).json({ "success": false, "msg": "No Record Found" })
     }
+}
+
+// POST /api/user/reset-password-email
+export const resetPassword = async (req, res) => {
+    const { emailId } = req.body;
+    // send link via email
+    try {
+        const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
+        await triggerSendEmail(emailId, link)
+        res.status(200).json({ success: true, msg: "Message sent!!" })
+    } catch (err) {
+        res.status(404).json({ success: false, msg: "An error occured" })
+    }
+}
+
+// PATCH /api/user/change-password
+export const changePassword = async (req, res) => {
+    const { token, emailId } = req.body;
+    const options = { new: true }
+    let linkVerified = false
+
+    const secret = process.env.JWT_SECRET + emailId;
+
+    const rsp = jsonwebtoken.verify(token, secret); // (err, verifyResp) => {
+    res.send(rsp)
+    //     if (err) {
+    //         console.log(err);
+    //         res.send(404).json({ success: false, msg: "Token not verified!" });
+    //     }
+    //     else {
+    //         console.log(verifyResp)
+    //         linkVerified = true
+    //     }
+    // });
+    // try {
+    //     if (linkVerified) {
+    //         await User.findOneAndUpdate({ emailId: emailId }, req.body.password, options)
+    //         res.status(200).json({ success: true, msg: "password changed" });
+    //     } else {
+    //         res.status(404).json({ success: false, msg: "Link is not verified" })
+    //     }
+    // } catch (err) {
+    //     console.log(err)
+    //     res.status(404).json({ success: false, msg: err.message });
+    // }
+
 }

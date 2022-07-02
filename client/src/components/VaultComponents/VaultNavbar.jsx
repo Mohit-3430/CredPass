@@ -1,5 +1,5 @@
 import "../../styles/VaultNavbar.css"
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import { useState} from "react"
 import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaCaretDown, FaCaretUp} from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
@@ -36,22 +36,22 @@ const VaultNavbar = () => {
         <>  
         <nav className="nav">
             <div className="nav__brand">
-                <Link to='/vault-home'>PVA</Link>
+                <NavLink to='/vault-home'>PVA</NavLink>
                 <span onClick={()=>toggleNav()}>{bars ===true ? < FaBars/> : <FaTimes/>}</span>
             </div>
             <div className={`nav__links ${showNav}`}>
                 <ul>
-                    <li onClick={()=>toggleNav()}><Link to='/vault-home'>Home</Link></li>
-                    <li onClick={()=>toggleNav()}><Link to='/vault-create'>Add</Link></li>
+                    <li onClick={()=>toggleNav()}><NavLink to='/vault-home'>Home</NavLink></li>
+                    <li onClick={()=>toggleNav()}><NavLink to='/vault-create'>Add</NavLink></li>
                     <div className="extra__menu">
                     <li onClick={()=>extraMenuToggle()}>Dashboard {caret==="down" ? <FaCaretDown />: <FaCaretUp />}
                         {extraMenu && 
                         <ul>
                             <div className="toggle--extra__menu">
-                                <li className="user__name"><Link to='#'>@ {localStorage.getItem('user')}</Link></li>
-                                <li><Link to='#'><FaUser/> Profile</Link></li>
-                                <li><Link to='/settings'><IoSettings /> Settings</Link></li>
-                                <li><Link to='/logout'><FaSignOutAlt /> Logout</Link></li>
+                                <li className="user__name"><NavLink to='#'>@ {localStorage.getItem('user')}</NavLink></li>
+                                <li><NavLink to='#'><FaUser/> Profile</NavLink></li>
+                                <li><NavLink to='/settings'><IoSettings /> Settings</NavLink></li>
+                                <li><NavLink to='/logout'><FaSignOutAlt /> Logout</NavLink></li>
                             </div>
                         </ul>
                         }

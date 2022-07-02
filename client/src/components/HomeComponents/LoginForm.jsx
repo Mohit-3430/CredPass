@@ -107,7 +107,7 @@ const LoginForm = () => {
                     {message && <div className='response'>{message}</div>}
                 </form>
                     <div className="dialogs">
-                        <p><Link to='#'>Forgot Password??</Link></p>
+                        <p><Link to='/forgot-password'>Forgot Password??</Link></p>
                         <p><Link to='/signup'>New here, Register</Link></p>
                     </div>
                 </div>
