@@ -1,20 +1,24 @@
 import "./styles/HomeApp.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomeContent from "./components/HomeComponents/HomeContent";
-import LoginForm from "./components/HomeComponents/LoginForm";
-import SignupForm from "./components/HomeComponents/SignupForm";
-import HomeVault from "./components/VaultComponents/HomeVault";
-import CreateVault from "./components/VaultComponents/CreateVault";
-import Logout from "./components/HomeComponents/Logout";
-import Totp from "./components/HomeComponents/Totp";
-import ForgotPassword from "./components/HomeComponents/ForgotPassword";
-import ResetPassword from "./components/HomeComponents/ResetPassword";
+import {
+  HomeContent,
+  LoginForm,
+  SignupForm,
+  Totp,
+  ForgotPassword,
+  ResetPassword,
+  Logout,
+  HomeVault,
+  CreateVault,
+} from "./components/";
 
-import Settings from "./components/VaultComponents/Settings";
-import SettingsMyAccount from "./components/VaultComponents/SettingsSkeleton/SettingsMyAccount";
-import Settings2Fa from "./components/VaultComponents/SettingsSkeleton/Settings2FA";
-import SettingsIrreversible from "./components/VaultComponents/SettingsSkeleton/SettingsIrreversible";
-import SettingsExportData from "./components/VaultComponents/SettingsSkeleton/SettingsExportData";
+import {
+  Settings,
+  SettingsMyAccount,
+  Settings2Fa,
+  SettingsIrreversible,
+  SettingsExportData,
+} from "./components/";
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import HomeNavbar from "./HomeNavbar";
+import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Slide } from "react-toastify";

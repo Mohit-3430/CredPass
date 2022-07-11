@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HomeNavbar from "./HomeNavbar";
+import HomeNavbar from "../HomeComponents/HomeNavbar";
 import axios from "axios";
 
 const ForgotPassword = () => {
@@ -9,12 +9,9 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await axios.post(
-        "http://localhost:5000/api/user/reset-password-email",
-        {
-          emailId,
-        }
-      );
+      await axios.post("http://localhost:5000/api/user/reset-password-email", {
+        emailId,
+      });
       setFormSubmitted(true);
     } catch (err) {
       console.log(err);

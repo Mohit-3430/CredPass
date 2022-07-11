@@ -1,10 +1,10 @@
 import express from "express";
 
-import { VaultHome, VaultCreate, VaultCreateIndex, VaultSiteData, VaultDecrypt, VaultEncrypt, recordDelete, recordEdit, deleteFullVault, deleteAccount, exportData } from "../../controllers/index.js"
+import { VaultGeneral, VaultCreate, VaultCreateIndex, VaultSiteData, VaultDecrypt, VaultEncrypt, recordDelete, recordEdit, deleteFullVault, deleteAccount, exportData } from "../../controllers/index.js"
 const router = express.Router();
 
 // All statrting with /api
-router.get('/vault-home', VaultHome);
+router.get('/vault-home', VaultGeneral);
 router.get('/vault-create', VaultCreateIndex);
 
 router.get('/vault-data/', VaultSiteData)

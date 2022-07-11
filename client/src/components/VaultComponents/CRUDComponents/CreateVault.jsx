@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import VaultNavbar from "./VaultNavbar";
+import VaultNavbar from "../VaultGeneral/VaultNavbar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Slide, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../styles/AuthForms.css";
+import "../../../styles/Auth/AuthForms.css";
 
 const CreateVault = () => {
   const [siteName, setSiteName] = useState("");

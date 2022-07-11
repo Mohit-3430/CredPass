@@ -1,51 +1,60 @@
 import ReactModal from "react-modal";
 import { useState } from "react";
 import axios from "axios";
-import { FaTimes, FaEye, FaEyeSlash, } from "react-icons/fa"
-import { ToastContainer, toast, Zoom} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import React from "react";
 
-ReactModal.setAppElement('#root')
-const ConfirmPasswordModal = ({ setSuperPassVerified, showModal, setShowModal, setNextModal}) => {
-  
+ReactModal.setAppElement("#root");
+const ConfirmPasswordModal = ({
+  setSuperPassVerified,
+  showModal,
+  setShowModal,
+  setNextModal,
+}) => {
   const [superPassword, setSuperPassword] = useState("");
   const [eye, setEye] = useState(true);
 
-  const passModalSubmit = async(e)=>{
+  const passModalSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        const {data} = await axios.post('http://localhost:5000/api/user/only-password', {password:superPassword},{headers : {
-        "Authorization" : localStorage.getItem("token")}
-    });
-        if(data.success===true){ // if password is verified then
-            setSuperPassVerified(true)
+      const { data } = await axios.post(
+        "http://localhost:5000/api/user/only-password",
+        { password: superPassword },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
-        else setSuperPassVerified(false)
-    }catch (err){
-        setSuperPassVerified(false)
-        toast.error("Supper Password Incorrect",{
-            transition : Zoom
-        })
+      );
+      if (data.success === true) {
+        // if password is verified then
+        setSuperPassVerified(true);
+      } else setSuperPassVerified(false);
+    } catch (err) {
+      setSuperPassVerified(false);
+      toast.error("Supper Password Incorrect", {
+        transition: Zoom,
+      });
     }
-    setShowModal(false)
-    setSuperPassword("")
-    setNextModal(true)
-}
+    setShowModal(false);
+    setSuperPassword("");
+    setNextModal(true);
+  };
 
-  const togglePassword= ()=>{
-    const pswd = document.getElementById('pswd')
-    if(eye===true && pswd.type==="password") {
-        setEye(false);
-        pswd.type="text"
+  const togglePassword = () => {
+    const pswd = document.getElementById("pswd");
+    if (eye === true && pswd.type === "password") {
+      setEye(false);
+      pswd.type = "text";
+    } else {
+      pswd.type = "password";
+      setEye(true);
     }
-    else {
-        pswd.type="password"
-        setEye(true);
-    }
-}
+  };
 
   return (
     <>
@@ -65,10 +74,7 @@ const ConfirmPasswordModal = ({ setSuperPassVerified, showModal, setShowModal, s
         }}
       >
         <section className="modal__container">
-          <span
-            onClick={() => setShowModal(false)}
-            className="close"
-          >
+          <span onClick={() => setShowModal(false)} className="close">
             <FaTimes />
           </span>
           <h3 className="modal__container--title">Confirm Yourself:</h3>
@@ -99,7 +105,7 @@ const ConfirmPasswordModal = ({ setSuperPassVerified, showModal, setShowModal, s
           </form>
         </section>
       </ReactModal>
-      <ToastContainer hideProgressBar autoClose={3000}/>  
+      <ToastContainer hideProgressBar autoClose={3000} />
     </>
   );
 };

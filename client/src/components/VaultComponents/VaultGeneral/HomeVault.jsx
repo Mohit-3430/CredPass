@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../../styles/HomeVault.css";
-import Record from "./Record";
+import "../../../styles/Vault/HomeVault.css";
+import { Record, EditModal } from "../CRUDComponents";
 import VaultNavbar from "./VaultNavbar";
-import EditModal from "./EditModal";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 

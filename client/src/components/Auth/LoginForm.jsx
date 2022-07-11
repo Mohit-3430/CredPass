@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/AuthForms.css";
+import "../../styles/Auth/AuthForms.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import HomeNavbar from "./HomeNavbar";
+import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

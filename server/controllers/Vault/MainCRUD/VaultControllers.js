@@ -2,7 +2,7 @@ import { Site } from "../../../Models/site.js"
 import { encrypt } from "../../../configs/EncryptionHandler.js"
 
 // GET api/vault-home
-export const VaultHome = (req, res) => {
+export const VaultGeneral = (req, res) => {
     res.status(201).json({ sucess: true, msg: "Hi There from Vault Home" });
 }
 
