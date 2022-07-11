@@ -1,0 +1,53 @@
+import { User } from "../../../Models/user.js";
+import { sendMail } from "../../../configs/SendEmail.js";
+import { passwordResetLink } from "../../../configs/PasswordResetLink.js";
+import jsonwebtoken from "jsonwebtoken";
+
+// POST /api/user/reset-password-email
+export const resetPasswordEmail = async (req, res) => {
+    const { emailId } = req.body;
+    // send link via email
+    try {
+        const user = await User.findOne({ emailId: emailId })
+        console.log(user)
+        if (!user)
+            res.status(404).json({ success: false, msg: "User not Found!!" })
+        else {
+            const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
+            const subject = "Password reset from PVA"
+            sendMail(emailId, subject, link)
+            res.status(200).json({ success: true, msg: "Message sent!!" })
+        }
+    } catch (err) {
+        res.status(404).json({ success: false, msg: "An error occured" })
+    }
+}
+
+// PATCH /api/user/reset-password/:id/:token
+export const resetPassword = async (req, res) => {
+    const { token, emailId } = req.params;
+    const { password, confirmPassword } = req.body;
+    if (password !== confirmPassword)
+        res.status(200).json({ success: false, msg: "Passwords Doesn't match" })
+
+    const options = { new: true }
+
+    const secret = process.env.EMAIL_JWT_SECRET
+
+    jsonwebtoken.verify(token, secret, async (err, verifyResp) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: "Token not verified!" });
+        }
+        else if (verifyResp) {
+            try {
+                const user = await User.findOneAndUpdate({ emailId: emailId }, { password: password }, options)
+                user.save()
+                res.status(200).json({ success: true, msg: "password changed" })
+            }
+            catch (err) {
+                res.status(404).json({ success: false, msg: "Unsuccesful" });
+            }
+        }
+    });
+
+}

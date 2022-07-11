@@ -1,6 +1,7 @@
 import express from "express"
-import { LoginController, LoginVerifyController, SignupController, SignupAuthController, aldreadySigninPasswordVerifier, toptStatus, toptShow, toptVerification, toptVerificationNoAuth, editUser, toptStatusNoauth, resetPassword, resetPasswordEmail } from "../controllers/UserControllers.js"
-import { authentication, toptCheck } from "../middlewares/authentication.js";
+import { LoginController, LoginVerifyController, SignupController, SignupAuthController, aldreadySigninPasswordVerifier, toptStatus, toptShow, toptVerification, toptVerificationNoAuth, editUser, toptStatusNoauth, resetPassword, resetPasswordEmail } from "../../controllers/index.js"
+import { authentication, toptCheck } from "../../middlewares/authentication.js";
+
 
 const router = express.Router();
 
