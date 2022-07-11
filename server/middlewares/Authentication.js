@@ -6,7 +6,7 @@ dotenv.config()
 
 export const authentication = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]
+    const token = authHeader && authHeader.split(' ')[2]
     if (token) {
         jsonwebtoken.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403)
@@ -14,11 +14,11 @@ export const authentication = (req, res, next) => {
                 req.user = user
                 next();
             }
-            })
-        }
-        else {
-            res.send(false)
-        }
+        })
+    }
+    else {
+        res.send(false)
+    }
 }
 
 export const toptCheck = async (req, res, next) => {

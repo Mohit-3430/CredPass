@@ -3,7 +3,7 @@ import { User } from "../Models/user.js";
 import bcrypt from "bcrypt";
 import qrcode from "qrcode"
 import { verifyTOTP, genSecret } from "../configs/2FAUtils.js";
-import { triggerSendEmail } from "../configs/SendEmail.js";
+import { sendMail } from "../configs/SendEmail.js";
 import { passwordResetLink } from "../configs/PasswordResetLink.js";
 import jsonwebtoken from "jsonwebtoken";
 
@@ -194,47 +194,43 @@ export const editUser = async (req, res) => {
 }
 
 // POST /api/user/reset-password-email
-export const resetPassword = async (req, res) => {
+export const resetPasswordEmail = async (req, res) => {
     const { emailId } = req.body;
     // send link via email
     try {
         const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
-        await triggerSendEmail(emailId, link)
+        const subject = "Password reset from PVA"
+        await sendMail(emailId, subject, link)
         res.status(200).json({ success: true, msg: "Message sent!!" })
     } catch (err) {
         res.status(404).json({ success: false, msg: "An error occured" })
     }
 }
 
-// PATCH /api/user/change-password
-export const changePassword = async (req, res) => {
-    const { token, emailId } = req.body;
+// PATCH /api/user/reset-password/:id/:token
+export const resetPassword = async (req, res) => {
+    const { token, emailId } = req.params;
+    const { password, confirmPassword } = req.body;
+    if (password !== confirmPassword)
+        res.status(200).json({ success: false, msg: "Passwords Doesn't match" })
+
     const options = { new: true }
-    let linkVerified = false
 
-    const secret = process.env.JWT_SECRET + emailId;
+    const secret = process.env.EMAIL_JWT_SECRET
 
-    const rsp = jsonwebtoken.verify(token, secret); // (err, verifyResp) => {
-    res.send(rsp)
-    //     if (err) {
-    //         console.log(err);
-    //         res.send(404).json({ success: false, msg: "Token not verified!" });
-    //     }
-    //     else {
-    //         console.log(verifyResp)
-    //         linkVerified = true
-    //     }
-    // });
-    // try {
-    //     if (linkVerified) {
-    //         await User.findOneAndUpdate({ emailId: emailId }, req.body.password, options)
-    //         res.status(200).json({ success: true, msg: "password changed" });
-    //     } else {
-    //         res.status(404).json({ success: false, msg: "Link is not verified" })
-    //     }
-    // } catch (err) {
-    //     console.log(err)
-    //     res.status(404).json({ success: false, msg: err.message });
-    // }
+    jsonwebtoken.verify(token, secret, async (err, verifyResp) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: "Token not verified!" });
+        }
+        else if (verifyResp) {
+            try {
+                const user = await User.findOneAndUpdate({ emailId: emailId }, { password: password }, options)
+                res.status(200).json({ success: true, msg: "password changed" })
+            }
+            catch (err) {
+                res.status(404).json({ success: false, msg: "Unsuccesful" });
+            }
+        }
+    });
 
 }

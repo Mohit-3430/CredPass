@@ -4,59 +4,52 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const OAuth2 = google.auth.OAuth2;
+const oauth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
+});
 
-const createTransporter = async () => {
-  const oauth2Client = new OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    "https://developers.google.com/oauthplayground"
-  );
+const prepareEmailPipeLine = async (recipent, subject, body) => {
+  try {
+    const accessToken = await oauth2Client.getAccessToken();
 
-  oauth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN
-  });
-
-  const accessToken = await new Promise((resolve, reject) => {
-    oauth2Client.getAccessToken((err, token) => {
-      if (err) {
-        reject();
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: accessToken
       }
-      resolve(token);
     });
-  });
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.EMAIL,
-      accessToken,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: recipent,
+      subject: subject,
+      text: body,
+      // html:
     }
-  });
-  return transporter;
-};
 
+    const result = await transporter.sendMail(mailOptions)
+    return result
 
-
-export const triggerSendEmail = async (targetEmail, link) => {
-
-  const emailOptions = {
-    subject: "Test",
-    text: link,
-    to: targetEmail,
-    from: process.env.EMAIL
+  } catch (error) {
+    return error
   }
+}
 
-  let emailTransporter = await createTransporter();
-  emailTransporter.sendMail(emailOptions, async (error, info) => {
-    if (error)
-      console.log(error)
-    else {
-      return info.response
-    }
-  });
+export const sendMail = async (recipent, subject, body) => {
+  try {
+    prepareEmailPipeLine(recipent, subject, body);
+  }
+  catch (error) {
+    return error;
+  }
 }
