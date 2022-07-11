@@ -198,10 +198,16 @@ export const resetPasswordEmail = async (req, res) => {
     const { emailId } = req.body;
     // send link via email
     try {
-        const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
-        const subject = "Password reset from PVA"
-        await sendMail(emailId, subject, link)
-        res.status(200).json({ success: true, msg: "Message sent!!" })
+        const user = await User.findOne({ emailId: emailId })
+        console.log(user)
+        if (!user)
+            res.status(404).json({ success: false, msg: "User not Found!!" })
+        else {
+            const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
+            const subject = "Password reset from PVA"
+            sendMail(emailId, subject, link)
+            res.status(200).json({ success: true, msg: "Message sent!!" })
+        }
     } catch (err) {
         res.status(404).json({ success: false, msg: "An error occured" })
     }
@@ -225,6 +231,7 @@ export const resetPassword = async (req, res) => {
         else if (verifyResp) {
             try {
                 const user = await User.findOneAndUpdate({ emailId: emailId }, { password: password }, options)
+                user.save()
                 res.status(200).json({ success: true, msg: "password changed" })
             }
             catch (err) {

@@ -12,6 +12,6 @@ export const passwordResetLink = (emailId) => {
     const token = jsonwebtoken.sign(payload, seccret, {
         expiresIn: '10m'
     });
-    const link = `${process.env.SERVER_URL}/api/user/reset-password/${emailId}/${token}`;
+    const link = `${process.env.CLIENT_URL}/reset-password/${emailId}/${token}`;
     return link
 }

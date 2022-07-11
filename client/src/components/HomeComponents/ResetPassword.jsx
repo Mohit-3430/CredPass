@@ -17,15 +17,17 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: First verify the token or the link
-    // TODO: Next update the db through patch req
+
     if (pass === cpass) {
-      await axios.patch("http://localhost:5000/api/user/change-password", {
-        password: pass,
-        cpass,
-        token,
-        emailId,
-      });
+      await axios.patch(
+        `http://localhost:5000/api/user/reset-password/${emailId}/${token}`,
+        {
+          password: pass,
+          confirmPassword: cpass,
+          token,
+          emailId,
+        }
+      );
       toast.success("Password Changed", {
         transition: Zoom,
       });

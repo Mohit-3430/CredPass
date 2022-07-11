@@ -38,8 +38,7 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // If we use arrow function "this" is not accessible
-userSchema.pre("save", async function(next)  {
-    console.log(this)
+userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
     next();
 });
