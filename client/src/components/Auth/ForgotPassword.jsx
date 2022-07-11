@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
 import axios from "axios";
+import pic from "../../images/purple-mail.svg";
+import "../../styles/ForgotPassword/ForgotPassword.css";
 
 const ForgotPassword = () => {
   const [emailId, setEmailId] = useState("");
@@ -46,7 +48,14 @@ const ForgotPassword = () => {
           </div>
         </section>
       )}
-      {formSubmitted && <div>Close this tab and check your email</div>}
+      {formSubmitted && (
+        <div className="User--info">
+          <img src={pic} className="Info__pic" alt="MailBox" />
+          <p className="forgot__password">
+            Please close this tab and check your email
+          </p>
+        </div>
+      )}
     </>
   );
 };

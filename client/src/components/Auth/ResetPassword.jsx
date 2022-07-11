@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
+import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../../styles/ForgotPassword/ForgotPassword.css";
+import pic from "../../images/completed.svg";
 
 const ResetPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -14,6 +17,7 @@ const ResetPassword = () => {
   const { token, emailId } = useParams();
   const [eye, setEye] = useState(true);
   const [ceye, setcEye] = useState(true);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +110,18 @@ const ResetPassword = () => {
           </div>
         </section>
       )}
-      {formSubmitted && <div>password Has been Changed</div>}
+      {formSubmitted && (
+        <div className="User--info">
+          <img src={pic} className="Info__pic" alt="MailBox" />
+          <p className="forgot__password">Master password is updated</p>
+          <button
+            onClick={() => navigate("/login")}
+            className="proceed__buttons"
+          >
+            Login
+          </button>
+        </div>
+      )}
       <ToastContainer hideProgressBar autoClose={3000} />
     </>
   );
