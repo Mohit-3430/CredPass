@@ -62,14 +62,33 @@ export const recordEdit = async (req, res) => {
 // DELETE api/record-delete
 export const recordDelete = async (req, res) => {
     const siteId = req.params.siteId;
-
-    try {
-        const site = await Site.findByIdAndDelete(siteId)
-        if (!site) throw error;
-        res.status(200).json({ "success": true, "msg": "record deleted!" })
-    } catch (error) {
-        res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+    const date = new Date(Date.now() + 6.048e+8).toISOString();
+    const updates = {
+        expireAt: date,
+        deleted: true
     }
+    const site = await Site.findById(siteId);
+
+    if (site.deleted !== true) {
+        try {
+            const site = await Site.findByIdAndUpdate(siteId, updates, { new: true })
+            if (!site) throw error;
+            res.status(200).json({ "success": true, "msg": "record Will be deleted in 7 days" })
+        } catch (error) {
+            res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+        }
+    }
+    else {
+        try {
+            const site = await Site.findByIdAndDelete(siteId)
+            if (!site) throw error;
+            res.status(200).json({ "success": true, "msg": "record is permenatly deleted" })
+        }
+        catch (error) {
+            res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+        }
+    }
+
 }
 
 
