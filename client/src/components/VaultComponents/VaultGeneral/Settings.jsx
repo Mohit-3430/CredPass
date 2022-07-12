@@ -1,12 +1,12 @@
 import VaultNavbar from "./VaultNavbar";
-import "../../../styles/Vault/Settings.css";
+import "../../../styles/Vault/UI.css";
 import { SettingsLinks } from "../Settings/SettingsComponents";
 
 const Settings = () => {
   return (
     <>
       <VaultNavbar />
-      <section className="settings__container">
+      <section className="ui__container">
         {" "}
         {/*Grid*/}
         <SettingsLinks />

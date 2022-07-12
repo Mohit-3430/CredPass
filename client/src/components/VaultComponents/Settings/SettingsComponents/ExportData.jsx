@@ -42,8 +42,8 @@ const ExportData = () => {
 
   return (
     <>
-      <div className="settings-section" id="irreversible-stuff">
-        <div className="settings-section__header">
+      <div className="ui-section" id="irreversible-stuff">
+        <div className="ui-section__header">
           <h2>Export Data</h2>
           <hr />
           <p>
@@ -51,7 +51,7 @@ const ExportData = () => {
             contains your password unprotected!!{" "}
           </p>
         </div>
-        <div className="settings-section__content--button">
+        <div className="ui-section__content--button">
           <button onClick={exportDataProceedings}>Download File</button>
         </div>
         {exportModalSuperPasswordVerified === false ? (

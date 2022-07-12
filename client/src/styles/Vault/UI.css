@@ -1,27 +1,26 @@
-.settings__container{
+.ui__container{
     display: grid;
     grid-template-columns: 1fr 3fr;
     justify-items: center;
     /* grid-template-rows: ; */
 }
 
-.settings__menu {
+.ui__menu {
     border: 0.15rem solid black;
-    border-radius: 0.4rem;
     margin: 1rem;
 }
 
-.settings__menu--header{
+.ui__menu--header{
     padding: 1rem;
     font-weight: bolder;
 }
-.settings {
+.ui {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.settings a {
+.ui a {
     color: black;
     background-color: white;
     border: none;
@@ -29,55 +28,54 @@
     list-style: none;
     padding: 0.25rem 1rem;
 }
-.settings a:hover {
+.ui a:hover {
     background-color: rgba(128, 128, 128, 0.486);
     cursor: pointer;
 }
-.settings a{
+.ui a{
     color: black;
     font-weight: 400;
 }
 
-/* Settings-sections */
-.settings-section{
+/* ui-sections */
+.ui-section{
     margin: 1rem 0;
 }
-.settings-section__container{
+.ui-section__container{
     display: flex;
     width : 95%;
     flex-direction: column;
 }
-.settings-section__container form {
+.ui-section__container form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.settings-section__container form label {
+.ui-section__container form label {
     display: block;
     font-weight: 500;
     margin: 0.15rem;
 }
-.settings-section__content input {
+.ui-section__content input {
     width: 15rem;
 }
-.settings-section__content--button button{
+.ui-section__content--button button{
     margin-top: 1rem;
     border: none;
     padding: 0.20rem;
     background-color: rgba(47, 4, 117, 0.788);
     color: white;
     font-weight: 600;
-    border-radius: 0.25rem;
 }
 a,button:hover{
     cursor: pointer;
 }
 
 /* Two-step-Login */
-.settings-section__header p{
+.ui-section__header p{
     margin: 1rem 0;
 }
-.settings-section__header button{
+.ui-section__header button{
     margin-top: 0.25rem;
     margin-right: 5rem;
     border: none;
@@ -85,7 +83,6 @@ a,button:hover{
     background-color: rgba(47, 4, 117, 0.788);
     color: white;
     font-weight: 600;
-    border-radius: 0.25rem;
 }
 .instructions {
     padding: 1rem;
@@ -110,35 +107,35 @@ a,button:hover{
     margin: 1rem;
 }
 
-.settings--buttons__group{
+.ui--buttons__group{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 @media only screen and (max-width:600px) {
-    .settings__container{
+    .ui__container{
         grid-template-columns: 1fr;
     }
-    .settings__menu--header{
+    .ui__menu--header{
         padding: 0;
         text-align: center;
     }
-    .settings-section__content input {
+    .ui-section__content input {
         width: 70vw;
     }
-    .settings li{
+    .ui li{
         padding: 0 0.5rem;
     }
-    .settings {
+    .ui {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .settings__menu {
+    .ui__menu {
         border: none;
     }
-    .settings-section__container{
+    .ui-section__container{
         width: 70%;
     }
 }

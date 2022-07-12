@@ -21,7 +21,7 @@
 
 .plus-new{
     background-color: black;
-    padding: .5rem;
+    padding: .5rem 0.5rem 0.2rem 0.5rem;
     color: white;
     font-size: 1rem;
 }

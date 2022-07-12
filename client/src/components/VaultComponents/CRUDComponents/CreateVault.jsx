@@ -6,7 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Slide, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../../styles/Auth/AuthForms.css";
+import "../../../styles/Forms/Forms.css";
 
 const CreateVault = () => {
   const [siteName, setSiteName] = useState("");

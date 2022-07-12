@@ -63,7 +63,7 @@ const HomeVault = () => {
                 className="plus-new"
                 onClick={() => navigate("/vault-create")}
               >
-                <FaPlus />
+                <FaPlus size={"1em"} />
               </span>
             </div>
           </>

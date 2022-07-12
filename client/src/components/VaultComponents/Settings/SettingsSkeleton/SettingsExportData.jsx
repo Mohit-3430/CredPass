@@ -6,11 +6,11 @@ const SettingsExportData = () => {
   return (
     <>
       <VaultNavbar />
-      <section className="settings__container">
+      <section className="ui__container">
         {" "}
         {/*Grid*/}
         <SettingsLinks />
-        <section className="settings-section__container">
+        <section className="ui-section__container">
           <ExportData />
         </section>
       </section>

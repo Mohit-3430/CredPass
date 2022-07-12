@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import "../../styles/Auth/AuthForms.css";
+import "../../styles/Forms/Forms.css";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { useNavigate } from "react-router-dom";
 

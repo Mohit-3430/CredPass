@@ -1,5 +1,5 @@
 import { VaultNavbar } from "../../VaultGeneral";
-import "../../../../styles/Vault/Settings.css";
+import "../../../../styles/Vault/UI.css";
 import IrreversibleStuff from "../SettingsComponents/IrreversibleStuff";
 import SettingsLinks from "../SettingsComponents/SettingsLinks";
 
@@ -7,11 +7,11 @@ const SettingsIrreversible = () => {
   return (
     <>
       <VaultNavbar />
-      <section className="settings__container">
+      <section className="ui__container">
         {" "}
         {/*Grid*/}
         <SettingsLinks />
-        <section className="settings-section__container">
+        <section className="ui-section__container">
           <IrreversibleStuff />
         </section>
       </section>

@@ -21,7 +21,6 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 2rem;
     padding: 5rem 8rem;
     border: solid black 0.15rem;
 }
@@ -54,7 +53,6 @@ form {
     border: none;
     outline: none;
     padding: .25rem;
-    border-radius: 0.5rem;
     color: green;
     background-color: white;
     border: .1rem solid rgb(7, 131, 13);
@@ -106,7 +104,6 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 2rem;
     padding: 2rem 2rem;
     border: solid black 0.15rem;
 }

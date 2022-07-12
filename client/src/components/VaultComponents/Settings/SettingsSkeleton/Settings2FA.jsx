@@ -1,6 +1,6 @@
 import { VaultNavbar } from "../../VaultGeneral";
 import { TwoStepLogin, SettingsLinks } from "../SettingsComponents";
-import "../../../../styles/Vault/Settings.css";
+import "../../../../styles/Vault/UI.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -26,11 +26,11 @@ const Settings2Fa = () => {
   return (
     <>
       <VaultNavbar />
-      <section className="settings__container">
+      <section className="ui__container">
         {" "}
         {/*Grid*/}
         <SettingsLinks />
-        <section className="settings-section__container">
+        <section className="ui-section__container">
           <TwoStepLogin superUser={superUser} />
         </section>
       </section>

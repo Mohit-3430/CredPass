@@ -101,8 +101,8 @@ const IrreversibleStuff = () => {
 
   return (
     <>
-      <div className="settings-section" id="irreversible-stuff">
-        <div className="settings-section__header">
+      <div className="ui-section" id="irreversible-stuff">
+        <div className="ui-section__header">
           <h2>Irreversible Stuff</h2>
           <hr />
         </div>
@@ -216,7 +216,7 @@ const IrreversibleStuff = () => {
             </section>
           </ReactModal>
         )}
-        <div className="settings-section__content--button settings--buttons__group">
+        <div className="ui-section__content--button settings--buttons__group">
           <button onClick={() => vaultProceedings()}>Delete Vault</button>
           <button onClick={() => accountProceedings()}>Delete Account</button>
         </div>
