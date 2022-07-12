@@ -36,12 +36,11 @@ const SignupForm = () => {
       };
 
       try {
-        const data = await axios.post(
+        await axios.post(
           "http://localhost:5000/api/user/register",
           { emailId, password, uname, againPassword },
           config
         );
-        console.log(data);
         navigate("/login");
       } catch (err) {
         const errObj = err.response.data.errors;

@@ -218,6 +218,7 @@ const IrreversibleStuff = () => {
         )}
         <div className="ui-section__content--button settings--buttons__group">
           <button onClick={() => vaultProceedings()}>Delete Vault</button>
+          <br />
           <button onClick={() => accountProceedings()}>Delete Account</button>
         </div>
         <ToastContainer hideProgressBar autoClose={3000} />

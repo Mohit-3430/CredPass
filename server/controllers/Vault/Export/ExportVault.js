@@ -5,7 +5,7 @@ import { decrypt } from "../../../configs/EncryptionHandler.js"
 // GET /api/export-vault-data
 export const exportData = async (req, res) => {
     try {
-        Site.find({ user: req.user.sub }, 'siteName uname password', function (err, doc) {
+        Site.find({ user: req.user.sub }, 'siteUrl uname password', function (err, doc) {
             if (err) {
                 console.log(err);
                 res.status(404).json({ success: false, msg: "error occured!" });

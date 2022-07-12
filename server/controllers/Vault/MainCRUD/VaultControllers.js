@@ -8,19 +8,19 @@ export const VaultGeneral = (req, res) => {
 
 // POST api/vault-create
 export const VaultCreate = async (req, res) => {
-    const { siteName, uname, password } = req.body;
+    const { siteUrl, uname, password } = req.body;
 
     const encryptedPassword = encrypt(password);
 
     const site = new Site({
-        siteName: siteName,
+        siteUrl: siteUrl,
         uname: uname,
         password: encryptedPassword
         // iv : encryptedPassword.iv
     });
     try {
         await site.save();
-        await Site.findOneAndUpdate({ siteName: siteName }, { user: req.user.sub })
+        await Site.findOneAndUpdate({ siteUrl: siteUrl }, { user: req.user.sub })
         res.status(200).json({ sucess: true, msg: "Added" })
     } catch (err) {
         res.status(401).json({ sucess: false, msg: "An error Ocurred!" })

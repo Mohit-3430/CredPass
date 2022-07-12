@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../styles/Vault/Record.css";
-import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import { IoEllipsisVerticalOutline } from "react-icons/io5";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,24 +11,33 @@ import { MdEdit } from "react-icons/md";
 import React from "react";
 
 const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
-  const [eye, setEye] = useState(true);
-  const [status, setStatus] = useState(1); // hidden-1, show-0
-
-  const changeEye = () => {
-    if (eye === true) {
-      setStatus(0);
-      setEye(false);
-    } else {
-      setStatus(1);
-      setEye(true);
-    }
-  };
-
+  // const [status, setStatus] = useState(1); // hidden-1, show-0
+  const [menu, setMenu] = useState(false);
+  const [fav, setFav] = useState(site.favorite);
   const config = {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   };
+
+  const toggleStar = async () => {
+    if (fav === true) {
+      setFav(false);
+      await axios.patch(
+        `http://localhost:5000/api/record-edit/${site._id}`,
+        { favorite: false },
+        config
+      );
+    } else {
+      setFav(true);
+      await axios.patch(
+        `http://localhost:5000/api/record-edit/${site._id}`,
+        { favorite: true },
+        config
+      );
+    }
+  };
+
   useEffect(() => {
     const decryptPassword = async (siteObj) => {
       const res = await axios.post(
@@ -40,7 +51,7 @@ const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
           return site._id === siteObj._id
             ? {
                 _id: site._id,
-                siteName: site.siteName,
+                siteUrl: site.siteUrl,
                 uname: site.uname,
                 password: res.data,
               }
@@ -50,7 +61,7 @@ const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
     };
     decryptPassword(site);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [site]);
 
   const removeRecord = async (siteId) => {
     try {
@@ -81,32 +92,40 @@ const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
   return (
     <>
       <section className="vault__contents">
-        <div className="vault__contents--edit-icons">
-          <span onClick={() => removeRecord(site._id)} className="trash">
-            {" "}
-            <FaTrash />
+        <span className="vault__contents--menu">
+          <span onClick={() => toggleStar()}>
+            {fav === true ? <AiFillStar /> : <AiOutlineStar />}
           </span>
-          <span onClick={() => editStuff(site)} className="edit">
-            <MdEdit />
-          </span>
+          {<IoEllipsisVerticalOutline onClick={() => setMenu(!menu)} />}
+        </span>
+        <div className="menu__links">
+          <div className="menu__dropdown">
+            {menu && (
+              <div className="vault__contents--edit-icons">
+                <div>
+                  <span
+                    onClick={() => removeRecord(site._id)}
+                    className="trash"
+                  >
+                    <FaTrash />
+                    Remove
+                  </span>
+                </div>
+                <div>
+                  <span onClick={() => editStuff(site)} className="edit">
+                    <MdEdit />
+                    Edit
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <p>
-          <b>Site Name: </b>
-          {site.siteName}
-        </p>
-        <p>
-          <b>User Name: </b>
-          {site.uname}
-        </p>
-        <div className="vault__content--password-field">
-          <p style={{ display: "inline" }}>
-            <b>Password:</b>
+        <div>
+          <p className="record__title" onClick={() => editStuff(site)}>
+            <b>{site.siteUrl}</b>
           </p>
-          <span className="reye" onClick={() => changeEye()}>
-            {" "}
-            {eye === true ? <FaEye /> : <FaEyeSlash />}
-          </span>
-          <p> {status ? "●●●●●●●●" : site.password}</p>
+          <p>{site.uname}</p>
         </div>
         <ToastContainer />
       </section>

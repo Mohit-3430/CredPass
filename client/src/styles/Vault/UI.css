@@ -11,7 +11,7 @@
 }
 
 .ui__menu--header{
-    padding: 1rem;
+    padding: 0.5rem;
     font-weight: bolder;
 }
 .ui {
@@ -113,6 +113,12 @@ a,button:hover{
     align-items: flex-start;
 }
 
+@media only screen and (max-width:800px) {
+    .ui__container{
+        grid-template-columns: 1fr;
+    }
+}
+
 @media only screen and (max-width:600px) {
     .ui__container{
         grid-template-columns: 1fr;
@@ -131,9 +137,6 @@ a,button:hover{
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .ui__menu {
-        border: none;
     }
     .ui-section__container{
         width: 70%;

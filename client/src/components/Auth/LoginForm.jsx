@@ -35,7 +35,7 @@ const LoginForm = () => {
         localStorage.setItem("expires", data.expiresIn);
         localStorage.setItem("user", data.superUser);
         setMessage("");
-        navigate("/vault-home");
+        navigate("/vault/all-items");
       } else if (data.success === false && data.msg === "could not find user") {
         toast.info("User not Found", {
           autoClose: 3000,

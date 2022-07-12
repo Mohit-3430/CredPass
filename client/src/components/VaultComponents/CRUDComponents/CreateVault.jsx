@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/Forms/Forms.css";
 
 const CreateVault = () => {
-  const [siteName, setSiteName] = useState("");
+  const [siteUrl, setsiteUrl] = useState("");
   const [uname, setUname] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
@@ -48,7 +48,7 @@ const CreateVault = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/vault-create",
-        { siteName, uname, password, userName },
+        { siteUrl, uname, password, userName },
         config
       );
       if (response.status === 200) {
@@ -57,7 +57,7 @@ const CreateVault = () => {
           transition: Slide,
         });
         setTimeout(() => {
-          navigate("/vault-home");
+          navigate("/vault/all-items");
         }, 3000);
       } else {
         toast.warn("Invalid Operation", {
@@ -98,11 +98,11 @@ const CreateVault = () => {
             <label>Site Name:</label>
             <input
               type="text"
-              value={siteName}
+              value={siteUrl}
               required
               autoFocus
               placeholder="Enter site name or URL"
-              onChange={(e) => setSiteName(e.target.value)}
+              onChange={(e) => setsiteUrl(e.target.value)}
             />
             <label>User Name:</label>
             <input

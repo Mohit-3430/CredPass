@@ -48,7 +48,7 @@ const VaultNavbar = () => {
         <div className={`nav__links ${showNav}`}>
           <ul>
             <li onClick={() => toggleNav()}>
-              <NavLink to="/vault-home">Home</NavLink>
+              <NavLink to="/vault/all-items">Home</NavLink>
             </li>
             <li onClick={() => toggleNav()}>
               <NavLink to="/vault-create">Add</NavLink>

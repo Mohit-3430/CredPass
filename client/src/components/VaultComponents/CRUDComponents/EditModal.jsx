@@ -9,7 +9,7 @@ import "../../../styles/Utils/EditModalStyle.css";
 
 ReactModal.setAppElement("#root");
 const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
-  const [siteName, setSiteName] = useState(siteModal.siteName);
+  const [siteUrl, setsiteUrl] = useState(siteModal.siteUrl);
   const [uname, setUname] = useState(siteModal.uname);
   const [password, setPassword] = useState(siteModal.password);
   const [eye, setEye] = useState(true);
@@ -29,7 +29,7 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
         return val._id === siteModal._id
           ? {
               _id: val._id,
-              siteName: siteName,
+              siteUrl: siteUrl,
               uname: uname,
               password: password,
             }
@@ -45,7 +45,7 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
       );
       await axios.patch(
         `http://localhost:5000/api/record-edit/${siteModal._id}`,
-        { siteName, uname, password: data },
+        { siteUrl, uname, password: data },
         config
       );
       toast.success("Edited Successfully", {
@@ -94,8 +94,8 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
             <label>Site Name:</label>
             <input
               type="text"
-              value={siteName}
-              onChange={(e) => setSiteName(e.target.value)}
+              value={siteUrl}
+              onChange={(e) => setsiteUrl(e.target.value)}
             />
             <label>User Name:</label>
             <input
