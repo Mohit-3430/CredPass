@@ -65,27 +65,30 @@ export const recordDelete = async (req, res) => {
     const date = new Date(Date.now() + 6.048e+8).toISOString();
     const updates = {
         expireAt: date,
+        favorite: false,
         deleted: true
     }
     const site = await Site.findById(siteId);
-
-    if (site.deleted !== true) {
-        try {
-            const site = await Site.findByIdAndUpdate(siteId, updates, { new: true })
-            if (!site) throw error;
-            res.status(200).json({ "success": true, "msg": "record Will be deleted in 7 days" })
-        } catch (error) {
-            res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+    console.log(site)
+    if (site) {
+        if (site.deleted !== true) {
+            try {
+                const site = await Site.findByIdAndUpdate(siteId, updates, { new: true })
+                if (!site) throw error;
+                res.status(200).json({ "success": true, "msg": "record Will be deleted in 7 days" })
+            } catch (error) {
+                res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+            }
         }
-    }
-    else {
-        try {
-            const site = await Site.findByIdAndDelete(siteId)
-            if (!site) throw error;
-            res.status(200).json({ "success": true, "msg": "record is permenatly deleted" })
-        }
-        catch (error) {
-            res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+        else {
+            try {
+                const site = await Site.findByIdAndDelete(siteId)
+                if (!site) throw error;
+                res.status(200).json({ "success": true, "msg": "record is permenatly deleted" })
+            }
+            catch (error) {
+                res.status(404).json({ "success": false, "msg": "Record Not Found!" })
+            }
         }
     }
 

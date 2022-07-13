@@ -18,7 +18,7 @@ import {
   SettingsIrreversible,
   SettingsExportData,
 } from "./components/";
-import { VskAllItems, VskFavorites } from "./components";
+import { VskAllItems, VskFavorites, VskTrash } from "./components";
 
 const App = () => {
   return (
@@ -37,6 +37,7 @@ const App = () => {
 
           <Route path="/vault/all-items" element={<VskAllItems />} />
           <Route path="/vault/fav" element={<VskFavorites />} />
+          <Route path="/vault/trash" element={<VskTrash />} />
           <Route path="/vault-create" element={<CreateVault />} />
           <Route path="/logout" element={<Logout />} />
 

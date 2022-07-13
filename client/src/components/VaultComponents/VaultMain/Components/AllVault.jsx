@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactModal from "react-modal";
 import { Record, EditModal } from "../../CRUDComponents";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
 ReactModal.setAppElement("#root");
 const AllVault = () => {
-  const [uname, setUname] = useState("");
   const [sites, setSites] = useState([]);
   const [modal, setModal] = useState(false);
   const [siteModal, setSiteModal] = useState([]);
@@ -17,13 +16,22 @@ const AllVault = () => {
 
   useEffect(() => {
     const fetchSites = async () => {
-      const resp = await axios.get("http://localhost:5000/api/vault-data/", {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      setSites(resp.data.sites);
-      setUname(resp.data.user);
+      const sitesArr = [];
+      const { data } = await axios.get(
+        "http://localhost:5000/api/vault-data/",
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      for (let i = 0; i < data.sites.length; i++) {
+        if (data.sites[i].deleted === false) {
+          sitesArr.push(data.sites[i]);
+        }
+      }
+      setSites(sitesArr);
+      // setUname(resp.data.user);
     };
     fetchSites();
   }, []);
@@ -52,6 +60,7 @@ const AllVault = () => {
                   setModal={setModal}
                   key={site._id}
                   setSiteModal={setSiteModal}
+                  star={true}
                 />
               ))}
             </main>

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactModal from "react-modal";
-import { Record, EditModal } from "../../CRUDComponents";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { Record } from "../../CRUDComponents";
+import { ConfirmDeletionModal, ConfirmRestoreModal } from "../../../Utils";
 
 ReactModal.setAppElement("#root");
-const Favorites = () => {
+const Trash = () => {
   const [sites, setSites] = useState([]);
-  const [modal, setModal] = useState(false);
+  const [delModal, setDelModal] = useState(false);
+  const [restoreModal, setRestoreModal] = useState(false);
   const [siteModal, setSiteModal] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSites = async () => {
@@ -25,7 +23,7 @@ const Favorites = () => {
         }
       );
       for (let i = 0; i < data.sites.length; i++) {
-        if (data.sites[i].favorite === true) {
+        if (data.sites[i].deleted === true) {
           sitesArr.push(data.sites[i]);
         }
       }
@@ -36,18 +34,18 @@ const Favorites = () => {
 
   return (
     <>
-      <div className="ui-section" id="two-step-login">
+      <div className="ui-section">
         <div className="ui-section__header">
-          {sites.length > 0 && (
-            <span className="plus" onClick={() => navigate("/vault-create")}>
-              <FaPlus />
-            </span>
-          )}
-          <h2>Favorites</h2>
+          <h2>Trash</h2>
           <hr />
+          <div className="none">
+            <p id="message" style={{ display: "inline" }}>
+              The Items here are automatically deleted after 7 days
+            </p>
+          </div>
           <br />
         </div>
-        {sites.length > 0 ? (
+        {sites.length > 0 && (
           <>
             <main className="vault">
               {sites.map((site) => (
@@ -55,38 +53,35 @@ const Favorites = () => {
                   site={site}
                   sites={sites}
                   setSites={setSites}
-                  setModal={setModal}
+                  setModal={setDelModal}
                   key={site._id}
                   setSiteModal={setSiteModal}
-                  star={true}
+                  star={false}
+                  setDelModal={setDelModal}
+                  setRestoreModal={setRestoreModal}
                 />
               ))}
             </main>
           </>
-        ) : (
-          <>
-            {" "}
-            <div className="none">
-              <p id="message" style={{ display: "inline" }}>
-                Add records by marking them with ⭐
-              </p>
-              <span
-                className="plus-new"
-                onClick={() => navigate("/vault-create")}
-              >
-                <FaPlus size={"1em"} />
-              </span>
-            </div>
-          </>
         )}
-        {modal && (
-          <EditModal
+        {delModal && (
+          <ConfirmDeletionModal
             siteModal={siteModal}
-            modal={modal}
+            modal={delModal}
             sites={sites}
-            setModal={setModal}
+            setModal={setDelModal}
             setSites={setSites}
-            close={() => setModal(false)}
+            close={() => setDelModal(false)}
+          />
+        )}
+        {restoreModal && (
+          <ConfirmRestoreModal
+            siteModal={siteModal}
+            modal={restoreModal}
+            sites={sites}
+            setModal={setRestoreModal}
+            setSites={setSites}
+            close={() => setRestoreModal(false)}
           />
         )}
       </div>
@@ -94,4 +89,4 @@ const Favorites = () => {
   );
 };
 
-export default Favorites;
+export default Trash;

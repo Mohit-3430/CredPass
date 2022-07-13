@@ -7,13 +7,24 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdOutlineRestorePage } from "react-icons/md";
+
 import React from "react";
 
-const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
+const Record = ({
+  site,
+  sites,
+  setSites,
+  setModal,
+  setSiteModal,
+  star,
+  setDelModal,
+  setRestoreModal,
+}) => {
   // const [status, setStatus] = useState(1); // hidden-1, show-0
   const [menu, setMenu] = useState(false);
   const [fav, setFav] = useState(site.favorite);
+
   const config = {
     headers: {
       Authorization: localStorage.getItem("token"),
@@ -65,7 +76,7 @@ const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
 
   const removeRecord = async (siteId) => {
     try {
-      toast.warn("Record Deleted!", {
+      toast.warn("Item Moved to trash!", {
         autoClose: 1500,
         hideProgressBar: true,
         transition: Slide,
@@ -89,34 +100,69 @@ const Record = ({ site, sites, setSites, setModal, setSiteModal }) => {
     setSiteModal(site);
   };
 
+  const restore = (site) => {
+    setRestoreModal(true);
+    setSiteModal(site);
+  };
+
+  const permenantDelete = (site) => {
+    setDelModal(true);
+    setSiteModal(site);
+  };
+
   return (
     <>
       <section className="vault__contents">
         <span className="vault__contents--menu">
-          <span onClick={() => toggleStar()}>
-            {fav === true ? <AiFillStar /> : <AiOutlineStar />}
-          </span>
+          {star && (
+            <span onClick={() => toggleStar()}>
+              {fav === true ? <AiFillStar /> : <AiOutlineStar />}
+            </span>
+          )}
           {<IoEllipsisVerticalOutline onClick={() => setMenu(!menu)} />}
         </span>
         <div className="menu__links">
           <div className="menu__dropdown">
             {menu && (
               <div className="vault__contents--edit-icons">
-                <div>
-                  <span
-                    onClick={() => removeRecord(site._id)}
-                    className="trash"
-                  >
-                    <FaTrash />
-                    Remove
-                  </span>
-                </div>
-                <div>
-                  <span onClick={() => editStuff(site)} className="edit">
-                    <MdEdit />
-                    Edit
-                  </span>
-                </div>
+                {star && (
+                  <>
+                    <div>
+                      <span
+                        onClick={() => removeRecord(site._id)}
+                        className="trash"
+                      >
+                        <FaTrash />
+                        Remove
+                      </span>
+                    </div>
+                    <div>
+                      <span onClick={() => editStuff(site)} className="edit">
+                        <MdEdit />
+                        Edit
+                      </span>
+                    </div>
+                  </>
+                )}
+                {!star && (
+                  <>
+                    <div>
+                      <span onClick={() => restore(site)} className="restore">
+                        <MdOutlineRestorePage />
+                        Restore
+                      </span>
+                    </div>
+                    <div>
+                      <span
+                        onClick={() => permenantDelete(site)}
+                        className="restore"
+                      >
+                        <FaTrash />
+                        Delete
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
