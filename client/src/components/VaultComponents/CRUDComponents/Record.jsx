@@ -74,6 +74,30 @@ const Record = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [site]);
 
+  const getFavicon = async (siteUrl) => {
+    const options = {
+      method: "GET",
+      url: "https://faviconfinder.p.rapidapi.com/faviconurl/",
+      params: {
+        url: `https://${siteUrl}`,
+        fallback: "https://www.iana.org/_img/bookmark_icon.ico",
+      },
+      headers: {
+        "X-RapidAPI-Key": "9c38fd10a7mshebc97296041f384p1658b7jsn84d06e5e11cb",
+        "X-RapidAPI-Host": "faviconfinder.p.rapidapi.com",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
   const removeRecord = async (siteId) => {
     try {
       toast.warn("Item Moved to trash!", {
@@ -167,11 +191,21 @@ const Record = ({
             )}
           </div>
         </div>
-        <div>
-          <p className="record__title" onClick={() => editStuff(site)}>
-            <b>{site.siteUrl}</b>
-          </p>
-          <p>{site.uname}</p>
+        <div className="record__container" onClick={() => getFavicon()}>
+          <div>
+            <img
+              className="record__favicon"
+              src={`https://icon.horse/icon/${site.siteUrl}/`}
+              // src={`https://icons.duckduckgo.com/ip3/${site.siteUrl}.ico`}
+              alt="No Favicon"
+            />
+          </div>
+          <div>
+            <p className="record__title" onClick={() => editStuff(site)}>
+              <b>{site.siteUrl}</b>
+            </p>
+            <p>{site.uname}</p>
+          </div>
         </div>
         <ToastContainer />
       </section>

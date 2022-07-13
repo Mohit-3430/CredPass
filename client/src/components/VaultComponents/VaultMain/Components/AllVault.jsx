@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactModal from "react-modal";
 import { Record, EditModal } from "../../CRUDComponents";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
@@ -92,7 +90,6 @@ const AllVault = () => {
           />
         )}
       </div>
-      <ToastContainer />
     </>
   );
 };
