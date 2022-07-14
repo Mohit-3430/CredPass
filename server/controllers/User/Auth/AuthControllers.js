@@ -1,4 +1,4 @@
-import { issueJWT } from "../../../configs/utils.js";
+import { getCookieWithJwtToken } from "../../../configs/JWT/JWTServices.js";
 import { User } from "../../../Models/user.js";
 import bcrypt from "bcrypt";
 
@@ -58,7 +58,6 @@ export const LoginController = (req, res) => {
 
 //POST /api/user/login
 export const LoginVerifyController = async (req, res) => {
-
     try {
         const user = await User.findOne({ emailId: req.body.emailId })
         if (!user) {
@@ -69,8 +68,9 @@ export const LoginVerifyController = async (req, res) => {
 
         if (isValid && user) {
             if (user.two_fa_status === false) {
-                const tokenObject = issueJWT(user.uname); //from utils
-                res.status(202).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus: user.two_fa_status, superUser: user.uname });
+                const cookie = await getCookieWithJwtToken(user.uname); //from utils
+                res.cookie(cookie);
+                res.status(202).json({ success: true, msg: "cookie set!" });
             }
             else {
                 res.status(200).json({ success: "partial", msg: "Token will be generated once the totp step is completed", totpStatus: true, superUser: user.uname })

@@ -1,7 +1,7 @@
-import { issueJWT } from "../../../configs/utils.js";
 import { User } from "../../../Models/user.js";
 import qrcode from "qrcode"
 import { verifyTOTP, genSecret } from "../../../configs/2FAUtils.js";
+import { getCookieWithJwtToken } from "../../../configs/JWT/JWTServices.js";
 
 // GET /api/user/totp-show
 export const toptShow = async (req, res) => {
@@ -64,10 +64,12 @@ export const toptVerification = async (req, res) => {
 // POST /api/user/totp-verification-noauth
 export const toptVerificationNoAuth = (req, res) => {
     const { verified } = verifyTOTP(req.body.secret_32, req.body.code)
+    console.log(req.body.user)
     if (verified === true) {
-        const tokenObject = issueJWT(req.body.user); //from utils
-        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus: true });
+        const cookie = getCookieWithJwtToken(req.body.user);
+        res.cookie(cookie);
+        res.status(200).json({ success: true, msg: "Totp verified and token generated" });
     }
     else
-        res.status(404).json({ success: false })
+        res.status(404).json({ success: false, msg: "Totp not verified!" })
 }

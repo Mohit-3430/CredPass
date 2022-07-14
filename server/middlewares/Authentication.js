@@ -5,13 +5,19 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const authentication = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]
+    const token = req.cookies.Authentication
+    const secret = Buffer.from(process.env.JWT_ACCESS_PUB, 'base64').toString(
+        'ascii',
+    );
     if (token) {
-        jsonwebtoken.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        jsonwebtoken.verify(token, secret, async (err, payload) => {
             if (err) return res.sendStatus(403)
             else {
-                req.user = user
+                const user = await User.findOne({ uname: payload.sub })
+                if (!user)
+                    res.send(false)
+                else
+                    req.user = payload
                 next();
             }
         })
