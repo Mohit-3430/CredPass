@@ -28,7 +28,7 @@ const ConfirmRestoreModal = ({
     try {
       await axios.patch(
         `http://localhost:5000/api/record-edit/${siteModal._id}`,
-        { deleted: false, expiryAt: null },
+        { deleted: false, expireAt: null },
         config
       );
       setSites(
