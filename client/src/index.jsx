@@ -12,7 +12,7 @@ import App from "./App";
 const container = document.getElementById("root");
 const rootContainer = ReactDOM.createRoot(container);
 rootContainer.render(
-  // <React.StrictMode>
-  <App />
-  // </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );

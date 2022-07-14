@@ -29,7 +29,6 @@ const AllVault = () => {
         }
       }
       setSites(sitesArr);
-      // setUname(resp.data.user);
     };
     fetchSites();
   }, []);

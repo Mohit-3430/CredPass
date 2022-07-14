@@ -71,8 +71,8 @@ const Record = ({
       );
     };
     decryptPassword(site);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [site]);
+    // eslint-disable-next-line
+  }, []);
 
   const getFavicon = async (siteUrl) => {
     const options = {
