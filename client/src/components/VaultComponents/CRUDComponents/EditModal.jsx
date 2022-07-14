@@ -3,7 +3,7 @@ import axios from "axios";
 import ReactModal from "react-modal";
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { Slide } from "react-toastify";
+import { Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/Utils/EditModalStyle.css";
 
@@ -49,8 +49,8 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
         config
       );
       toast.success("Edited Successfully", {
-        autoClose: 3000,
-        transition: Slide,
+        autoClose: 1000,
+        transition: Flip,
       });
     } catch (error) {
       console.log(error);

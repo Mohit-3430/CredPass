@@ -69,7 +69,6 @@ export const recordDelete = async (req, res) => {
         deleted: true
     }
     const site = await Site.findById(siteId);
-    console.log(site)
     if (site) {
         if (site.deleted !== true) {
             try {

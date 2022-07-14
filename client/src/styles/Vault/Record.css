@@ -1,8 +1,8 @@
 .vault__contents{
     font-size: 1.123rem;
-    border: 0.25rem solid black;
+    border: 0.15rem solid black;
     width:45vw;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 .record__container{
     display: flex;
@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: flex-start;
     margin-left: 2rem;
+    overflow:auto;
 }
 
 .record__favicon{
@@ -106,7 +107,6 @@
 @media only screen and (max-width: 350px) {
     .record__container{
         text-align: start;
-        overflow-wrap: break-word;
         margin-left: 0;
     }
     

@@ -12,7 +12,7 @@
 .vault{
     display: grid;
     row-gap: 1rem;
-    justify-content: center;
+    /* justify-content: center; */
     align-content: center;
     margin: 1rem;  
 }
@@ -38,3 +38,8 @@
     align-items: center;
 }
 
+@media only screen and (max-width:800px){
+    .vault {
+        justify-content: center;
+    }  
+}
