@@ -8,21 +8,23 @@ import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+axios.defaults.withCredentials = true;
+
 const LoginForm = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [eye, setEye] = useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setMessage("");
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/user/login",
-        { emailId, password }
+        { emailId, password },
+        {
+          withCredentials: true,
+        }
       );
       // TOTP Enabled
       if (data.success === "partial" && data.totpStatus === true) {
@@ -31,10 +33,11 @@ const LoginForm = () => {
       }
       // TOTP Disabled
       else if (data.success === true && data.totpStatus === false) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("expires", data.expiresIn);
         localStorage.setItem("user", data.superUser);
-        setMessage("");
+        toast.success("Success!!", {
+          autoClose: 200,
+          transition: Flip,
+        });
         navigate("/vault/all-items");
       } else if (data.success === false && data.msg === "could not find user") {
         toast.info("User not Found", {
@@ -111,7 +114,7 @@ const LoginForm = () => {
                 Log In
               </button>
             </div>
-            {message && <div className="response">{message}</div>}
+            {/* {message && <div className="response">{message}</div>} */}
           </form>
           <div className="dialogs">
             <p>

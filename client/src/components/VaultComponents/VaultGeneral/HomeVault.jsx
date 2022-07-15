@@ -6,6 +6,8 @@ import VaultNavbar from "./VaultNavbar";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
+axios.defaults.withCredentials = true;
+
 const HomeVault = () => {
   const [uname, setUname] = useState("");
   const [sites, setSites] = useState([]);
@@ -16,9 +18,7 @@ const HomeVault = () => {
   useEffect(() => {
     const fetchSites = async () => {
       const resp = await axios.get("http://localhost:5000/api/vault-data/", {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
+        withCredentials: true,
       });
       setSites(resp.data.sites);
       setUname(resp.data.user);

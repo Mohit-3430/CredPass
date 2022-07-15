@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdEdit, MdOutlineRestorePage } from "react-icons/md";
 
 import React from "react";
+axios.defaults.withCredentials = true;
 
 const Record = ({
   site,
@@ -25,26 +26,28 @@ const Record = ({
   const [menu, setMenu] = useState(false);
   const [fav, setFav] = useState(site.favorite);
 
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-
   const toggleStar = async () => {
     if (fav === true) {
       setFav(false);
       await axios.patch(
         `http://localhost:5000/api/record-edit/${site._id}`,
-        { favorite: false },
-        config
+        {
+          favorite: false,
+        },
+        {
+          withCredentials: true,
+        }
       );
     } else {
       setFav(true);
       await axios.patch(
         `http://localhost:5000/api/record-edit/${site._id}`,
-        { favorite: true },
-        config
+        {
+          favorite: true,
+        },
+        {
+          withCredentials: true,
+        }
       );
     }
   };
@@ -54,7 +57,9 @@ const Record = ({
       const res = await axios.post(
         `http://localhost:5000/api/vault-decrypt-password/`,
         { siteObj: { password: site.password } },
-        { headers: { Authorization: localStorage.getItem("token") } }
+        {
+          withCredentials: true,
+        }
       );
       siteObj.password = res.data;
       setSites(
@@ -74,30 +79,6 @@ const Record = ({
     // eslint-disable-next-line
   }, []);
 
-  const getFavicon = async (siteUrl) => {
-    const options = {
-      method: "GET",
-      url: "https://faviconfinder.p.rapidapi.com/faviconurl/",
-      params: {
-        url: `https://${siteUrl}`,
-        fallback: "https://www.iana.org/_img/bookmark_icon.ico",
-      },
-      headers: {
-        "X-RapidAPI-Key": "9c38fd10a7mshebc97296041f384p1658b7jsn84d06e5e11cb",
-        "X-RapidAPI-Host": "faviconfinder.p.rapidapi.com",
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
-
   const removeRecord = async (siteId) => {
     try {
       toast.warn("Item Moved to trash!", {
@@ -105,10 +86,9 @@ const Record = ({
         hideProgressBar: true,
         transition: Slide,
       });
-      await axios.delete(
-        `http://localhost:5000/api/record-delete/${siteId}`,
-        config
-      );
+      await axios.delete(`http://localhost:5000/api/record-delete/${siteId}`, {
+        withCredentials: true,
+      });
       setSites(
         sites.filter((val) => {
           return val._id !== siteId;
@@ -191,7 +171,7 @@ const Record = ({
             )}
           </div>
         </div>
-        <div className="record__container" onClick={() => getFavicon()}>
+        <div className="record__container">
           <div>
             <img
               className="record__favicon"

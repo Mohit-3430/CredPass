@@ -8,6 +8,8 @@ import { Slide, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/Forms/Forms.css";
 
+axios.defaults.withCredentials = true;
+
 const CreateVault = () => {
   const [siteUrl, setsiteUrl] = useState("");
   const [uname, setUname] = useState("");
@@ -39,17 +41,13 @@ const CreateVault = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const config = {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    };
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/vault-create",
         { siteUrl, uname, password, userName },
-        config
+        {
+          withCredentials: true,
+        }
       );
       if (response.status === 200) {
         toast.info("Added!!", {

@@ -7,6 +7,7 @@ import { Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/Utils/EditModalStyle.css";
 
+axios.defaults.withCredentials = true;
 ReactModal.setAppElement("#root");
 const ConfirmDeletionModal = ({
   siteModal,
@@ -17,9 +18,7 @@ const ConfirmDeletionModal = ({
   close,
 }) => {
   const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
+    withCredentials: true,
   };
 
   const modalSubmit = async (e) => {
@@ -39,9 +38,11 @@ const ConfirmDeletionModal = ({
         autoClose: 1000,
         transition: Flip,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, [2000]);
+      setSites(
+        sites.filter((val) => {
+          return val.deleted === false;
+        })
+      );
     } catch (error) {
       console.log(error);
     }

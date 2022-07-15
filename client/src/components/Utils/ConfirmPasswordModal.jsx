@@ -6,6 +6,7 @@ import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import React from "react";
+axios.defaults.withCredentials = true;
 
 ReactModal.setAppElement("#root");
 const ConfirmPasswordModal = ({
@@ -25,9 +26,7 @@ const ConfirmPasswordModal = ({
         "http://localhost:5000/api/user/only-password",
         { password: superPassword },
         {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+          withCredentials: true,
         }
       );
       if (data.success === true) {

@@ -4,15 +4,12 @@ import "../../styles/Forms/Forms.css";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 const Totp = () => {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
 
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,13 +23,10 @@ const Totp = () => {
           secret_32: data.base32,
           code: code,
           user: localStorage.getItem("user"),
-        },
-        config
+        }
       );
       if (response.data.success === true) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("expires", response.data.expiresIn);
-        navigate("/vault-home");
+        navigate("/vault/all-items");
       }
     } catch (err) {
       console.log(err);

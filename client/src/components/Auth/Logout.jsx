@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Utils/Reload.css";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const Logout = () => {
-  function removeData() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expires");
-    localStorage.removeItem("user");
-  }
-
+  localStorage.removeItem("user");
+  const removeData = async () => {
+    await axios.get("http://localhost:5000/api/user/logout", {
+      withCredentials: true,
+    });
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +19,8 @@ const Logout = () => {
     setTimeout(() => {
       navigate("/Login");
     }, 800);
-  }, [navigate]);
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <center>

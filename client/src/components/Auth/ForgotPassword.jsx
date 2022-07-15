@@ -4,6 +4,8 @@ import axios from "axios";
 import pic from "../../images/purple-mail.svg";
 import "../../styles/ForgotPassword/ForgotPassword.css";
 
+axios.defaults.withCredentials = true;
+
 const ForgotPassword = () => {
   const [emailId, setEmailId] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -11,9 +13,15 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/user/reset-password-email", {
-        emailId,
-      });
+      await axios.post(
+        "http://localhost:5000/api/user/reset-password-email",
+        {
+          emailId,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setFormSubmitted(true);
     } catch (err) {
       console.log(err);

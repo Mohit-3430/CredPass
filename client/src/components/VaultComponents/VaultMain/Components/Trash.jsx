@@ -4,6 +4,8 @@ import ReactModal from "react-modal";
 import { Record } from "../../CRUDComponents";
 import { ConfirmDeletionModal, ConfirmRestoreModal } from "../../../Utils";
 
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const Trash = () => {
   const [sites, setSites] = useState([]);
@@ -17,9 +19,7 @@ const Trash = () => {
       const { data } = await axios.get(
         "http://localhost:5000/api/vault-data/",
         {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+          withCredentials: true,
         }
       );
       for (let i = 0; i < data.sites.length; i++) {

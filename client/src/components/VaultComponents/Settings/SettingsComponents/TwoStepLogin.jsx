@@ -5,6 +5,9 @@ import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Slide, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const TwoStepLogin = () => {
   const [superModal, setSuperModal] = useState(false);
@@ -24,7 +27,9 @@ const TwoStepLogin = () => {
       try {
         const { data } = await axios.get(
           "http://localhost:5000/api/user/totp-status",
-          { headers: { Authorization: localStorage.getItem("token") } }
+          {
+            withCredentials: true,
+          }
         );
         if (data.msg === "Enabled") {
           setRes32Code(data.base32);
@@ -41,19 +46,15 @@ const TwoStepLogin = () => {
     };
   }, []);
 
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-
   const getQR = async () => {
     // fetches NEW base32 and qr image only if user two_fa_status ===false
     if (status === "Disabled") {
       try {
         const { data } = await axios.get(
           "http://localhost:5000/api/user/totp-show",
-          config
+          {
+            withCredentials: true,
+          }
         );
         setRes32Code(data.code);
         setResQR(data.scan);
@@ -72,9 +73,7 @@ const TwoStepLogin = () => {
         "http://localhost:5000/api/user/only-password",
         { password: superPassword },
         {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+          withCredentials: true,
         }
       );
       if (data.success === true) {
@@ -97,9 +96,7 @@ const TwoStepLogin = () => {
         "http://localhost:5000/api/user/totp-verification",
         { secret_32: res32Code, code: code },
         {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+          withCredentials: true,
         }
       );
       if (data === true) {
@@ -110,11 +107,12 @@ const TwoStepLogin = () => {
         });
         await axios.patch(
           "http://localhost:5000/api/user/edit-user-info",
-          { base32: res32Code, qrCode: resQR },
           {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
+            base32: res32Code,
+            qrCode: resQR,
+          },
+          {
+            withCredentials: true,
           }
         );
         setQrModal(false);
@@ -144,8 +142,14 @@ const TwoStepLogin = () => {
   const disableTotp = async () => {
     await axios.patch(
       "http://localhost:5000/api/user/edit-user-info",
-      { two_fa_status: false, base32: "", qrCode: "" },
-      { headers: { Authorization: localStorage.getItem("token") } }
+      {
+        two_fa_status: false,
+        base32: "",
+        qrCode: "",
+      },
+      {
+        withCredentials: true,
+      }
     );
     setStatus("Disabled");
     toast.info("Diasbled!", {

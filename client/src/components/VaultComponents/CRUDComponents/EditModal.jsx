@@ -7,18 +7,14 @@ import { Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/Utils/EditModalStyle.css";
 
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
   const [siteUrl, setsiteUrl] = useState(siteModal.siteUrl);
   const [uname, setUname] = useState(siteModal.uname);
   const [password, setPassword] = useState(siteModal.password);
   const [eye, setEye] = useState(true);
-
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
 
   const modalSubmit = async (e) => {
     e.preventDefault();
@@ -41,12 +37,16 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
       const { data } = await axios.post(
         "http://localhost:5000/api/vault-encrypt-password",
         { siteObj: { password: password, _id: siteModal._id } },
-        config
+        {
+          withCredentials: true,
+        }
       );
       await axios.patch(
         `http://localhost:5000/api/record-edit/${siteModal._id}`,
         { siteUrl, uname, password: data },
-        config
+        {
+          withCredentials: true,
+        }
       );
       toast.success("Edited Successfully", {
         autoClose: 1000,

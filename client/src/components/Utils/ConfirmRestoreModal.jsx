@@ -7,6 +7,8 @@ import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/Utils/EditModalStyle.css";
 
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const ConfirmRestoreModal = ({
   siteModal,
@@ -16,12 +18,6 @@ const ConfirmRestoreModal = ({
   sites,
   close,
 }) => {
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-
   const modalSubmit = async (e) => {
     setModal(false);
 
@@ -29,20 +25,22 @@ const ConfirmRestoreModal = ({
       await axios.patch(
         `http://localhost:5000/api/record-edit/${siteModal._id}`,
         { deleted: false, expireAt: null },
-        config
+        {
+          withCredentials: true,
+        }
       );
       setSites(
         sites.filter((val) => {
-          return val._id !== setModal._id;
+          return val.deleted === false;
         })
       );
       toast.success("Restored Successfully", {
         autoClose: 1500,
         transition: Slide,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, [1000]);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, [1000]);
     } catch (error) {
       console.log(error);
     }

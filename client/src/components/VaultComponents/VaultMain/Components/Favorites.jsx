@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const Favorites = () => {
   const [sites, setSites] = useState([]);
@@ -19,9 +21,7 @@ const Favorites = () => {
       const { data } = await axios.get(
         "http://localhost:5000/api/vault-data/",
         {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
+          withCredentials: true,
         }
       );
       for (let i = 0; i < data.sites.length; i++) {

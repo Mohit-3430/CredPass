@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../styles/ForgotPassword/ForgotPassword.css";
 import pic from "../../images/completed.svg";
 
+axios.defaults.withCredentials = true;
+
 const ResetPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [pass, setPass] = useState("");
@@ -30,6 +32,9 @@ const ResetPassword = () => {
           confirmPassword: cpass,
           token,
           emailId,
+        },
+        {
+          withCredentials: true,
         }
       );
       toast.success("Password Changed", {

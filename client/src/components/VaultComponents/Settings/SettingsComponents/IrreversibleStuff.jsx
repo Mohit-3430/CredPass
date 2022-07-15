@@ -8,6 +8,8 @@ import axios from "axios";
 import { ConfirmPasswordModal } from "../../../Utils";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
 const IrreversibleStuff = () => {
   const navigate = useNavigate();
@@ -26,18 +28,14 @@ const IrreversibleStuff = () => {
   const [showAccountSuperPassModal, setShowAccountSuperPassModal] =
     useState(false);
 
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-
   const vaultModalSubmit = async (e) => {
     e.preventDefault();
 
     const { data } = await axios.delete(
       "http://localhost:5000/api/delete-all-vault/",
-      config
+      {
+        withCredentials: true,
+      }
     );
     if (data.success === true) {
       toast.success(data.msg, {
@@ -55,7 +53,9 @@ const IrreversibleStuff = () => {
 
     const { data } = await axios.delete(
       "http://localhost:5000/api/delete-account/",
-      config
+      {
+        withCredentials: true,
+      }
     );
     if (data.success === true) {
       toast.success(data.msg, {
@@ -64,7 +64,9 @@ const IrreversibleStuff = () => {
       try {
         const { data } = await axios.delete(
           "http://localhost:5000/api/delete-all-vault/",
-          config
+          {
+            withCredentials: true,
+          }
         );
         if (data.success === true)
           toast.success(data.msg, {

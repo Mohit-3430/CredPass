@@ -1,5 +1,5 @@
 import express from "express"
-import { LoginController, LoginVerifyController, SignupController, SignupAuthController, aldreadySigninPasswordVerifier, toptStatus, toptShow, toptVerification, toptVerificationNoAuth, editUser, toptStatusNoauth, resetPassword, resetPasswordEmail } from "../../controllers/index.js"
+import { LoginController, LoginVerifyController, SignupController, SignupAuthController, aldreadySigninPasswordVerifier, toptStatus, toptShow, toptVerification, toptVerificationNoAuth, editUser, toptStatusNoauth, resetPassword, resetPasswordEmail, logout } from "../../controllers/index.js"
 import { authentication, toptCheck } from "../../middlewares/authentication.js";
 
 
@@ -22,4 +22,5 @@ router.post('/totp-verification', authentication, toptCheck, toptVerification)
 router.post('/totp-verification-noauth', toptVerificationNoAuth)
 router.get('/totp-show', authentication, toptCheck, toptShow)
 
+router.get('/logout', authentication, toptCheck, logout)
 export default router;

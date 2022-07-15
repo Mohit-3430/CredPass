@@ -68,9 +68,9 @@ export const LoginVerifyController = async (req, res) => {
 
         if (isValid && user) {
             if (user.two_fa_status === false) {
-                const cookie = await getCookieWithJwtToken(user.uname); //from utils
-                res.cookie(cookie);
-                res.status(202).json({ success: true, msg: "cookie set!" });
+                const jwt_cookie = await getCookieWithJwtToken(user.uname); //from utils
+                res.cookie(jwt_cookie);
+                res.status(202).json({ success: true, msg: "cookie set!", totpStatus: user.two_fa_status, cookie: jwt_cookie, superUser: user.uname });
             }
             else {
                 res.status(200).json({ success: "partial", msg: "Token will be generated once the totp step is completed", totpStatus: true, superUser: user.uname })
@@ -104,4 +104,9 @@ export const aldreadySigninPasswordVerifier = async (req, res) => {
     catch (err) {
         res.status(404).json({ sucess: false, msg: err.message })
     }
+}
+
+// GET /api/user/logout
+export const logout = (req, res) => {
+    res.status(202).clearCookie('Authentication').json({ success: true, msg: "cookies cleared" })
 }
