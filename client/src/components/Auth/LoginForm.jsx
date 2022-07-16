@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Forms/Forms.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -7,6 +7,7 @@ import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../Utils/Auth";
 
 axios.defaults.withCredentials = true;
 
@@ -14,7 +15,16 @@ const LoginForm = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [eye, setEye] = useState(true);
+  const [autoF, setAutoF] = useState("emailId");
   const navigate = useNavigate();
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (localStorage.getItem("emailId")) {
+      setEmailId(localStorage.getItem("emailId"));
+      setAutoF("password");
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,17 +38,26 @@ const LoginForm = () => {
       );
       // TOTP Enabled
       if (data.success === "partial" && data.totpStatus === true) {
-        localStorage.setItem("user", data.superUser);
-        navigate("/login-totp");
+        if (localStorage.getItem("isLoggedIn") === "true") {
+          auth.login(data.superUser);
+          navigate("/vault/all-items", { replace: true });
+        } else {
+          localStorage.setItem("user", data.superUser);
+          navigate("/login-totp", { replace: true });
+        }
       }
       // TOTP Disabled
       else if (data.success === true && data.totpStatus === false) {
         localStorage.setItem("user", data.superUser);
+        localStorage.setItem("isLoggedIn", data.success);
+        localStorage.setItem("emailId", emailId);
+        auth.login(data.superUser);
+
         toast.success("Success!!", {
           autoClose: 200,
           transition: Flip,
         });
-        navigate("/vault/all-items");
+        navigate("/vault/all-items", { replace: true });
       } else if (data.success === false && data.msg === "could not find user") {
         toast.info("User not Found", {
           autoClose: 3000,
@@ -86,6 +105,9 @@ const LoginForm = () => {
       <section className="form__container">
         <div className="form__wrapper login">
           <h1 className="form__heading">Sign In</h1>
+          <p className="form__container--instructions">
+            Enter details to login or unlock vault
+          </p>
           <hr />
           <form onSubmit={handleSubmit}>
             <label>Email:</label>
@@ -98,14 +120,27 @@ const LoginForm = () => {
               onChange={(e) => setEmailId(e.target.value)}
             />
             <label>Password:</label>
-            <input
-              type="password"
-              value={password}
-              id="pswd"
-              required
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            {autoF === "password" && (
+              <input
+                type="password"
+                value={password}
+                id="pswd"
+                autoFocus
+                required
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            )}
+            {autoF === "emailId" && (
+              <input
+                type="password"
+                value={password}
+                id="pswd"
+                required
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            )}
             <span className="eye" onClick={() => togglePassword()}>
               {eye === true ? <FaEye /> : <FaEyeSlash />}
             </span>

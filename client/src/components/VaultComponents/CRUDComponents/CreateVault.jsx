@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import VaultNavbar from "../VaultGeneral/VaultNavbar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,29 +14,8 @@ const CreateVault = () => {
   const [siteUrl, setsiteUrl] = useState("");
   const [uname, setUname] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
   const [eye, setEye] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUname = () => {
-      axios
-        .get(`http://localhost:5000/api/vault-data/`, {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        })
-        .then((res) => {
-          setUserName(res.data.user);
-        })
-        .catch((err) => console.log(`${err}`));
-    };
-    fetchUname();
-
-    return () => {
-      setUserName("");
-    };
-  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,13 +23,13 @@ const CreateVault = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/vault-create",
-        { siteUrl, uname, password, userName },
+        { siteUrl, uname, password },
         {
           withCredentials: true,
         }
       );
       if (response.status === 200) {
-        toast.info("Added!!", {
+        toast.success("Added!!", {
           autoClose: 3000,
           transition: Slide,
         });

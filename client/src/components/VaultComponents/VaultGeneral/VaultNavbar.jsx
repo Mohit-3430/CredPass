@@ -10,12 +10,14 @@ import {
   FaCaretUp,
 } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
+import { useAuth } from "../../Utils/Auth";
 
 const VaultNavbar = () => {
   const [showNav, setShowNav] = useState("hide");
   const [bars, setBars] = useState(true);
   const [extraMenu, setExtraMenu] = useState(false);
   const [caret, setCaret] = useState("down");
+  const auth = useAuth();
 
   const toggleNav = () => {
     if (showNav === "hide") {
@@ -60,9 +62,7 @@ const VaultNavbar = () => {
                   <ul>
                     <div className="toggle--extra__menu">
                       <li className="user__name">
-                        <NavLink to="#">
-                          @ {localStorage.getItem("user")}
-                        </NavLink>
+                        <NavLink to="#">@ {auth.superUser}</NavLink>
                       </li>
                       <li>
                         <NavLink to="#">

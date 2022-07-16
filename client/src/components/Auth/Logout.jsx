@@ -2,17 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Utils/Reload.css";
 import axios from "axios";
+import { useAuth } from "../Utils/Auth";
 
 axios.defaults.withCredentials = true;
 
 const Logout = () => {
-  localStorage.removeItem("user");
+  const navigate = useNavigate();
+  const auth = useAuth();
+
   const removeData = async () => {
     await axios.get("http://localhost:5000/api/user/logout", {
       withCredentials: true,
     });
+    localStorage.removeItem("user");
+    localStorage.setItem("isLoggedIn", false);
+    localStorage.removeItem("emailId");
+    auth.logout();
   };
-  const navigate = useNavigate();
 
   useEffect(() => {
     removeData();

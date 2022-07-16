@@ -64,11 +64,12 @@ export const toptVerification = async (req, res) => {
 // POST /api/user/totp-verification-noauth
 export const toptVerificationNoAuth = async (req, res) => {
     const { verified } = verifyTOTP(req.body.secret_32, req.body.code)
-    console.log(req.body.user)
+    const { user } = req.body
+    const u = await User.findOne({ uname: user });
     if (verified === true) {
-        const cookie = await getCookieWithJwtToken(req.body.user);
+        const cookie = await getCookieWithJwtToken(user);
         res.cookie(cookie);
-        res.status(200).json({ success: true, msg: "Totp verified and token generated" });
+        res.status(200).json({ success: true, msg: "Totp verified and token generated", superUser: user, emailId: u.emailId });
     }
     else
         res.status(404).json({ success: false, msg: "Totp not verified!" })

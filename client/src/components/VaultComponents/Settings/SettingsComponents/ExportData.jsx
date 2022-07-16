@@ -7,6 +7,8 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ConfirmPasswordModal } from "../../../Utils";
 
+axios.defaults.withCredentials = true;
+
 const ExportData = () => {
   const [modalExportData, setModalExportData] = useState(false);
   // Export Modal states:
@@ -16,16 +18,12 @@ const ExportData = () => {
   ] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
 
-  const config = {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  };
-
   const exportModalSubmit = (e) => {
     e.preventDefault();
     axios
-      .get("http://localhost:5000/api/export-vault-data", config)
+      .get("http://localhost:5000/api/export-vault-data", {
+        withCredentials: true,
+      })
       .then((resp) => {
         const finalData = JSON.stringify(resp.data, null, 2);
         download(finalData, `${localStorage.getItem("user")}.json`);

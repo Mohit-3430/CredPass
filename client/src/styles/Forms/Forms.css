@@ -12,6 +12,12 @@
     padding: 2rem 1rem;
 }
 
+.form__container--instructions{
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-style: oblique;
+}
+
 form {
     width: 110%;
 }

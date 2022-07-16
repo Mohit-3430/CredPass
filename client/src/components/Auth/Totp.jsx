@@ -3,12 +3,14 @@ import axios from "axios";
 import "../../styles/Forms/Forms.css";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Utils/Auth";
 
 axios.defaults.withCredentials = true;
 
 const Totp = () => {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,10 @@ const Totp = () => {
         }
       );
       if (response.data.success === true) {
-        navigate("/vault/all-items");
+        auth.login(response.data.superUser);
+        localStorage.setItem("isLoggedIn", true);
+        localStorage.setItem("emailId", response.data.emailId);
+        navigate("/vault/all-items", { replace: true });
       }
     } catch (err) {
       console.log(err);
