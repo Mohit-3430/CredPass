@@ -60,7 +60,7 @@ const ForgotPassword = () => {
         <div className="info__page">
           <img src={pic} className="info__page--pic" alt="MailBox" />
           <p className="info__page--message">
-            Please close this tab and check your email
+            Please close this tab and check your email:<u> {emailId} </u>
           </p>
         </div>
       )}

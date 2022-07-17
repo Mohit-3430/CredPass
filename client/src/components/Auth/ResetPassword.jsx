@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
@@ -8,12 +8,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/InfoPage/InfoPage.css";
-import pic from "../../images/completed.svg";
+import pic from "../../images/expired_link.svg";
 
 axios.defaults.withCredentials = true;
 
 const ResetPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [linkValid, setLinkValid] = useState(true);
   const [pass, setPass] = useState("");
   const [cpass, setCpass] = useState("");
   const { token, emailId } = useParams();
@@ -21,11 +22,24 @@ const ResetPassword = () => {
   const [ceye, setcEye] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const isValidLink = async () => {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/user/reset-password-check-link/${token}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setLinkValid(data.success);
+    };
+    isValidLink();
+  }, [linkValid, token]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (pass === cpass) {
-      await axios.patch(
+      const { data } = await axios.patch(
         `http://localhost:5000/api/user/reset-password/${emailId}/${token}`,
         {
           password: pass,
@@ -37,10 +51,14 @@ const ResetPassword = () => {
           withCredentials: true,
         }
       );
-      toast.success("Password Changed", {
-        transition: Zoom,
-      });
-      setFormSubmitted(true);
+      if (data.success === true) {
+        toast.success("Password Changed", {
+          transition: Zoom,
+        });
+        setFormSubmitted(true);
+      } else if (data.success === false && data.msg === "Token not verified") {
+        setLinkValid(false);
+      }
     } else {
       toast.info("Passwords Not matched", {
         transition: Slide,
@@ -73,7 +91,7 @@ const ResetPassword = () => {
   return (
     <>
       <HomeNavbar />
-      {!formSubmitted && (
+      {!formSubmitted && linkValid && (
         <section className="form__container">
           <div className="form__wrapper login">
             <h1 className="form__heading">Change Password</h1>
@@ -114,10 +132,22 @@ const ResetPassword = () => {
           </div>
         </section>
       )}
-      {formSubmitted && (
+      {formSubmitted && linkValid && (
         <div className="info__page">
           <img src={pic} className="info__page--pic" alt="MailBox" />
           <p className="info__page--message">Super password is updated</p>
+          <button
+            onClick={() => navigate("/login")}
+            className="info__page--proceed-button"
+          >
+            Login
+          </button>
+        </div>
+      )}
+      {!linkValid && (
+        <div className="info__page">
+          <img src={pic} className="info__page--pic" alt="MailBox" />
+          <p className="info__page--message">Link is not Valid</p>
           <button
             onClick={() => navigate("/login")}
             className="info__page--proceed-button"

@@ -50,3 +50,22 @@ export const resetPassword = async (req, res) => {
     });
 
 }
+
+//GET /api/user/reset-password-check-link/:token
+export const reserPasswordCheckLink = (req, res) => {
+    const { token } = req.params;
+    const secret = process.env.EMAIL_JWT_SECRET
+
+    jsonwebtoken.verify(token, secret, async (err, payload) => {
+        if (err) {
+            res.status(204).json({ success: false, msg: "Token Expired!" });
+        }
+        else {
+            const user = await User.findOne({ emailId: payload.sub })
+            if (!user)
+                res.status(200).json({ success: false, msg: "No User" })
+            else
+                res.status(200).json({ success: true, msg: "Token Verified!" })
+        }
+    });
+}
