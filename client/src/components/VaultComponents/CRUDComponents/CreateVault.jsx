@@ -30,12 +30,12 @@ const CreateVault = () => {
       );
       if (response.status === 200) {
         toast.success("Added!!", {
-          autoClose: 3000,
+          autoClose: 1500,
           transition: Slide,
         });
         setTimeout(() => {
           navigate("/vault/all-items");
-        }, 3000);
+        }, 1500);
       } else {
         toast.warn("Invalid Operation", {
           autoClose: 3000,
@@ -47,10 +47,6 @@ const CreateVault = () => {
         autoClose: 3000,
         transition: Flip,
       });
-
-      setTimeout(() => {
-        navigate("/Logout");
-      }, 3000);
     }
   };
 
