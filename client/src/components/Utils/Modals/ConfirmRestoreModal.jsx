@@ -3,13 +3,14 @@ import axios from "axios";
 import ReactModal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { Flip } from "react-toastify";
+import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../styles/Utils/EditModalStyle.css";
+import "../../../styles/Utils/EditModalStyle.css";
 
 axios.defaults.withCredentials = true;
+
 ReactModal.setAppElement("#root");
-const ConfirmDeletionModal = ({
+const ConfirmRestoreModal = ({
   siteModal,
   setModal,
   modal,
@@ -17,32 +18,26 @@ const ConfirmDeletionModal = ({
   sites,
   close,
 }) => {
-  const config = {
-    withCredentials: true,
-  };
-
   const modalSubmit = async (e) => {
     setModal(false);
 
     try {
-      await axios.delete(
-        `http://localhost:5000/api/record-delete/${siteModal._id}`,
-        config
+      await axios.patch(
+        `http://localhost:5000/api/record-edit/${siteModal._id}`,
+        { deleted: false, expireAt: null },
+        {
+          withCredentials: true,
+        }
       );
-      setSites(
-        sites.filter((val) => {
-          return val._id !== setModal._id;
-        })
-      );
-      toast.success("Permenantly Deleted", {
-        autoClose: 1000,
-        transition: Flip,
-      });
       setSites(
         sites.filter((val) => {
           return val.deleted === false;
         })
       );
+      toast.success("Restored Successfully", {
+        autoClose: 1500,
+        transition: Slide,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -69,13 +64,13 @@ const ConfirmDeletionModal = ({
           <span onClick={() => setModal(false)} className="close">
             <FaTimes />
           </span>
-          <h3 className="modal__container--title">Delete</h3>
+          <h3 className="modal__container--title">Restore</h3>
           <p className="modal__container--subtitle">
-            This step deletes record Permenantly
+            This step Restores the record
           </p>
           <div className="modal__container--form-buttons">
             <button onClick={() => modalSubmit()} className="change__buttons">
-              Delete
+              Restore
             </button>
             <button onClick={() => setModal(false)} className="cancel__buttons">
               Cancel
@@ -87,4 +82,4 @@ const ConfirmDeletionModal = ({
   );
 };
 
-export default ConfirmDeletionModal;
+export default ConfirmRestoreModal;
