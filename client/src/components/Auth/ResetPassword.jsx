@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { Zoom, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../../styles/ForgotPassword/ForgotPassword.css";
+import "../../styles/InfoPage/InfoPage.css";
 import pic from "../../images/completed.svg";
 
 axios.defaults.withCredentials = true;
@@ -99,7 +99,6 @@ const ResetPassword = () => {
                 value={cpass}
                 id="cpswd"
                 required
-                autoFocus
                 placeholder="Enter new Password again"
                 onChange={(e) => setCpass(e.target.value)}
               />
@@ -116,12 +115,12 @@ const ResetPassword = () => {
         </section>
       )}
       {formSubmitted && (
-        <div className="User--info">
-          <img src={pic} className="Info__pic" alt="MailBox" />
-          <p className="forgot__password">Super password is updated</p>
+        <div className="info__page">
+          <img src={pic} className="info__page--pic" alt="MailBox" />
+          <p className="info__page--message">Super password is updated</p>
           <button
             onClick={() => navigate("/login")}
-            className="proceed__buttons"
+            className="info__page--proceed-button"
           >
             Login
           </button>

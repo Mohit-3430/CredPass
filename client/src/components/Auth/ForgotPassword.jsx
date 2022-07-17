@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HomeNavbar from "../HomeComponents/HomeNavbar";
 import axios from "axios";
 import pic from "../../images/purple-mail.svg";
-import "../../styles/ForgotPassword/ForgotPassword.css";
+import "../../styles/InfoPage/InfoPage.css";
 
 axios.defaults.withCredentials = true;
 
@@ -57,9 +57,9 @@ const ForgotPassword = () => {
         </section>
       )}
       {formSubmitted && (
-        <div className="User--info">
-          <img src={pic} className="Info__pic" alt="MailBox" />
-          <p className="forgot__password">
+        <div className="info__page">
+          <img src={pic} className="info__page--pic" alt="MailBox" />
+          <p className="info__page--message">
             Please close this tab and check your email
           </p>
         </div>

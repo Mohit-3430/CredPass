@@ -1,21 +1,21 @@
-.User--info{
+.info__page{
     margin-top: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: 2rem;
+    row-gap: 1rem;
 }
 
-.forgot__password{
+.info__page--message{
     color: blueviolet;
 }
 
-.Info__pic{
-    height : 15rem;
+.info__page--pic{
+    height : 13rem;
     width: 15rem;
 }
-.proceed__buttons{
+.info__page--proceed-button{
     margin-top: 0.2rem;
     border: none;
     padding: 0.5rem;
@@ -25,11 +25,11 @@
 }
 
 @media only screen and (max-width:600px) {
-    .Info__pic{
+    .info__page--pic{
         height : 10rem;
         width:10rem
     }
-    .forgot__password{
+    .info__page--message{
         font-size: .75rem;
     }
 }
