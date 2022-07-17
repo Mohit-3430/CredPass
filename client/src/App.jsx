@@ -20,6 +20,7 @@ import {
 } from "./components/";
 import { VskAllItems, VskFavorites, VskTrash } from "./components";
 import { AuthProvider, RequireAuth } from "./components/Utils/Auth";
+import NoPage from "./components/General/NoPage";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <Router>
         <AuthProvider>
           <Routes>
+            <Route path="*" element={<NoPage />} />
             <Route path="/" element={<HomeContent />} />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/login" element={<LoginForm />} />
