@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../../styles/Vault/HomeVault.css";
+import ReactModal from "react-modal";
 import { Record, EditModal } from "../CRUD";
-import VaultNavbar from "./VaultNavbar";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
 axios.defaults.withCredentials = true;
 
-const HomeVault = () => {
-  const [uname, setUname] = useState("");
+ReactModal.setAppElement("#root");
+const Favorites = () => {
   const [sites, setSites] = useState([]);
   const [modal, setModal] = useState(false);
   const [siteModal, setSiteModal] = useState([]);
@@ -17,28 +17,38 @@ const HomeVault = () => {
 
   useEffect(() => {
     const fetchSites = async () => {
-      const resp = await axios.get("http://localhost:5000/api/vault-data/", {
-        withCredentials: true,
-      });
-      setSites(resp.data.sites);
-      setUname(resp.data.user);
+      const sitesArr = [];
+      const { data } = await axios.get(
+        "http://localhost:5000/api/vault-data/",
+        {
+          withCredentials: true,
+        }
+      );
+      for (let i = 0; i < data.sites.length; i++) {
+        if (data.sites[i].favorite === true) {
+          sitesArr.push(data.sites[i]);
+        }
+      }
+      setSites(sitesArr);
     };
     fetchSites();
   }, []);
 
   return (
     <>
-      <section className="vault__dashboard">
-        <VaultNavbar />
-        <h1 id="message">Welcome 👋, {uname} </h1>
+      <div className="ui-section" id="two-step-login">
+        <div className="ui-section__header">
+          {sites.length > 0 && (
+            <span className="plus" onClick={() => navigate("/vault-create")}>
+              <FaPlus />
+            </span>
+          )}
+          <h2>Favorites</h2>
+          <hr />
+          <br />
+        </div>
         {sites.length > 0 ? (
           <>
-            <p id="ref">
-              <u>Your Vault:</u>
-              <span className="plus" onClick={() => navigate("/vault-create")}>
-                <FaPlus />
-              </span>
-            </p>
             <main className="vault">
               {sites.map((site) => (
                 <Record
@@ -48,6 +58,7 @@ const HomeVault = () => {
                   setModal={setModal}
                   key={site._id}
                   setSiteModal={setSiteModal}
+                  star={true}
                 />
               ))}
             </main>
@@ -57,7 +68,7 @@ const HomeVault = () => {
             {" "}
             <div className="none">
               <p id="message" style={{ display: "inline" }}>
-                There is no data to display, Add now
+                Add records by marking them with ⭐
               </p>
               <span
                 className="plus-new"
@@ -68,19 +79,19 @@ const HomeVault = () => {
             </div>
           </>
         )}
-      </section>
-      {modal && (
-        <EditModal
-          siteModal={siteModal}
-          modal={modal}
-          sites={sites}
-          setModal={setModal}
-          setSites={setSites}
-          close={() => setModal(false)}
-        />
-      )}
+        {modal && (
+          <EditModal
+            siteModal={siteModal}
+            modal={modal}
+            sites={sites}
+            setModal={setModal}
+            setSites={setSites}
+            close={() => setModal(false)}
+          />
+        )}
+      </div>
     </>
   );
 };
 
-export default HomeVault;
+export default Favorites;

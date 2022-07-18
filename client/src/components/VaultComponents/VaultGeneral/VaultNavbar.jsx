@@ -10,7 +10,7 @@ import {
   FaCaretUp,
 } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
-import { useAuth } from "../../Utils/Auth";
+import { useAuth } from "../../../Context";
 
 const VaultNavbar = () => {
   const [showNav, setShowNav] = useState("hide");

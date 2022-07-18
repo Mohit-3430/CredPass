@@ -9,7 +9,7 @@ import {
   ResetPassword,
   Logout,
   CreateVault,
-} from "./components/";
+} from "./pages";
 
 import {
   Settings,
@@ -17,10 +17,10 @@ import {
   Settings2Fa,
   SettingsIrreversible,
   SettingsExportData,
-} from "./components/";
-import { VskAllItems, VskFavorites, VskTrash } from "./components";
-import { AuthProvider, RequireAuth } from "./components/Utils/Auth";
-import NoPage from "./components/General/NoPage";
+} from "./pages/";
+import { VskAllItems, VskFavorites, VskTrash } from "./pages";
+import { AuthProvider, RequireAuth } from "./Context";
+import NoPage from "./pages/General/NoPage";
 
 const App = () => {
   return (
