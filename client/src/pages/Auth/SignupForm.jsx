@@ -87,6 +87,10 @@ const SignupForm = () => {
       <section className="form__container">
         <div className="form__wrapper register">
           <h1 className="form__heading">Register</h1>
+          <p className="form__container--instructions">
+            Enter details , choose a strong password!
+          </p>
+          <hr />
           <form onSubmit={handleSubmit}>
             <label>Email:</label>
             <input
