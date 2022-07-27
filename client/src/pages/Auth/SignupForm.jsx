@@ -29,12 +29,6 @@ const SignupForm = () => {
       setPassword("");
       setAgainPassword("");
     } else {
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-
       try {
         await axios.post("http://localhost:5000/api/user/register", {
           emailId,

@@ -11,7 +11,11 @@ const HomeContent = () => {
           <p>A simple password manager with enterprise features</p>
           <p>Almost Constructed!!</p>
           <button>
-            <a href="https://github.com/Mohit-3430/PVA-MERN" target={"_blank"}>
+            <a
+              href="https://github.com/Mohit-3430/PVA-MERN"
+              target={"_blank"}
+              rel="noreferrer"
+            >
               Code
             </a>
           </button>
