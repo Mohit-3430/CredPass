@@ -10,8 +10,8 @@ const VaultLinks = () => {
             <hr style={{ width: "15rem" }} />
           </div>
           <ul className="ui">
-            <NavLink to="#">My Vault</NavLink>
-            <NavLink to="/vault/new">+Organization</NavLink>
+            <NavLink to="/vault/all-items">My Vault</NavLink>
+            {/* <NavLink to="/vault/new">+Organization</NavLink> */}
             <div className="ui__menu--header">
               <hr style={{ width: "15rem" }} />
             </div>
@@ -19,9 +19,9 @@ const VaultLinks = () => {
             <NavLink to="/vault/fav">Favourites</NavLink>
             <NavLink to="/vault/trash">Trash</NavLink>
             {/* Types */}
-            <NavLink to="/vault/login">Login</NavLink>
+            {/* <NavLink to="/vault/login">Login</NavLink>
             <NavLink to="/vault/card">Card</NavLink>
-            <NavLink to="/vault/identity">Identity</NavLink>
+            <NavLink to="/vault/identity">Identity</NavLink> */}
           </ul>
         </div>
       </div>

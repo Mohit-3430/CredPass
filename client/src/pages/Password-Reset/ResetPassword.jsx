@@ -38,7 +38,9 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (pass === cpass) {
+    if (pass.length < 6) toast.warn("Password is less than 6 characters");
+    else if (pass !== cpass) toast.warn("Passwords doesn't match");
+    else if (pass === cpass) {
       const { data } = await axios.patch(
         `http://localhost:5000/api/user/reset-password/${emailId}/${token}`,
         {
