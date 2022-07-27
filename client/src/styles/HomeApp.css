@@ -1,12 +1,10 @@
 .home{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: url('../images/green_circuit_key.jpg') no-repeat center ;
+  background: url('../images/key7.jpg') no-repeat center ;
   background-size: cover;
-  height: 80vh;
-  width: 100vw;
+  height: 92vh;
+  width: 98.9vw;
   font-weight: bold;
 }
 
@@ -38,4 +36,13 @@
   background-color: transparent;
   cursor: pointer;
   color : white;
+}
+
+@media only screen and (max-width:375px) {
+  .home__intro {
+    overflow-wrap: break-word;
+  }
+  .home__intro > h1 {
+    font-size: 2rem;
+  }
 }

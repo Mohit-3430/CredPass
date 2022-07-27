@@ -7,10 +7,14 @@ const HomeContent = () => {
       <section className="home">
         <main className="home__intro">
           <h1>Welcome</h1>
-          <p>One Stop for All your Passwords</p>
-          <p>Forget About Passwords We will take care of it</p>
-          <p>Don't worry regarding the Storage 😉</p>
-          <button>Read More !!</button>
+          <p>A MERN Stack project</p>
+          <p>A simple password manager with enterprise features</p>
+          <p>Almost Constructed!!</p>
+          <button>
+            <a href="https://github.com/Mohit-3430/PVA-MERN" target={"_blank"}>
+              Code
+            </a>
+          </button>
         </main>
       </section>
     </>
