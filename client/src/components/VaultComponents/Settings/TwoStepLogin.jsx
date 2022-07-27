@@ -106,9 +106,9 @@ const TwoStepLogin = () => {
           transition: Flip,
         });
         await axios.patch(
-          "http://localhost:5000/api/user/edit-user-info",
+          "http://localhost:5000/api/user/totp-data-on",
           {
-            base32: res32Code,
+            secret: res32Code,
             qrCode: resQR,
           },
           {
@@ -140,17 +140,9 @@ const TwoStepLogin = () => {
   };
 
   const disableTotp = async () => {
-    await axios.patch(
-      "http://localhost:5000/api/user/edit-user-info",
-      {
-        two_fa_status: false,
-        base32: "",
-        qrCode: "",
-      },
-      {
-        withCredentials: true,
-      }
-    );
+    await axios.patch("http://localhost:5000/api/user/totp-data-off", {
+      withCredentials: true,
+    });
     setStatus("Disabled");
     toast.info("Diasbled!", {
       autoClose: 3000,

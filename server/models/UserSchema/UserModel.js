@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt";
 import isEmail from 'validator/lib/isEmail.js';
+import { VaultOwnSchema, MFASchema, VaultSharedSchema } from "./NestedSchemas/index.js";
 
 const userSchema = new mongoose.Schema({
 
@@ -24,16 +25,9 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter a user name'],
         unique: true,
     },
-    two_fa_status: {
-        type: Boolean,
-        default: false
-    },
-    qrCode: {
-        type: String,
-    },
-    base32: {
-        type: String
-    }
+    mfa_details: { type: MFASchema, default: {} },
+    vault_own: [VaultOwnSchema],
+    vault_shared: [VaultSharedSchema]
 
 }, { timestamps: true });
 
@@ -43,6 +37,5 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-
 // it will look up for *"users"* collections
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.models.User || mongoose.model("User", userSchema);

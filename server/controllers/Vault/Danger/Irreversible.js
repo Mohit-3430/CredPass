@@ -1,10 +1,9 @@
-import { Site } from "../../../Models/site.js"
-import { User } from "../../../Models/user.js"
+import { User } from "../../../Models/index.js";
 
 // DELETE api/delete-all-vault
 export const deleteFullVault = async (req, res) => {
     try {
-        const resp = await Site.deleteMany({ user: req.user.sub })
+        const resp = await Vault.deleteMany({ owner: req.user.sub })
         if (resp.deletedCount !== 0) {
             res.status(200).json({ success: true, msg: "All vault data deleted" })
         }
@@ -19,7 +18,7 @@ export const deleteFullVault = async (req, res) => {
 // DELETE api/delete-account
 export const deleteAccount = async (req, res) => {
     try {
-        const resp = await User.deleteOne({ uname: req.user.sub })
+        const resp = await User.findByIdAndDelete(req.user.sub)
 
         if (resp.deletedCount !== 0) {
             res.status(200).json({ success: true, msg: "User deleted" })

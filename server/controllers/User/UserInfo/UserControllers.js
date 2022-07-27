@@ -1,4 +1,4 @@
-import { User } from "../../../Models/user.js";
+import { User } from "../../../Models/index.js";
 
 
 import dotenv from "dotenv"

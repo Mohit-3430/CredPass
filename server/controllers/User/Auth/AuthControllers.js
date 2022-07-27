@@ -1,5 +1,5 @@
 import { getCookieWithJwtToken } from "../../../configs/JWT/JWTServices.js";
-import { User } from "../../../Models/user.js";
+import { User } from "../../../Models/index.js";
 import bcrypt from "bcrypt";
 
 
@@ -39,7 +39,7 @@ export const SignupAuthController = async (req, res) => {
             res.status(201).json({ success: true, user: user })
         }
         else {
-            res.status(400).send('Passwords Not matched!!')
+            res.status(406).send('Passwords Not matched!!')
         }
     } catch (err) {
         const errors = handleErrors(err);
@@ -49,7 +49,7 @@ export const SignupAuthController = async (req, res) => {
 
 // GET /api/user/signup
 export const SignupController = (req, res) => {
-    res.status(201).json({ suecess: true, msg: "Hi from signup Route!" })
+    res.status(200).json({ suecess: true, msg: "Hi from signup Route!" })
 }
 
 export const LoginController = (req, res) => {
@@ -67,10 +67,10 @@ export const LoginVerifyController = async (req, res) => {
         const isValid = await bcrypt.compare(req.body.password, user.password)
 
         if (isValid && user) {
-            if (user.two_fa_status === false) {
-                const jwt_cookie = await getCookieWithJwtToken(user.uname); //from utils
+            if (user.mfa_details.mfa_status === false) {
+                const jwt_cookie = await getCookieWithJwtToken(user._id); //from utils
                 res.cookie(jwt_cookie);
-                res.status(202).json({ success: true, msg: "cookie set!", totpStatus: user.two_fa_status, cookie: jwt_cookie, superUser: user.uname });
+                res.status(202).json({ success: true, msg: "cookie set!", totpStatus: user.mfa_details.mfa_status, cookie: jwt_cookie, superUser: user.uname });
             }
             else {
                 res.status(200).json({ success: "partial", msg: "Token will be generated once the totp step is completed", totpStatus: true, superUser: user.uname })
@@ -86,10 +86,9 @@ export const LoginVerifyController = async (req, res) => {
 
 // POST /api/user/only-password
 export const aldreadySigninPasswordVerifier = async (req, res) => {
-
+    console.log(req.body);
     try {
-        const user = await User.findOne({ uname: req.user.sub })
-
+        const user = await User.findById(req.user.sub)
         if (!user) {
             return res.status(401).json({ success: false, msg: "could not find user" });
         }

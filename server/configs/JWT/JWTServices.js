@@ -1,14 +1,14 @@
 import jsonwebtoken from "jsonwebtoken"
 import dotenv from "dotenv"
-import { User } from "../../Models/user.js"
+import { User } from "../../models/index.js"
 
 dotenv.config();
 
-export const getCookieWithJwtToken = async (uname) => {
-    const user = await User.findOne({ uname: uname });
-    const mfa_status = user.two_fa_status;
+export const getCookieWithJwtToken = async (_id) => {
+    const user = await User.findById(_id);
+    const mfa_status = user.mfa_details.mfa_status;
     const payload = {
-        sub: uname,
+        sub: _id,
         mfa_status,
     };
     const secret = Buffer.from(process.env.JWT_ACCESS_PRV, 'base64').toString('ascii')

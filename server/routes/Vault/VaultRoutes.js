@@ -12,7 +12,7 @@ router.post('/vault-create', VaultCreate);
 router.post('/vault-decrypt-password', VaultDecrypt);
 router.post('/vault-encrypt-password', VaultEncrypt);
 router.patch('/record-edit/:siteId', recordEdit);
-router.delete('/record-delete/:siteId', recordDelete);
+router.delete('/record-delete/:id', recordDelete);
 router.delete('/delete-all-vault', deleteFullVault);
 router.delete('/delete-account', deleteAccount);
 router.get('/export-vault-data', exportData)

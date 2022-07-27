@@ -1,4 +1,4 @@
-import { User } from "../../../Models/user.js";
+import { User } from "../../../Models/index.js";
 import { sendMail } from "../../../configs/SendEmail.js";
 import { passwordResetLink } from "../../../configs/PasswordResetLink.js";
 import jsonwebtoken from "jsonwebtoken";

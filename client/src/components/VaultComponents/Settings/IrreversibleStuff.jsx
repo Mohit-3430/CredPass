@@ -41,6 +41,8 @@ const IrreversibleStuff = () => {
       toast.success(data.msg, {
         transition: Zoom,
       });
+      localStorage.clear();
+      navigate("/");
     } else {
       toast.info(data.msg, {
         transition: Slide,
