@@ -42,7 +42,7 @@ const VaultNavbar = () => {
     <>
       <nav className="nav">
         <div className="nav__brand">
-          <NavLink to="/vault-home">PVA</NavLink>
+          <NavLink to="/vault/all-items">CredPass</NavLink>
           <span onClick={() => toggleNav()}>
             {bars === true ? <FaBars /> : <FaTimes />}
           </span>

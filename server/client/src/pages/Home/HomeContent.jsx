@@ -12,7 +12,7 @@ const HomeContent = () => {
           <p>Almost Constructed!!</p>
           <button>
             <a
-              href="https://github.com/Mohit-3430/PVA-MERN"
+              href="https://github.com/Mohit-3430/CredPass"
               target={"_blank"}
               rel="noreferrer"
             >

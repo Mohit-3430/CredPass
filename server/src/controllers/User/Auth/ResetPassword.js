@@ -12,8 +12,8 @@ export const resetPasswordEmail = async (req, res) => {
         if (!user)
             res.status(404).json({ success: false, msg: "User not Found!!" })
         else {
-            const link = `Hello From PVA!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
-            const subject = "Password reset from PVA"
+            const link = `Hello From CredPass!\nGo through this link and set your new Password\nThe link will be valid for 10 minutes\n\n${passwordResetLink(emailId)}`
+            const subject = "Password reset from CredPass"
             sendMail(emailId, subject, link)
             res.status(200).json({ success: true, msg: "Message sent!!" })
         }

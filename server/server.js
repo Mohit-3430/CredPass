@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose"
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import { authentication, toptCheck } from "./middlewares/Authentication.js"
+import { authentication, toptCheck } from "./src/middlewares/Authentication.js"
 
 dotenv.config();
 
@@ -20,8 +20,8 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   .then(() => { console.log("DB connected!!") })
   .catch(() => { console.log("Check DB connection!!") })
 
-import UserAuthRoutes from "./routes/User/UserAuthRoutes.js"
-import VaultRoutes from "./routes/Vault/VaultRoutes.js"
+import UserAuthRoutes from "./src/routes/User/UserAuthRoutes.js"
+import VaultRoutes from "./src/routes/Vault/VaultRoutes.js"
 
 app.get('/', (req, res) => {
   res.send("Hello From Server!!")
