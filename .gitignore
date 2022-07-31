@@ -1,6 +1,5 @@
 node_modules/
-server/client/node_modules/
-server/client/build
+client/node_modules/
 .env
 *.ps1
 *.pem
