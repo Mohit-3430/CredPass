@@ -66,9 +66,9 @@ All the items user wants to save are stored and accessed here, currently only sa
 .
 ├── README.md
 ├── server
-│   ├── client
-│   │   ├── public
-│   │   └── src
 │   ├── server.js
+│   └── src
+├── client
+│   ├── public
 │   └── src
 ```
