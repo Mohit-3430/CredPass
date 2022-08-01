@@ -26,7 +26,7 @@ const ConfirmDeletionModal = ({
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/record-delete/${siteModal._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/record-delete/${siteModal._id}`,
         config
       );
       setSites(

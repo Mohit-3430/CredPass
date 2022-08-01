@@ -17,9 +17,12 @@ const HomeVault = () => {
 
   useEffect(() => {
     const fetchSites = async () => {
-      const resp = await axios.get("http://localhost:5000/api/vault-data/", {
-        withCredentials: true,
-      });
+      const resp = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/vault-data/`,
+        {
+          withCredentials: true,
+        }
+      );
       setSites(resp.data.sites);
       setUname(resp.data.user);
     };

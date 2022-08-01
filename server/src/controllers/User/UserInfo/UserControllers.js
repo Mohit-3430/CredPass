@@ -1,11 +1,6 @@
 import { User } from "../../../Models/user.js";
 
 
-import dotenv from "dotenv"
-
-dotenv.config()
-
-
 // PATCH /api/user/edit-user-info
 export const editUser = async (req, res) => {
     const updates = req.body;

@@ -1,7 +1,4 @@
 import jsonwebtoken from "jsonwebtoken"
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export const passwordResetLink = (emailId) => {
     const seccret = process.env.EMAIL_JWT_SECRET

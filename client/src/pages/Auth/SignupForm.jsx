@@ -30,12 +30,15 @@ const SignupForm = () => {
       setAgainPassword("");
     } else {
       try {
-        await axios.post("http://localhost:5000/api/user/register", {
-          emailId,
-          password,
-          uname,
-          againPassword,
-        });
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/api/user/register`,
+          {
+            emailId,
+            password,
+            uname,
+            againPassword,
+          }
+        );
         navigate("/login");
       } catch (err) {
         const errObj = err.response.data.errors;

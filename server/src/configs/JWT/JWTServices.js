@@ -1,8 +1,5 @@
 import jsonwebtoken from "jsonwebtoken"
-import dotenv from "dotenv"
 import { User } from "../../Models/user.js"
-
-dotenv.config();
 
 export const getCookieWithJwtToken = async (uname) => {
     const user = await User.findOne({ uname: uname });

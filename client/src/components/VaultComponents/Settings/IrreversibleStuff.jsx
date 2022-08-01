@@ -32,7 +32,7 @@ const IrreversibleStuff = () => {
     e.preventDefault();
 
     const { data } = await axios.delete(
-      "http://localhost:5000/api/delete-all-vault/",
+      `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
       {
         withCredentials: true,
       }
@@ -52,7 +52,7 @@ const IrreversibleStuff = () => {
     e.preventDefault();
 
     const { data } = await axios.delete(
-      "http://localhost:5000/api/delete-account/",
+      `${process.env.REACT_APP_SERVER_URL}/api/delete-account/`,
       {
         withCredentials: true,
       }
@@ -63,7 +63,7 @@ const IrreversibleStuff = () => {
       });
       try {
         const { data } = await axios.delete(
-          "http://localhost:5000/api/delete-all-vault/",
+          `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
           {
             withCredentials: true,
           }

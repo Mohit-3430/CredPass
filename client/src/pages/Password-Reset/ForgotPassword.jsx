@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/user/reset-password-email",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-email`,
         {
           emailId,
         },

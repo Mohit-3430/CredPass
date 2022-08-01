@@ -17,7 +17,7 @@ const Trash = () => {
     const fetchSites = async () => {
       const sitesArr = [];
       const { data } = await axios.get(
-        "http://localhost:5000/api/vault-data/",
+        `${process.env.REACT_APP_SERVER_URL}/api/vault-data/`,
         {
           withCredentials: true,
         }

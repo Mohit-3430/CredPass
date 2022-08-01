@@ -30,7 +30,7 @@ const Record = ({
     if (fav === true) {
       setFav(false);
       await axios.patch(
-        `http://localhost:5000/api/record-edit/${site._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${site._id}`,
         {
           favorite: false,
         },
@@ -41,7 +41,7 @@ const Record = ({
     } else {
       setFav(true);
       await axios.patch(
-        `http://localhost:5000/api/record-edit/${site._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${site._id}`,
         {
           favorite: true,
         },
@@ -55,7 +55,7 @@ const Record = ({
   useEffect(() => {
     const decryptPassword = async (siteObj) => {
       const res = await axios.post(
-        `http://localhost:5000/api/vault-decrypt-password/`,
+        `${process.env.REACT_APP_SERVER_URL}/api/vault-decrypt-password/`,
         { siteObj: { password: site.password } },
         {
           withCredentials: true,
@@ -86,9 +86,12 @@ const Record = ({
         hideProgressBar: true,
         transition: Slide,
       });
-      await axios.delete(`http://localhost:5000/api/record-delete/${siteId}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/api/record-delete/${siteId}`,
+        {
+          withCredentials: true,
+        }
+      );
       setSites(
         sites.filter((val) => {
           return val._id !== siteId;
@@ -175,8 +178,7 @@ const Record = ({
           <div>
             <img
               className="record__favicon"
-              src={`https://icon.horse/icon/${site.siteUrl}/`}
-              // src={`https://icons.duckduckgo.com/ip3/${site.siteUrl}.ico`}
+              src={`${process.env.REACT_APP_FAVICON_URL}/${site.siteUrl}/`}
               alt="No Favicon"
             />
           </div>

@@ -23,7 +23,7 @@ const ConfirmPasswordModal = ({
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/only-password",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/only-password`,
         { password: superPassword },
         {
           withCredentials: true,

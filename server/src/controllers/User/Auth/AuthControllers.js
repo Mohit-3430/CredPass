@@ -2,11 +2,6 @@ import { getCookieWithJwtToken } from "../../../configs/JWT/JWTServices.js";
 import { User } from "../../../Models/user.js";
 import bcrypt from "bcrypt";
 
-
-import dotenv from "dotenv"
-
-dotenv.config()
-
 // custom error handler
 const handleErrors = (err) => {
     let errors = { emailId: '', password: '', uname: '' };

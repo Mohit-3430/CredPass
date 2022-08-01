@@ -21,7 +21,7 @@ const ExportData = () => {
   const exportModalSubmit = (e) => {
     e.preventDefault();
     axios
-      .get("http://localhost:5000/api/export-vault-data", {
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/export-vault-data`, {
         withCredentials: true,
       })
       .then((resp) => {

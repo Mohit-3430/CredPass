@@ -25,7 +25,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const isValidLink = async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/reset-password-check-link/${token}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-check-link/${token}`,
         {
           withCredentials: true,
         }
@@ -42,7 +42,7 @@ const ResetPassword = () => {
     else if (pass !== cpass) toast.warn("Passwords doesn't match");
     else if (pass === cpass) {
       const { data } = await axios.patch(
-        `http://localhost:5000/api/user/reset-password/${emailId}/${token}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password/${emailId}/${token}`,
         {
           password: pass,
           confirmPassword: cpass,

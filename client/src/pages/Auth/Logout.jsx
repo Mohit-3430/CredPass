@@ -11,7 +11,7 @@ const Logout = () => {
   const auth = useAuth();
 
   const removeData = async () => {
-    await axios.get("http://localhost:5000/api/user/logout", {
+    await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/user/logout`, {
       withCredentials: true,
     });
     localStorage.removeItem("user");

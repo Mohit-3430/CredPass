@@ -16,11 +16,11 @@ const Totp = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/totp-status-noauth",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/totp-status-noauth`,
         { superUser: localStorage.getItem("user") }
       );
       const response = await axios.post(
-        "http://localhost:5000/api/user/totp-verification-noauth",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/totp-verification-noauth`,
         {
           secret_32: data.base32,
           code: code,

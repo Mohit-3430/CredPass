@@ -26,7 +26,7 @@ const TwoStepLogin = () => {
     const getStatus = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/user/totp-status",
+          `${process.env.REACT_APP_SERVER_URL}/api/user/totp-status`,
           {
             withCredentials: true,
           }
@@ -51,7 +51,7 @@ const TwoStepLogin = () => {
     if (status === "Disabled") {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/user/totp-show",
+          `${process.env.REACT_APP_SERVER_URL}/api/user/totp-show`,
           {
             withCredentials: true,
           }
@@ -70,7 +70,7 @@ const TwoStepLogin = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/only-password",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/only-password`,
         { password: superPassword },
         {
           withCredentials: true,
@@ -93,7 +93,7 @@ const TwoStepLogin = () => {
     //  Makes Call to display QR and modify user schema
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/totp-verification",
+        `${process.env.REACT_APP_SERVER_URL}/api/user/totp-verification`,
         { secret_32: res32Code, code: code },
         {
           withCredentials: true,
@@ -106,7 +106,7 @@ const TwoStepLogin = () => {
           transition: Flip,
         });
         await axios.patch(
-          "http://localhost:5000/api/user/edit-user-info",
+          `${process.env.REACT_APP_SERVER_URL}/api/user/edit-user-info`,
           {
             base32: res32Code,
             qrCode: resQR,
@@ -141,7 +141,7 @@ const TwoStepLogin = () => {
 
   const disableTotp = async () => {
     await axios.patch(
-      "http://localhost:5000/api/user/edit-user-info",
+      `${process.env.REACT_APP_SERVER_URL}/api/user/edit-user-info`,
       {
         two_fa_status: false,
         base32: "",
