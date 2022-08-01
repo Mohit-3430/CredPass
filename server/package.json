@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Password Manager",
   "main": "server.js",
+  "engines": {
+    "node": "16.13.1",
+    "npm": "8.13.2"
+},
   "type": "module",
   "scripts": {
     "dev": "env-cmd -f .env.local nodemon server.js",
