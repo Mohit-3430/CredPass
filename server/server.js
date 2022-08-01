@@ -3,6 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser";
 import { authentication, toptCheck } from "./src/middlewares/Authentication.js"
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express();
 

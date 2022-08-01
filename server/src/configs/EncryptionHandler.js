@@ -1,4 +1,6 @@
 import Cryptr from "cryptr"
+import dotenv from "dotenv"
+dotenv.config()
 
 const key = process.env.CRYPTO_SECRET
 const cryptr = new Cryptr(key);

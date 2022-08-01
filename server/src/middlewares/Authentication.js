@@ -1,5 +1,7 @@
 import jsonwebtoken from "jsonwebtoken"
 import { User } from "../Models/user.js"
+import dotenv from "dotenv"
+dotenv.config()
 
 export const authentication = (req, res, next) => {
     const token = req.cookies.Authentication

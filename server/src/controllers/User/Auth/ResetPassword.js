@@ -2,6 +2,8 @@ import { User } from "../../../Models/user.js";
 import { sendMail } from "../../../configs/SendEmail.js";
 import { passwordResetLink } from "../../../configs/PasswordResetLink.js";
 import jsonwebtoken from "jsonwebtoken";
+import dotenv from "dotenv"
+dotenv.config()
 
 // POST /api/user/reset-password-email
 export const resetPasswordEmail = async (req, res) => {
