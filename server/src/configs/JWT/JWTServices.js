@@ -3,7 +3,7 @@ import { User } from "../../Models/user.js"
 import dotenv from "dotenv"
 dotenv.config()
 
-export const getCookieWithJwtToken = async (uname) => {
+export const getJWTToken = async (uname) => {
     const user = await User.findOne({ uname: uname });
     const mfa_status = user.two_fa_status;
     const payload = {
@@ -16,6 +16,5 @@ export const getCookieWithJwtToken = async (uname) => {
         algorithm: 'RS256'
     }
     const token = jsonwebtoken.sign(payload, secret, options);
-    const cookie = `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_ACCESS_EXP}`;
-    return cookie;
+    return token;
 }

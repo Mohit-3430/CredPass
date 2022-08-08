@@ -1,7 +1,7 @@
 import { User } from "../../../Models/user.js";
 import qrcode from "qrcode"
 import { verifyTOTP, genSecret } from "../../../configs/2FAUtils.js";
-import { getCookieWithJwtToken } from "../../../configs/JWT/JWTServices.js";
+import { getJWTToken } from "../../../configs/JWT/JWTServices.js";
 
 // GET /api/user/totp-show
 export const toptShow = async (req, res) => {
@@ -67,9 +67,14 @@ export const toptVerificationNoAuth = async (req, res) => {
     const { user } = req.body
     const u = await User.findOne({ uname: user });
     if (verified === true) {
-        const cookie = await getCookieWithJwtToken(user);
-        res.cookie(cookie);
-        res.status(200).json({ success: true, msg: "Totp verified and token generated", superUser: user, emailId: u.emailId });
+        const token = await getJWTToken(user.uname); //from utils
+        res.status(200)
+            .cookie('Authentication', token, {
+                path: '/',
+                expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000),
+                // httpOnly: true, we need to have same domain
+            })
+            .json({ success: true, msg: "Totp verified and token generated", superUser: user, emailId: u.emailId });
     }
     else
         res.status(404).json({ success: false, msg: "Totp not verified!" })
