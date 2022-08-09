@@ -5,8 +5,8 @@ export const VaultDecrypt = (req, res) => {
     try {
         let password = req.body.siteObj.password;
         res.send(decrypt(password))
-    } catch {
-
+    } catch (err) {
+        console.log(err)
     }
 }
 
@@ -15,7 +15,7 @@ export const VaultEncrypt = (req, res) => {
     try {
         let password = req.body.siteObj.password;
         res.send(encrypt(password))
-    } catch {
-
+    } catch (err) {
+        console.log(err)
     }
 }
