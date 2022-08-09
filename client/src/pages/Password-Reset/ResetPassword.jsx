@@ -10,8 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../styles/InfoPage/InfoPage.css";
 import pic from "../../images/expired_link.svg";
 
-axios.defaults.withCredentials = true;
-
 const ResetPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [linkValid, setLinkValid] = useState(true);
@@ -25,10 +23,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const isValidLink = async () => {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-check-link/${token}`,
-        {
-          withCredentials: true,
-        }
+        `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-check-link/${token}`
       );
       setLinkValid(data.success);
     };
@@ -48,9 +43,6 @@ const ResetPassword = () => {
           confirmPassword: cpass,
           token,
           emailId,
-        },
-        {
-          withCredentials: true,
         }
       );
       if (data.success === true) {

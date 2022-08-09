@@ -5,8 +5,6 @@ import { Record, EditModal } from "../CRUD";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
-axios.defaults.withCredentials = true;
-
 ReactModal.setAppElement("#root");
 const AllVault = () => {
   const [sites, setSites] = useState([]);
@@ -20,7 +18,9 @@ const AllVault = () => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/vault-data`,
         {
-          withCredentials: true,
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
         }
       );
       for (let i = 0; i < data.sites.length; i++) {

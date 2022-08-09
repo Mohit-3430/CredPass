@@ -4,8 +4,6 @@ import axios from "axios";
 import pic from "../../images/purple-mail.svg";
 import "../../styles/InfoPage/InfoPage.css";
 
-axios.defaults.withCredentials = true;
-
 const ForgotPassword = () => {
   const [emailId, setEmailId] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -17,9 +15,6 @@ const ForgotPassword = () => {
         `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-email`,
         {
           emailId,
-        },
-        {
-          withCredentials: true,
         }
       );
       setFormSubmitted(true);

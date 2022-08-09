@@ -6,8 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { Slide, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-axios.defaults.withCredentials = true;
-
 ReactModal.setAppElement("#root");
 const TwoStepLogin = () => {
   const [superModal, setSuperModal] = useState(false);
@@ -21,6 +19,12 @@ const TwoStepLogin = () => {
   const [res32Code, setRes32Code] = useState("");
   const [status, setStatus] = useState("");
 
+  const config = {
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
+  };
+
   useEffect(() => {
     // Fetches status(Enabled or Disabled); base32 & qrcode
     const getStatus = async () => {
@@ -28,7 +32,9 @@ const TwoStepLogin = () => {
         const { data } = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/api/user/totp-status`,
           {
-            withCredentials: true,
+            headers: {
+              "Authorization": localStorage.getItem("token"),
+            },
           }
         );
         if (data.msg === "Enabled") {
@@ -52,9 +58,7 @@ const TwoStepLogin = () => {
       try {
         const { data } = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/api/user/totp-show`,
-          {
-            withCredentials: true,
-          }
+          config
         );
         setRes32Code(data.code);
         setResQR(data.scan);
@@ -72,9 +76,7 @@ const TwoStepLogin = () => {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/api/user/only-password`,
         { password: superPassword },
-        {
-          withCredentials: true,
-        }
+        config
       );
       if (data.success === true) {
         setQrModal(true);
@@ -95,9 +97,7 @@ const TwoStepLogin = () => {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/api/user/totp-verification`,
         { secret_32: res32Code, code: code },
-        {
-          withCredentials: true,
-        }
+        config
       );
       if (data === true) {
         setStatus("Enabled");
@@ -111,9 +111,7 @@ const TwoStepLogin = () => {
             base32: res32Code,
             qrCode: resQR,
           },
-          {
-            withCredentials: true,
-          }
+          config
         );
         setQrModal(false);
         setSuperModal(false);
@@ -147,9 +145,7 @@ const TwoStepLogin = () => {
         base32: "",
         qrCode: "",
       },
-      {
-        withCredentials: true,
-      }
+      config
     );
     setStatus("Disabled");
     toast.info("Diasbled!", {

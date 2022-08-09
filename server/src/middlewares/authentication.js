@@ -4,7 +4,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const authentication = (req, res, next) => {
-    const token = req.cookies.Authentication
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]
     const secret = Buffer.from(process.env.JWT_ACCESS_PUB, 'base64').toString(
         'ascii',
     );

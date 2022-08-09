@@ -5,12 +5,16 @@ import { HomeNavbar } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context";
 
-axios.defaults.withCredentials = true;
-
 const Totp = () => {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
   const auth = useAuth();
+
+  const config = {
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,12 +29,15 @@ const Totp = () => {
           secret_32: data.base32,
           code: code,
           user: localStorage.getItem("user"),
-        }
+        },
+        config
       );
       if (response.data.success === true) {
         auth.login(response.data.superUser);
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("emailId", response.data.emailId);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("expires", response.data.expiresIn);
         navigate("/vault/all-items", { replace: true });
       }
     } catch (err) {

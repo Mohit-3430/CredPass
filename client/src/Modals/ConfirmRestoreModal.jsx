@@ -7,8 +7,6 @@ import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/Utils/EditModalStyle.css";
 
-axios.defaults.withCredentials = true;
-
 ReactModal.setAppElement("#root");
 const ConfirmRestoreModal = ({
   siteModal,
@@ -18,6 +16,11 @@ const ConfirmRestoreModal = ({
   sites,
   close,
 }) => {
+  const config = {
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
+  };
   const modalSubmit = async (e) => {
     setModal(false);
 
@@ -25,9 +28,7 @@ const ConfirmRestoreModal = ({
       await axios.patch(
         `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${siteModal._id}`,
         { deleted: false, expireAt: null },
-        {
-          withCredentials: true,
-        }
+        config
       );
       setSites(
         sites.filter((val) => {

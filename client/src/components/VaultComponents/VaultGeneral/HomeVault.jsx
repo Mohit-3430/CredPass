@@ -6,8 +6,6 @@ import VaultNavbar from "./VaultNavbar";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
-axios.defaults.withCredentials = true;
-
 const HomeVault = () => {
   const [uname, setUname] = useState("");
   const [sites, setSites] = useState([]);
@@ -20,7 +18,9 @@ const HomeVault = () => {
       const resp = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/vault-data/`,
         {
-          withCredentials: true,
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
         }
       );
       setSites(resp.data.sites);

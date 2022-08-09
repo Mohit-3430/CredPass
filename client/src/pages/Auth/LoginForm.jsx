@@ -9,8 +9,6 @@ import { Zoom, Flip, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../Context";
 
-axios.defaults.withCredentials = true;
-
 const LoginForm = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
@@ -31,10 +29,7 @@ const LoginForm = () => {
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/api/user/login`,
-        { emailId, password },
-        {
-          withCredentials: true,
-        }
+        { emailId, password }
       );
       // TOTP Enabled
       if (data.success === "partial" && data.totpStatus === true) {
@@ -51,6 +46,7 @@ const LoginForm = () => {
         localStorage.setItem("user", data.superUser);
         localStorage.setItem("isLoggedIn", data.success);
         localStorage.setItem("emailId", emailId);
+        localStorage.setItem("token", data.token);
         auth.login(data.superUser);
 
         toast.success("Success!!", {
@@ -63,6 +59,7 @@ const LoginForm = () => {
           autoClose: 3000,
           transition: Zoom,
         });
+        navigate("/signup");
       } else if (
         data.success === false &&
         data.msg === "you entered the wrong password"

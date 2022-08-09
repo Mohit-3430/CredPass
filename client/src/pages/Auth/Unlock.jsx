@@ -23,10 +23,7 @@ const Unlock = () => {
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/api/user/login`,
-        { emailId, password },
-        {
-          withCredentials: true,
-        }
+        { emailId, password }
       );
       if (data.success === true) {
         localStorage.setItem("user", data.superUser);

@@ -8,8 +8,6 @@ import axios from "axios";
 import { ConfirmPasswordModal } from "../../../Modals";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.withCredentials = true;
-
 ReactModal.setAppElement("#root");
 const IrreversibleStuff = () => {
   const navigate = useNavigate();
@@ -34,7 +32,9 @@ const IrreversibleStuff = () => {
     const { data } = await axios.delete(
       `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
       {
-        withCredentials: true,
+        headers: {
+          "Authorization": localStorage.getItem("token"),
+        },
       }
     );
     if (data.success === true) {
@@ -54,7 +54,9 @@ const IrreversibleStuff = () => {
     const { data } = await axios.delete(
       `${process.env.REACT_APP_SERVER_URL}/api/delete-account/`,
       {
-        withCredentials: true,
+        headers: {
+          "Authorization": localStorage.getItem("token"),
+        },
       }
     );
     if (data.success === true) {
@@ -65,7 +67,9 @@ const IrreversibleStuff = () => {
         const { data } = await axios.delete(
           `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
           {
-            withCredentials: true,
+            headers: {
+              "Authorization": localStorage.getItem("token"),
+            },
           }
         );
         if (data.success === true)

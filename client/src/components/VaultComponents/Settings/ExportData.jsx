@@ -7,8 +7,6 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ConfirmPasswordModal } from "../../../Modals";
 
-axios.defaults.withCredentials = true;
-
 const ExportData = () => {
   const [modalExportData, setModalExportData] = useState(false);
   // Export Modal states:
@@ -22,7 +20,9 @@ const ExportData = () => {
     e.preventDefault();
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/api/export-vault-data`, {
-        withCredentials: true,
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       })
       .then((resp) => {
         const finalData = JSON.stringify(resp.data, null, 2);

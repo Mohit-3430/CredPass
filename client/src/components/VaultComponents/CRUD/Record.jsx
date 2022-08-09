@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdEdit, MdOutlineRestorePage } from "react-icons/md";
 
 import React from "react";
-axios.defaults.withCredentials = true;
 
 const Record = ({
   site,
@@ -26,6 +25,12 @@ const Record = ({
   const [menu, setMenu] = useState(false);
   const [fav, setFav] = useState(site.favorite);
 
+  const config = {
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
+  };
+
   const toggleStar = async () => {
     if (fav === true) {
       setFav(false);
@@ -34,9 +39,7 @@ const Record = ({
         {
           favorite: false,
         },
-        {
-          withCredentials: true,
-        }
+        config
       );
     } else {
       setFav(true);
@@ -45,9 +48,7 @@ const Record = ({
         {
           favorite: true,
         },
-        {
-          withCredentials: true,
-        }
+        config
       );
     }
   };
@@ -58,7 +59,9 @@ const Record = ({
         `${process.env.REACT_APP_SERVER_URL}/api/vault-decrypt-password/`,
         { siteObj: { password: site.password } },
         {
-          withCredentials: true,
+          headers: {
+            "Authorization": localStorage.getItem("token"),
+          },
         }
       );
       siteObj.password = res.data;
@@ -88,9 +91,7 @@ const Record = ({
       });
       await axios.delete(
         `${process.env.REACT_APP_SERVER_URL}/api/record-delete/${siteId}`,
-        {
-          withCredentials: true,
-        }
+        config
       );
       setSites(
         sites.filter((val) => {

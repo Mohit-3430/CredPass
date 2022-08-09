@@ -7,7 +7,6 @@ import { Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/Utils/EditModalStyle.css";
 
-axios.defaults.withCredentials = true;
 ReactModal.setAppElement("#root");
 const ConfirmDeletionModal = ({
   siteModal,
@@ -18,7 +17,9 @@ const ConfirmDeletionModal = ({
   close,
 }) => {
   const config = {
-    withCredentials: true,
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
   };
 
   const modalSubmit = async (e) => {

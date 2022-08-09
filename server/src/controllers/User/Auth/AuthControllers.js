@@ -1,4 +1,4 @@
-import { getJWTToken } from "../../../configs/JWT/JWTServices.js";
+import { issueJWT } from "../../../configs/JWT/JWTServices.js";
 import { User } from "../../../Models/user.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -65,14 +65,8 @@ export const LoginVerifyController = async (req, res) => {
 
         if (isValid && user) {
             if (user.two_fa_status === false) {
-                const token = await getJWTToken(user.uname); //from utils
-                res.status(202)
-                    .cookie('Authentication', token, {
-                        path: '/',
-                        expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000),
-                        // httpOnly: true, we need to have same domain
-                    })
-                    .json({ success: true, msg: "cookie set!", totpStatus: user.two_fa_status, superUser: user.uname });
+                const tokenObject = await issueJWT(user.uname); //from utils
+                res.status(202).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, totpStatus: user.two_fa_status, superUser: user.uname });
             }
             else {
                 res.status(200).json({ success: "partial", msg: "Token will be generated once the totp step is completed", totpStatus: true, superUser: user.uname })

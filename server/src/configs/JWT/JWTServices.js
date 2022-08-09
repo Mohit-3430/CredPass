@@ -3,7 +3,7 @@ import { User } from "../../Models/user.js"
 import dotenv from "dotenv"
 dotenv.config()
 
-export const getJWTToken = async (uname) => {
+export const issueJWT = async (uname) => {
     const user = await User.findOne({ uname: uname });
     const mfa_status = user.two_fa_status;
     const payload = {
@@ -16,5 +16,8 @@ export const getJWTToken = async (uname) => {
         algorithm: 'RS256'
     }
     const token = jsonwebtoken.sign(payload, secret, options);
-    return token;
+    return {
+        token: "Bearer " + token,
+        expires: process.env.JWT_ACCESS_EXP
+    }
 }
