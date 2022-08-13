@@ -1,6 +1,6 @@
 import "../../../styles/Navbar/VaultNavbar.css";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   FaBars,
   FaTimes,
@@ -19,6 +19,28 @@ const VaultNavbar = () => {
   const [caret, setCaret] = useState("down");
   const auth = useAuth();
 
+  const menuref = useRef();
+
+  const escFunction = useCallback((event) => {
+    if (event.keyCode === 27) {
+      closeExtraMenu();
+    }
+  }, []);
+
+  const outFunction = useCallback((event) => {
+    if (!menuref.current?.contains(event.target)) closeExtraMenu();
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction);
+    document.addEventListener("mousedown", outFunction);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction);
+      document.removeEventListener("mousedown", outFunction);
+    };
+  }, [escFunction, outFunction]);
+
   const toggleNav = () => {
     if (showNav === "hide") {
       setShowNav("show");
@@ -27,6 +49,10 @@ const VaultNavbar = () => {
       setShowNav("hide");
       setBars(true);
     }
+  };
+  const closeExtraMenu = () => {
+    setCaret("down");
+    setExtraMenu(false);
   };
   const extraMenuToggle = () => {
     if (extraMenu === true) {
@@ -55,7 +81,7 @@ const VaultNavbar = () => {
             <li onClick={() => toggleNav()}>
               <NavLink to="/vault-create">Add</NavLink>
             </li>
-            <div className="extra__menu">
+            <div className="extra__menu" ref={menuref}>
               <li onClick={() => extraMenuToggle()}>
                 Dashboard {caret === "down" ? <FaCaretDown /> : <FaCaretUp />}
                 {extraMenu && (

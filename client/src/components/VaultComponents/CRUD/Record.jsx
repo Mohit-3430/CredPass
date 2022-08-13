@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "../../../styles/Vault/Record.css";
 import { FaTrash } from "react-icons/fa";
@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdEdit, MdOutlineRestorePage } from "react-icons/md";
 
 import React from "react";
+import { useRef } from "react";
 
 const Record = ({
   site,
@@ -24,6 +25,8 @@ const Record = ({
   // const [status, setStatus] = useState(1); // hidden-1, show-0
   const [menu, setMenu] = useState(false);
   const [fav, setFav] = useState(site.favorite);
+  const menuRef = useRef();
+  const menuIconsRef = useRef();
 
   const config = {
     headers: {
@@ -52,6 +55,35 @@ const Record = ({
       );
     }
   };
+
+  // utility for closing/hiding the menu
+  const escFunction = useCallback((event) => {
+    if (event.keyCode === 27) {
+      setMenu(false);
+    }
+  }, []);
+
+  const toggleMenu = () => {
+    if (menu === true) setMenu(false);
+    else setMenu(true);
+  };
+  const outFunction = useCallback((event) => {
+    if (
+      !menuRef.current?.contains(event.target) &&
+      !menuIconsRef.current?.contains(event.target)
+    )
+      setMenu(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction);
+    document.addEventListener("mousedown", outFunction);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction);
+      document.removeEventListener("mousedown", outFunction);
+    };
+  }, [escFunction, outFunction]);
 
   useEffect(() => {
     const decryptPassword = async (siteObj) => {
@@ -101,16 +133,19 @@ const Record = ({
     } catch (err) {
       console.log(err);
     }
+    setMenu(false);
   };
 
   const editStuff = (site) => {
     setModal(true);
     setSiteModal(site);
+    setMenu(false);
   };
 
   const restore = (site) => {
     setRestoreModal(true);
     setSiteModal(site);
+    setMenu(false);
   };
 
   const permenantDelete = (site) => {
@@ -121,18 +156,18 @@ const Record = ({
   return (
     <>
       <section className="vault__contents">
-        <span className="vault__contents--menu">
+        <span className="vault__contents--menu" ref={menuIconsRef}>
           {star && (
             <span onClick={() => toggleStar()}>
               {fav === true ? <AiFillStar /> : <AiOutlineStar />}
             </span>
           )}
-          {<IoEllipsisVerticalOutline onClick={() => setMenu(!menu)} />}
+          {<IoEllipsisVerticalOutline onClick={() => toggleMenu()} />}
         </span>
         <div className="menu__links">
-          <div className="menu__dropdown">
+          <div className={`menu__dropdown-${menu}`}>
             {menu && (
-              <div className="vault__contents--edit-icons">
+              <div className="vault__contents--edit-icons" ref={menuRef}>
                 {star && (
                   <>
                     <div>
