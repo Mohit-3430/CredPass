@@ -114,7 +114,7 @@ const Record = ({
     // eslint-disable-next-line
   }, []);
 
-  const copyUserName = async (copyMe) => {
+  const copyField = async (copyMe) => {
     try {
       await navigator.clipboard.writeText(copyMe);
       toast.success("Saved to Clip-Board", {
@@ -201,13 +201,13 @@ const Record = ({
                       </span>
                     </div>
                     <div>
-                      <span onClick={() => copyUserName(site.uname)}>
+                      <span onClick={() => copyField(site.uname)}>
                         <IoClipboardOutline />
                         UserName
                       </span>
                     </div>
                     <div>
-                      <span onClick={() => copyUserName(site.password)}>
+                      <span onClick={() => copyField(site.password)}>
                         <IoClipboardOutline />
                         Password
                       </span>
