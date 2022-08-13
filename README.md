@@ -51,6 +51,8 @@ All the items user wants to save are stored and accessed here, currently only sa
   - User can toggle any of their items to or from favorites.
 - **Favicons or websites logos**
   - Each item stored in Vault will have a logo associated with for a better UX.
+- **ClipBoard**
+  - User can copy the credentials within a click.
 
 ### Things under development
 
