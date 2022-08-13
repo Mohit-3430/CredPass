@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "../../../styles/Vault/Record.css";
 import { FaTrash } from "react-icons/fa";
-import { IoEllipsisVerticalOutline } from "react-icons/io5";
+import { IoEllipsisVerticalOutline, IoClipboardOutline } from "react-icons/io5";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
-import { Slide } from "react-toastify";
+import { Slide, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdEdit, MdOutlineRestorePage } from "react-icons/md";
 
@@ -114,6 +114,21 @@ const Record = ({
     // eslint-disable-next-line
   }, []);
 
+  const copyUserName = async (copyMe) => {
+    try {
+      await navigator.clipboard.writeText(copyMe);
+      toast.success("Saved to Clip-Board", {
+        autoClose: 1000,
+        transition: Bounce,
+        position: "bottom-center",
+        hideProgressBar: true,
+      });
+      setMenu(false);
+    } catch (err) {
+      toast.error("Failed to copy!");
+    }
+  };
+
   const removeRecord = async (siteId) => {
     try {
       toast.warn("Item Moved to trash!", {
@@ -183,6 +198,18 @@ const Record = ({
                       <span onClick={() => editStuff(site)} className="edit">
                         <MdEdit />
                         Edit
+                      </span>
+                    </div>
+                    <div>
+                      <span onClick={() => copyUserName(site.uname)}>
+                        <IoClipboardOutline />
+                        UserName
+                      </span>
+                    </div>
+                    <div>
+                      <span onClick={() => copyUserName(site.password)}>
+                        <IoClipboardOutline />
+                        Password
                       </span>
                     </div>
                   </>
