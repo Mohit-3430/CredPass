@@ -1,4 +1,5 @@
 import { issueJWT } from "../../../configs/JWT/JWTServices.js";
+import { sendMail } from "../../../configs/Email/SendEmail.js";
 import { User } from "../../../Models/user.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -33,6 +34,8 @@ export const SignupAuthController = async (req, res) => {
     try {
         if (req.body.password === req.body.againPassword) {
             const user = await User.create({ emailId, password, uname });
+            const subject = "Welcome to CredPass!!"
+            sendMail(emailId, subject, " ", "Welcome", uname)
             res.status(201).json({ success: true, user: user })
         }
         else {
@@ -40,6 +43,7 @@ export const SignupAuthController = async (req, res) => {
         }
     } catch (err) {
         const errors = handleErrors(err);
+        console.log(err)
         res.status(400).json({ success: false, errors });
     }
 }
