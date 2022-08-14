@@ -1,7 +1,13 @@
 import nodemailer from "nodemailer"
+import ejs from "ejs"
 import { google } from "googleapis"
 import dotenv from "dotenv"
 dotenv.config()
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -12,7 +18,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN
 });
 
-const prepareEmailPipeLine = async (recipent, subject, body) => {
+const prepareEmailPipeLine = async (recipent, subject, url, type, usr) => {
   try {
     const accessToken = await oauth2Client.getAccessToken();
 
@@ -28,27 +34,42 @@ const prepareEmailPipeLine = async (recipent, subject, body) => {
       }
     });
 
+    let view
+
+    switch (type) {
+      case "Password Reset":
+        view = "ResetLink"
+        break;
+      case "Welcome":
+        view = "Welcome"
+        break;
+    }
+
+    const data = await ejs.renderFile(__dirname + `/templates/${view}.ejs`, { usr, url });
+
+
     const mailOptions = {
       from: process.env.EMAIL,
       to: recipent,
       subject: subject,
-      text: body,
-      // html:
+      html: data,
     }
 
     const result = await transporter.sendMail(mailOptions)
-    return result
+    return result;
 
   } catch (error) {
     return error
   }
 }
 
-export const sendMail = async (recipent, subject, body) => {
+export const sendMail = async (recipent, subject, url, type, usr) => {
   try {
-    prepareEmailPipeLine(recipent, subject, body);
+    await prepareEmailPipeLine(recipent, subject, url, type, usr)
   }
   catch (error) {
+    console.log(error)
     return error;
   }
 }
+
