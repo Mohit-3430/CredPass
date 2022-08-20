@@ -98,7 +98,7 @@ export const aldreadySigninPasswordVerifier = async (req, res) => {
         if (isValid && user) {
             res.status(200).json({ success: true, msg: "successfully verified!!" });
         } else {
-            res.status(401).json({ success: false, msg: "you entered the wrong password" });
+            res.status(202).json({ success: false, msg: "you entered the wrong password" });
         }
     }
     catch (err) {

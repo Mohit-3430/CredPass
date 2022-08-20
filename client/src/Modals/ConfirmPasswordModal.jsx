@@ -79,7 +79,7 @@ const ConfirmPasswordModal = ({
           </span>
           <h3 className="modal__container--title">Confirm Yourself:</h3>
           <form onSubmit={passModalSubmit} className="modal__container--form">
-            <label>Enter Super Password:</label>
+            <label>Enter MasterPassword:</label>
             <div>
               <input
                 type="password"

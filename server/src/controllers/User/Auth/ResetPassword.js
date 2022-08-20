@@ -73,3 +73,17 @@ export const reserPasswordCheckLink = (req, res) => {
         }
     });
 }
+
+// PATCH /api/user/reset-password-settings/
+export const resetPasswordSettings = async (req, res) => {
+    const { password } = req.body;
+    try {
+        const user = await User.findOneAndUpdate({ uname: req.user.sub }, { password: password }, { new: true })
+        user.save()
+        res.status(200).json({ success: true, msg: "password changed" })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(404).json({ success: false, msg: "Unsuccesful" });
+    }
+}

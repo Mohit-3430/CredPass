@@ -129,7 +129,7 @@ const ResetPassword = () => {
       {formSubmitted && linkValid && (
         <div className="info__page">
           <img src={pic} className="info__page--pic" alt="MailBox" />
-          <p className="info__page--message">Super password is updated</p>
+          <p className="info__page--message">Masterpassword is updated</p>
           <button
             onClick={() => navigate("/login")}
             className="info__page--proceed-button"

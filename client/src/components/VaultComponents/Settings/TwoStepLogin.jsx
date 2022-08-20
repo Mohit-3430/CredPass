@@ -69,7 +69,7 @@ const TwoStepLogin = () => {
   };
 
   const superModalSubmit = async (e) => {
-    // Verifies the super password
+    // Verifies the Masterpassword
     setSuperPassword("");
     e.preventDefault();
     try {
@@ -192,7 +192,7 @@ const TwoStepLogin = () => {
               onSubmit={superModalSubmit}
               className="modal__container--form"
             >
-              <label>Enter Super Password:</label>
+              <label>Enter MasterPassword:</label>
               <div>
                 <input
                   type="password"

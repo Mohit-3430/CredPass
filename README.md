@@ -21,7 +21,7 @@ Don't save your information yet, this is **under development.**
 - **MFA (Multi factor Authentication)**
   - Built using speakeasy module it generates **TOTP** that supports various authenticators like Google Authenticator, Authy, etc.
 - **Forgot Password**
-  - User can reset their master/super password after **email verification**
+  - User can reset their master/Masterpassword after **email verification**
   - Email contains a link which is valid for 10mins.
   - Email is sent using nodemailer and google-apis and OAuth 2.0
 

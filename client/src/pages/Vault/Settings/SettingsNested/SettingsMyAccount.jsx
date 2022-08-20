@@ -1,4 +1,5 @@
-import { VaultNavbar, MyAccount, SettingsLinks } from "../../../../components";
+import { VaultNavbar, SettingsLinks } from "../../../../components";
+import MyAccount from "../../../../components/VaultComponents/Settings/AccountRelated/MyAccount";
 import "../../../../styles/Vault/UI.css";
 
 const SettingsMyAccount = () => {
