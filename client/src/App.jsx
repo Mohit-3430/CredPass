@@ -9,6 +9,7 @@ import {
   ResetPassword,
   Logout,
   CreateVault,
+  VskPasswordGenerator,
 } from "./pages";
 
 import {
@@ -21,7 +22,6 @@ import {
 import { VskAllItems, VskFavorites, VskTrash } from "./pages";
 import { AuthProvider, RequireAuth } from "./Context";
 import NoPage from "./pages/General/NoPage";
-import Generator from "./pages/PasswordGenerator/Generator";
 
 const App = () => {
   return (
@@ -60,6 +60,14 @@ const App = () => {
               element={
                 <RequireAuth>
                   <VskTrash />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/password-generator"
+              element={
+                <RequireAuth>
+                  <VskPasswordGenerator />
                 </RequireAuth>
               }
             />
@@ -113,7 +121,6 @@ const App = () => {
                 </RequireAuth>
               }
             />
-            <Route path="/password-generator" element={<Generator />} />
           </Routes>
         </AuthProvider>
       </Router>

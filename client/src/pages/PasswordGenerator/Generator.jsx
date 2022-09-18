@@ -3,7 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoClipboardOutline } from "react-icons/io5";
 import "../../styles/Forms/Generator.css";
-import { VaultNavbar } from "../../components";
+// import { VaultNavbar } from "../../components";
 
 const Generator = () => {
   const [password, setPassword] = useState("");
@@ -11,7 +11,7 @@ const Generator = () => {
   const [includeUppercase, setIncludeUppercase] = useState(false);
   const [includeLowercase, setIncludeLowercase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(false);
-  const [includeSymbols, setIncludeSymbols] = useState(false);
+  const [includeSymbols, setIncludeSymbols] = useState(true);
 
   const characters = {
     numbers: "0123456789",
@@ -91,7 +91,7 @@ const Generator = () => {
 
   return (
     <>
-      <VaultNavbar />
+      {/* <VaultNavbar /> */}
       <section className="generator__container">
         <div className="generator__wrapper">
           <h4 className="form__heading">Password Generator</h4>
