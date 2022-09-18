@@ -21,6 +21,7 @@ import {
 import { VskAllItems, VskFavorites, VskTrash } from "./pages";
 import { AuthProvider, RequireAuth } from "./Context";
 import NoPage from "./pages/General/NoPage";
+import Generator from "./pages/PasswordGenerator/Generator";
 
 const App = () => {
   return (
@@ -112,6 +113,7 @@ const App = () => {
                 </RequireAuth>
               }
             />
+            <Route path="/password-generator" element={<Generator />} />
           </Routes>
         </AuthProvider>
       </Router>
