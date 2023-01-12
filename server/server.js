@@ -15,6 +15,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
+mongoose.set("strictQuery", false);
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   .then(() => { console.log("DB connected!!") })
   .catch(() => { console.log("Check DB connection!!") })
