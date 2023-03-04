@@ -28,7 +28,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/user/login`,
+        `${import.meta.env.VITE_SERVER_URL}/api/user/login`,
         { emailId, password }
       );
       // TOTP Enabled

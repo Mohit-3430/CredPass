@@ -39,12 +39,12 @@ const EditModal = ({ siteModal, setModal, modal, sites, setSites, close }) => {
 
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/vault-encrypt-password`,
+        `${import.meta.env.VITE_SERVER_URL}/api/vault-encrypt-password`,
         { siteObj: { password: password, _id: siteModal._id } },
         config
       );
       await axios.patch(
-        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${siteModal._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/record-edit/${siteModal._id}`,
         { siteUrl, uname, password: data },
         config
       );

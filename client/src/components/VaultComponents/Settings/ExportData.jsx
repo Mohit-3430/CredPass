@@ -19,7 +19,7 @@ const ExportData = () => {
   const exportModalSubmit = (e) => {
     e.preventDefault();
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/export-vault-data`, {
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/export-vault-data`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
