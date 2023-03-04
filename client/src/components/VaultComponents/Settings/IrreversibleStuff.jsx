@@ -30,7 +30,7 @@ const IrreversibleStuff = () => {
     e.preventDefault();
 
     const { data } = await axios.delete(
-      `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
+      `${import.meta.env.VITE_SERVER_URL}/api/delete-all-vault/`,
       {
         headers: {
           "Authorization": localStorage.getItem("token"),
@@ -52,7 +52,7 @@ const IrreversibleStuff = () => {
     e.preventDefault();
 
     const { data } = await axios.delete(
-      `${process.env.REACT_APP_SERVER_URL}/api/delete-account/`,
+      `${import.meta.env.VITE_SERVER_URL}/api/delete-account/`,
       {
         headers: {
           "Authorization": localStorage.getItem("token"),
@@ -65,7 +65,7 @@ const IrreversibleStuff = () => {
       });
       try {
         const { data } = await axios.delete(
-          `${process.env.REACT_APP_SERVER_URL}/api/delete-all-vault/`,
+          `${import.meta.env.VITE_SERVER_URL}/api/delete-all-vault/`,
           {
             headers: {
               "Authorization": localStorage.getItem("token"),

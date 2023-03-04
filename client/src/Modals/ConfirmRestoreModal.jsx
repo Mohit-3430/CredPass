@@ -26,7 +26,7 @@ const ConfirmRestoreModal = ({
 
     try {
       await axios.patch(
-        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${siteModal._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/record-edit/${siteModal._id}`,
         { deleted: false, expireAt: null },
         config
       );
