@@ -26,7 +26,7 @@ const CreateVault = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/vault-create`,
+        `${import.meta.env.VITE_SERVER_URL}/api/vault-create`,
         { siteUrl, uname, password },
         config
       );

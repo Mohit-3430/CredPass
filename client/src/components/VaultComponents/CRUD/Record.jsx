@@ -38,7 +38,7 @@ const Record = ({
     if (fav === true) {
       setFav(false);
       await axios.patch(
-        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${site._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/record-edit/${site._id}`,
         {
           favorite: false,
         },
@@ -47,7 +47,7 @@ const Record = ({
     } else {
       setFav(true);
       await axios.patch(
-        `${process.env.REACT_APP_SERVER_URL}/api/record-edit/${site._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/record-edit/${site._id}`,
         {
           favorite: true,
         },
@@ -88,7 +88,7 @@ const Record = ({
   useEffect(() => {
     const decryptPassword = async (siteObj) => {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/vault-decrypt-password/`,
+        `${import.meta.env.VITE_SERVER_URL}/api/vault-decrypt-password/`,
         { siteObj: { password: site.password } },
         {
           headers: {
@@ -137,7 +137,7 @@ const Record = ({
         transition: Slide,
       });
       await axios.delete(
-        `${process.env.REACT_APP_SERVER_URL}/api/record-delete/${siteId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/record-delete/${siteId}`,
         config
       );
       setSites(
@@ -241,7 +241,7 @@ const Record = ({
           <div>
             <img
               className="record__favicon"
-              src={`${process.env.REACT_APP_FAVICON_URL}/${site.siteUrl}/`}
+              src={`${import.meta.env.VITE_FAVICON_URL}/${site.siteUrl}/`}
               alt="No Favicon"
             />
           </div>

@@ -30,7 +30,7 @@ const TwoStepLogin = () => {
     const getStatus = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/api/user/totp-status`,
+          `${import.meta.env.VITE_SERVER_URL}/api/user/totp-status`,
           {
             headers: {
               "Authorization": localStorage.getItem("token"),
@@ -57,7 +57,7 @@ const TwoStepLogin = () => {
     if (status === "Disabled") {
       try {
         const { data } = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/api/user/totp-show`,
+          `${import.meta.env.VITE_SERVER_URL}/api/user/totp-show`,
           config
         );
         setRes32Code(data.code);
@@ -74,7 +74,7 @@ const TwoStepLogin = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/user/only-password`,
+        `${import.meta.env.VITE_SERVER_URL}/api/user/only-password`,
         { password: superPassword },
         config
       );
@@ -95,7 +95,7 @@ const TwoStepLogin = () => {
     //  Makes Call to display QR and modify user schema
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/user/totp-verification`,
+        `${import.meta.env.VITE_SERVER_URL}/api/user/totp-verification`,
         { secret_32: res32Code, code: code },
         config
       );
@@ -106,7 +106,7 @@ const TwoStepLogin = () => {
           transition: Flip,
         });
         await axios.patch(
-          `${process.env.REACT_APP_SERVER_URL}/api/user/edit-user-info`,
+          `${import.meta.env.VITE_SERVER_URL}/api/user/edit-user-info`,
           {
             base32: res32Code,
             qrCode: resQR,
@@ -139,7 +139,7 @@ const TwoStepLogin = () => {
 
   const disableTotp = async () => {
     await axios.patch(
-      `${process.env.REACT_APP_SERVER_URL}/api/user/edit-user-info`,
+      `${import.meta.env.VITE_SERVER_URL}/api/user/edit-user-info`,
       {
         two_fa_status: false,
         base32: "",

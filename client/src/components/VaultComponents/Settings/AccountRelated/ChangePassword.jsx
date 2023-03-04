@@ -21,7 +21,7 @@ const ChangePassword = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     const { data } = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/user/only-password`,
+      `${import.meta.env.VITE_SERVER_URL}/api/user/only-password`,
       { password: currentPassword },
       config
     );
@@ -45,7 +45,7 @@ const ChangePassword = () => {
         setRepeatPassword("");
       } else {
         const { data } = await axios.patch(
-          `${process.env.REACT_APP_SERVER_URL}/api/user/reset-password-settings`,
+          `${import.meta.env.VITE_SERVER_URL}/api/user/reset-password-settings`,
           { password: newPassword },
           config
         );

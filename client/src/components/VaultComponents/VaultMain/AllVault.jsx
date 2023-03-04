@@ -16,7 +16,7 @@ const AllVault = () => {
     const fetchSites = async () => {
       const sitesArr = [];
       const { data } = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/api/vault-data`,
+        `${import.meta.env.VITE_SERVER_URL}/api/vault-data`,
         {
           headers: {
             "Authorization": localStorage.getItem("token"),
