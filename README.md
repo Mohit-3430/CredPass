@@ -7,7 +7,7 @@ Don't save your information yet, this is **under development.**
 
 - Uses MongoDB on cloud **MongoDB Atlas**
 - Implemented RESTful **API's** using Express framework in NodeJS.
-- React **SPA**.
+- React **SPA**, powered by [vite](https://vitejs.dev/) for faster development.
 
 ## Features ref to coding
 
@@ -59,7 +59,6 @@ All the items user wants to save are stored and accessed here, currently only sa
 - Better Encrytion right from the frontend initiaiton
 - Organization or group feature.
 - Multiple Items like Cards, personal data, secure notes.
-- Password Generator
 - Payment gateway implementation to lock the featuresvia Stripe or any other Indian platform.
 
 ### Direcory Structure
