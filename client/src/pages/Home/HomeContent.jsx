@@ -7,9 +7,8 @@ const HomeContent = () => {
       <section className="home">
         <main className="home__intro">
           <h1>Welcome</h1>
-          <p>A MERN Stack project</p>
+          <p>MERN Stack project</p>
           <p>A simple password manager with enterprise features</p>
-          <p>Almost Constructed!!</p>
           <button>
             <a
               href="https://github.com/Mohit-3430/CredPass"
