@@ -22,10 +22,12 @@ import {
 import { VskAllItems, VskFavorites, VskTrash } from "./pages";
 import { AuthProvider, RequireAuth } from "./Context";
 import NoPage from "./pages/General/NoPage";
+import ConnectionStatus from "../ConnectionStatus";
 
 const App = () => {
   return (
     <>
+      <ConnectionStatus />
       <Router>
         <AuthProvider>
           <Routes>
